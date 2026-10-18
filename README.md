@@ -11,5 +11,8 @@ Adaptados a España a partir de [agency-agents](https://github.com/msitarzewski/
 | `analista-precios` | Precio y margen por casa y por proyecto, escenarios |
 | `analista-financiero` | Viabilidad, caja, punto de equilibrio, real vs previsto |
 | `jefe-proyecto` | Plan de fabricación y obra, medición del piloto |
+| `ingeniero-estructuras` | Marcos de acero, kg/m², soldadura, CTE y EN 1090 (no firma) |
+| `compras-proveedores` | Ofertas, comparativas, listas de materiales, plazos |
+| `energia-sostenibilidad` | CTE DB-HE, calificación energética, argumentos verdes con dato |
 
 Uso: "Que el analista-precios calcule… y después el revisor-realidad lo revise".

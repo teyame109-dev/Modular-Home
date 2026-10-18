@@ -145,6 +145,9 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 | `analista-precios` | Precio y margen por casa y por proyecto, escenarios |
 | `analista-financiero` | Viabilidad, caja, punto de equilibrio, real frente a previsto |
 | `jefe-proyecto` | Plan de fabricación y obra, medición del piloto |
+| `ingeniero-estructuras` | Marcos de acero, kg/m², horas de soldadura, CTE y EN 1090; prepara preguntas para calculista, OCT y decenal (no firma) |
+| `compras-proveedores` | Peticiones y comparativas de ofertas (acero, Tabihaus, PVC, transporte), listas de materiales por casa y por 16, validez y plazos |
+| `energia-sostenibilidad` | Cumplimiento CTE DB-HE, puentes térmicos entre módulos, argumentos de venta verdes con dato y fuente |
 
 ## Forma de trabajar con Iván
 
