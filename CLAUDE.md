@@ -135,6 +135,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - Informe técnico del piloto (uso interno; enseña el coste partida a partida): https://claude.ai/artifact/PUr8byELE64QXatQoj7aUq
 - Tres direcciones de identidad (Plano de taller, Grafito, Cobalto): https://claude.ai/artifact/PNKmqYami7eeBuaYU3rFau
 - Variante «Hoja de taller», cinco diapositivas de muestra: https://claude.ai/artifact/FiCUvV71AhLFdGpT838gUn
+- Web de la propuesta, con la vivienda que se desmonta al hacer scroll (copia en `web/nevola_web.html`; `node web/serve.js` la sirve en local): https://claude.ai/artifact/SiAEFHbvzW83WzgZ7GM2qD
 - Oferta comercial antigua, superada: https://claude.ai/artifact/9CWhA82CXe4HehS8GZEvJ9
 
 ## Agentes del proyecto (`.claude/agents/`)
