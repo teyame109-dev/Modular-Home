@@ -73,9 +73,9 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   <p class="lede">Paso a sistema modular, sin cambiar la distribución del proyecto, del proyecto de ejecución de julio de 2026 (14 pareadas y 2 aisladas en Guadalix de la Sierra), con la tipología de módulo del proyecto de Mahón (182): marcos de acero soldados, panel sándwich Tabihaus y trasdosado. Medición y coste de la primera unidad.</p>
   <div class="figs">
     <div class="fig"><b>6 módulos</b><span>3 por planta · sin cambios de distribución</span></div>
-    <div class="fig"><b>13.216 kg</b><span>acero · 89,1 kg/m² (Mahón: 89)</span></div>
-    <div class="fig"><b>225.400 €</b><span>piloto dentro de la serie · 1.520 €/m²</span></div>
-    <div class="fig"><b>273.600 €</b><span>piloto aislado · 1.845 €/m²</span></div>
+    <div class="fig"><b>12.889 kg</b><span>acero · 86,9 kg/m² (Mahón: 89)</span></div>
+    <div class="fig"><b>225.400 €</b><span>precio cerrado del piloto · margen 21.430 € (9,5 %)</span></div>
+    <div class="fig"><b>273.600 €</b><span>precio cerrado si va aislado · margen 25.763 €</span></div>
   </div>
 </header>
 
@@ -83,7 +83,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   <h2>Cómo se pasa el proyecto a módulos</h2>
   <ul class="steps">
     <li><b>Retícula.</b> La planta baja mide 7,85 × 9,50 m hasta el eje de medianera. Se divide en tres módulos de 3,20, 2,30 y 2,35 m que corren de fachada a fachada. La junta a 5,50 m cae sobre tabiques; la de 3,20 m cae sobre el tabique entre los dormitorios 2 y 3 en planta primera y, en planta baja, cruza el dormitorio 1 a 0,30 m de su tabique, oculta en suelo y techo como en el salón. La distribución del proyecto no cambia.</li>
-    <li><b>Vuelos.</b> La planta primera vuela 0,60 m en frente y lateral (8,45 m de ancho). Los tres módulos de arriba arrancan 0,60 m por delante de los de abajo, con el borde frontal en IPE 220. El vuelo lateral es una pieza aparte de 0,60 × 8,47 m que se atornilla al M4 en parcela: ningún módulo pasa de 3,20 m de ancho.</li>
+    <li><b>Vuelos.</b> La planta primera vuela 0,60 m en frente y lateral (8,45 m de ancho). Los tres módulos de arriba arrancan 0,60 m por delante de los de abajo, con el borde frontal en IPE 220. El vuelo lateral va dentro del M4, que mide 3,80 m de ancho: un módulo entero, sin pieza que atornillar en parcela. Sus pilares quedan en el eje de 0,60 m, sobre los del M1, y el voladizo lleva borde en IPE 220.</li>
     <li><b>Apoyos.</b> Cada módulo lleva pilares IPE 160 en esquinas y en el eje intermedio. Los de planta primera descargan sobre los marcos de planta baja en los ejes y = 0,60 · 6,10 · 10,10 m. El salón (7,43 m libres en el proyecto) queda con luces de 5,50 y 4,00 m.</li>
     <li><b>Terraza y baño principal.</b> M4 y M5 terminan en 8,47 m. Sobre la cubierta de planta baja queda la terraza de 9 m². M6 llega hasta 10,10 m y recoge entero el baño principal que sobresale.</li>
     <li><b>Alturas.</b> Se mantienen las cotas del proyecto: suelo de planta baja +0,20, de planta primera +3,35 y cubierta +6,40. Módulos de unos 3,05 m de alto: en góndola rebajada quedan por debajo de 4,00 m.</li>
@@ -127,16 +127,15 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
 
     <div class="sheet">
       <div class="cap"><span>Lámina 2 · Planta primera</span><span>cotas en m</span></div>
-      <div class="scroll"><svg viewBox="0 0 520 600" role="img" aria-label="Planta primera con módulos de 3,20, 2,30 y 2,35 metros de ancho y pieza de vuelo lateral de 0,60">
+      <div class="scroll"><svg viewBox="0 0 520 600" role="img" aria-label="Planta primera con módulos de 3,80, 2,30 y 2,35 metros de ancho; el M4 incluye el vuelo lateral de 0,60">
         <g transform="translate(40,40) scale(48)">
           <rect x="0.60" y="0.60" width="7.85" height="9.50" fill="none" stroke-width="0.025" stroke-dasharray="0.15 0.1" style="stroke:var(--pbline)"/>
           <defs><pattern id="hat" width="0.25" height="0.25" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="0.25" stroke-width="0.03" style="stroke:var(--hatch)"/></pattern></defs>
           <rect x="0.60" y="8.47" width="5.50" height="1.63" fill="url(#hat)" stroke-width="0.02" style="stroke:var(--hatch)"/>
-          <rect x="0" y="0" width="0.60" height="8.47" fill="url(#hat)" stroke-width="0.03" stroke-dasharray="0.12 0.08" style="stroke:var(--p1line)"/>
-          <rect x="0.6" y="0" width="3.20" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="3.8" y="0" width="2.30" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="6.1" y="0" width="2.35" height="10.1" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/>
+          <rect x="0" y="0" width="3.80" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="3.8" y="0" width="2.30" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="6.1" y="0" width="2.35" height="10.1" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/>
           <line x1="8.45" y1="-0.25" x2="8.45" y2="10.35" stroke-width="0.06" stroke-dasharray="0.25 0.1" style="stroke:var(--med)"/>
           <g style="fill:var(--col)"><rect x="0.6" y="0" width="0.16" height="0.16"/><rect x="0.6" y="5.61" width="0.16" height="0.16"/><rect x="0.6" y="8.31" width="0.16" height="0.16"/><rect x="3.64" y="0" width="0.16" height="0.16"/><rect x="3.64" y="5.61" width="0.16" height="0.16"/><rect x="3.64" y="8.31" width="0.16" height="0.16"/><rect x="3.8" y="0" width="0.16" height="0.16"/><rect x="3.8" y="5.61" width="0.16" height="0.16"/><rect x="3.8" y="8.31" width="0.16" height="0.16"/><rect x="5.94" y="0" width="0.16" height="0.16"/><rect x="5.94" y="5.61" width="0.16" height="0.16"/><rect x="5.94" y="8.31" width="0.16" height="0.16"/><rect x="6.1" y="0" width="0.16" height="0.16"/><rect x="6.1" y="5.61" width="0.16" height="0.16"/><rect x="6.1" y="8.31" width="0.16" height="0.16"/><rect x="8.29" y="0" width="0.16" height="0.16"/><rect x="8.29" y="5.61" width="0.16" height="0.16"/><rect x="8.29" y="8.31" width="0.16" height="0.16"/><rect x="6.1" y="9.94" width="0.16" height="0.16"/><rect x="8.29" y="9.94" width="0.16" height="0.16"/></g>
-          <g font-size="0.42" font-weight="500" text-anchor="middle"><text x="2.20" y="1.0">M4</text><text x="4.95" y="1.0">M5</text><text x="7.27" y="1.0">M6</text></g>
+          <g font-size="0.42" font-weight="500" text-anchor="middle"><text x="1.90" y="1.0">M4</text><text x="4.95" y="1.0">M5</text><text x="7.27" y="1.0">M6</text></g>
           <g font-size="0.22" text-anchor="middle" style="fill:var(--muted)">
             <text x="2.20" y="2.6">Dormitorio 3</text><text x="2.20" y="4.9">Baño 2</text>
             <text x="4.95" y="2.2">Dormitorio 2</text><text x="4.95" y="4.9">Distribuidor</text>
@@ -144,12 +143,12 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
             <text x="7.27" y="3.6">Escalera</text><text x="7.27" y="6.6">Vestidor</text><text x="7.27" y="9.3">Baño principal</text>
             <text x="3.35" y="9.4">Terraza 9 m² sobre planta baja</text>
           </g>
-          <g font-size="0.2" text-anchor="middle" style="fill:var(--p1line)"><text transform="translate(0.36,4.2) rotate(-90)">V · vuelo 0,60</text><text x="4.5" y="0.42">vuelo 0,60 sobre fachada principal</text></g>
+          <g font-size="0.2" text-anchor="middle" style="fill:var(--p1line)"><text transform="translate(0.36,4.2) rotate(-90)">vuelo 0,60 dentro del M4</text><text x="4.5" y="0.42">vuelo 0,60 sobre fachada principal</text></g>
           <g stroke-width="0.015" style="stroke:var(--ink)"><line x1="0" y1="10.65" x2="8.45" y2="10.65"/><line x1="0" y1="10.55" x2="0" y2="10.75"/><line x1="0.6" y1="10.55" x2="0.6" y2="10.75"/><line x1="3.8" y1="10.55" x2="3.8" y2="10.75"/><line x1="6.1" y1="10.55" x2="6.1" y2="10.75"/><line x1="8.45" y1="10.55" x2="8.45" y2="10.75"/></g>
-          <g font-size="0.22" text-anchor="middle"><text x="0.30" y="10.55">0,60</text><text x="2.20" y="10.55">3,20</text><text x="4.95" y="10.55">2,30</text><text x="7.27" y="10.55">2,35</text><text x="4.22" y="11.05">8,45 hasta eje de medianera</text></g>
+          <g font-size="0.22" text-anchor="middle"><text x="1.90" y="10.55">3,80</text><text x="4.95" y="10.55">2,30</text><text x="7.27" y="10.55">2,35</text><text x="4.22" y="11.05">8,45 hasta eje de medianera</text></g>
         </g>
       </svg></div>
-      <p class="note">Discontinuo azul: huella de planta baja. M4 y M5 de 8,47 m; M6 de 10,10 m con el baño principal. Rayado: terraza y pieza de vuelo lateral (V). Juntas sobre el tabique entre dormitorios 2 y 3 y sobre el del baño principal.</p>
+      <p class="note">Discontinuo azul: huella de planta baja. M4 y M5 de 8,47 m; M6 de 10,10 m con el baño principal. Rayado: terraza. El M4 incluye el vuelo lateral de 0,60 m. Juntas sobre el tabique entre dormitorios 2 y 3 y sobre el del baño principal.</p>
     </div>
   </div>
 
@@ -216,14 +215,13 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
           <tr><td>M1 · PB</td><td class="n">3,20</td><td class="n">9,50</td><td class="n">30,40</td><td>Dormitorio 1, cocina, salón</td></tr>
           <tr><td>M2 · PB</td><td class="n">2,30</td><td class="n">9,50</td><td class="n">21,85</td><td>Vestíbulo, escalera, salón</td></tr>
           <tr><td>M3 · PB</td><td class="n">2,35</td><td class="n">9,50</td><td class="n">22,32</td><td>Baño 1, lavadero, salón</td></tr>
-          <tr><td>M4 · P1</td><td class="n">3,20</td><td class="n">8,47</td><td class="n">27,10</td><td>Dormitorio 3, baño 2, dormitorio principal</td></tr>
+          <tr><td>M4 · P1</td><td class="n">3,80</td><td class="n">8,47</td><td class="n">32,19</td><td>Dormitorio 3, baño 2, dormitorio principal, con los vuelos frontal y lateral</td></tr>
           <tr><td>M5 · P1</td><td class="n">2,30</td><td class="n">8,47</td><td class="n">19,48</td><td>Dormitorio 2, distribuidor</td></tr>
           <tr><td>M6 · P1</td><td class="n">2,35</td><td class="n">10,10</td><td class="n">23,73</td><td>Escalera, vestidor, baño principal</td></tr>
-          <tr><td>V · vuelo</td><td class="n">0,60</td><td class="n">8,47</td><td class="n">5,08</td><td>Voladizo lateral, se monta en parcela</td></tr>
-          <tr class="tot"><td>Total</td><td></td><td></td><td class="n">149,96</td><td>148,30 m² construidos en proyecto</td></tr>
+          <tr class="tot"><td>Total</td><td></td><td></td><td class="n">149,97</td><td>148,30 m² construidos en proyecto</td></tr>
         </tbody>
       </table>
-      <p class="note">Anchos de 2,30 a 3,20 m: todos viajan en góndola rebajada. La pieza de vuelo va aparte.</p>
+      <p class="note">Anchos de 2,30 a 3,80 m: todos viajan en góndola rebajada con autorización especial, y el M4 además con vehículo de acompañamiento.</p>
     </div>
   </div>
 </section>
@@ -234,16 +232,16 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   <div class="sheet"><table>
     <thead><tr><th>Elemento</th><th class="n">kg</th><th class="n">kg/m²</th></tr></thead>
     <tbody>
-      <tr><td>Vigas de marco IPE 200 (suelo y techo de cada módulo)</td><td class="n">6.182</td><td class="n">41,7</td></tr>
-      <tr><td>Bordes frontales en vuelo IPE 220 (M4, M5, M6)</td><td class="n">422</td><td class="n">2,8</td></tr>
-      <tr><td>Pieza de vuelo lateral: bordes IPE 220 y ménsulas IPE 160</td><td class="n">591</td><td class="n">4,0</td></tr>
+      <tr><td>Vigas de marco IPE 200 (suelo y techo de cada módulo)</td><td class="n">5.821</td><td class="n">39,3</td></tr>
+      <tr><td>Bordes frontales en vuelo IPE 220 (M4, M5, M6)</td><td class="n">454</td><td class="n">3,1</td></tr>
+      <tr><td>Borde lateral en vuelo del M4, IPE 220</td><td class="n">455</td><td class="n">3,1</td></tr>
       <tr><td>Pilares IPE 160 (38 ud)</td><td class="n">1.631</td><td class="n">11,0</td></tr>
-      <tr><td>Correas de suelo HEA 100</td><td class="n">1.548</td><td class="n">10,4</td></tr>
-      <tr><td>Correas de techo SHS 60.40.3</td><td class="n">1.242</td><td class="n">8,4</td></tr>
-      <tr><td>Angular L 80.8 de apoyo de panel</td><td class="n">339</td><td class="n">2,3</td></tr>
+      <tr><td>Correas de suelo HEA 100</td><td class="n">1.603</td><td class="n">10,8</td></tr>
+      <tr><td>Correas de techo SHS 60.40.3</td><td class="n">1.286</td><td class="n">8,7</td></tr>
+      <tr><td>Angular L 80.8 de apoyo de panel</td><td class="n">351</td><td class="n">2,4</td></tr>
       <tr><td>Escalera metálica</td><td class="n">450</td><td class="n">3,0</td></tr>
-      <tr><td>Refuerzos, remates y pletinas de arriostramiento</td><td class="n">810</td><td class="n">5,5</td></tr>
-      <tr class="tot"><td>Total</td><td class="n">13.216</td><td class="n">89,1</td></tr>
+      <tr><td>Refuerzos, remates y pletinas de arriostramiento</td><td class="n">838</td><td class="n">5,7</td></tr>
+      <tr class="tot"><td>Total</td><td class="n">12.889</td><td class="n">86,9</td></tr>
     </tbody>
   </table></div>
   <p class="note">kg/m² sobre 148,30 m² construidos. Mahón (182, dos plantas): 13.516 kg y 89 kg/m². Con un cálculo específico para módulos apilados se puede bajar: cada 10 kg/m² son unos 3.900 € por vivienda.</p>
@@ -256,9 +254,9 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
     <thead><tr><th>Partida</th><th class="n">Piloto dentro de la serie</th><th class="n">Piloto aislado</th></tr></thead>
     <tbody>
       <tr class="grp"><td colspan="3">Sistema modular</td></tr>
-      <tr><td>Estructura de acero · 13.216 kg × 2,60 €/kg</td><td class="n">34.362 €</td><td class="n">34.362 €</td></tr>
+      <tr><td>Estructura de acero · 12.889 kg × 2,60 €/kg</td><td class="n">33.512 €</td><td class="n">33.512 €</td></tr>
       <tr><td>Fachadas, medianera y vuelos: panel, trasdosado, aislamiento y acabado</td><td class="n">32.026 €</td><td class="n">32.026 €</td></tr>
-      <tr><td>Cubierta y terraza: panel y sistema de cubierta</td><td class="n">13.701 €</td><td class="n">13.701 €</td></tr>
+      <tr><td>Cubierta y terraza: panel y sistema de cubierta</td><td class="n">13.702 €</td><td class="n">13.702 €</td></tr>
       <tr><td>Forjados de panel: suelo de planta baja y de planta primera</td><td class="n">11.948 €</td><td class="n">11.948 €</td></tr>
       <tr><td>Juntas entre módulos y colectores suspendidos</td><td class="n">2.767 €</td><td class="n">2.767 €</td></tr>
       <tr class="grp"><td colspan="3">Igual que el proyecto</td></tr>
@@ -266,15 +264,15 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
       <tr><td>Carpinterías exterior e interior</td><td class="n">16.301 €</td><td class="n">16.301 €</td></tr>
       <tr><td>Tabiquería, techos, solados, alicatados y pintura</td><td class="n">24.766 €</td><td class="n">24.766 €</td></tr>
       <tr class="grp"><td colspan="3">Primera unidad, transporte y montaje</td></tr>
-      <tr><td>Sobrecoste de aprendizaje (15 % de la mano de obra de fábrica)</td><td class="n">3.722 €</td><td class="n">3.722 €</td></tr>
-      <tr><td>Transporte de 6 módulos y la pieza de vuelo</td><td class="n">6.648 €</td><td class="n">6.648 €</td></tr>
+      <tr><td>Sobrecoste de aprendizaje (15 % de la mano de obra de fábrica)</td><td class="n">3.650 €</td><td class="n">3.650 €</td></tr>
+      <tr><td>Transporte de 6 módulos, con el M4 como especial</td><td class="n">7.248 €</td><td class="n">7.248 €</td></tr>
       <tr><td>Grúa, jornada completa</td><td class="n">3.494 €</td><td class="n">3.494 €</td></tr>
       <tr><td>Montaje en parcela · 192 h</td><td class="n">5.078 €</td><td class="n">5.078 €</td></tr>
       <tr><td>Ingeniería: cálculo modular y proyecto de fabricación</td><td class="n">1.563 €</td><td class="n">25.000 €</td></tr>
       <tr><td>Gastos fijos de fábrica</td><td class="n">10.215 €</td><td class="n">30.645 €</td></tr>
-      <tr class="sub"><td>Coste</td><td class="n">204.889 €</td><td class="n">248.757 €</td></tr>
-      <tr><td>Margen RG21 (10 %)</td><td class="n">20.489 €</td><td class="n">24.876 €</td></tr>
-      <tr class="tot"><td>Precio del piloto</td><td class="n">225.378 €</td><td class="n">273.632 €</td></tr>
+      <tr class="sub"><td>Coste</td><td class="n">203.970 €</td><td class="n">247.837 €</td></tr>
+      <tr><td>Margen RG21 (precio cerrado menos coste)</td><td class="n">21.430 € · 9,5 %</td><td class="n">25.763 € · 9,4 %</td></tr>
+      <tr class="tot"><td>Precio cerrado con NIDO</td><td class="n">225.400 €</td><td class="n">273.600 €</td></tr>
       <tr><td>€/m² construido</td><td class="n">1.520</td><td class="n">1.845</td></tr>
     </tbody>
   </table></div>
@@ -287,7 +285,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   <div class="figs">
     <div class="fig"><b>14.187 €</b><span>ahorro de coste por vivienda</span></div>
     <div class="fig"><b>15.606 €</b><span>bajada de precio con el margen del 10 %</span></div>
-    <div class="fig"><b>209.772 €</b><span>piloto dentro de la serie · 1.415 €/m²</span></div>
+    <div class="fig"><b>209.800 €</b><span>precio ofertado con optimizaciones · 1.415 €/m²</span></div>
     <div class="fig"><b>3.106.069 €</b><span>serie de 16 con todos los ahorros</span></div>
   </div>
   <div class="sheet scroll"><table>
@@ -324,7 +322,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   <div class="risk">
     <div><b>Cálculo estructural</b><span>Validar marcos, pilares y vuelos de 0,60 m con un calculista. Es la partida con más margen de ahorro.</span></div>
     <div><b>Medianera</b><span>Cada vivienda cierra sus módulos (68 m² de panel). Estudiar una medianera compartida con protección contra incendios EI 60 entre las dos viviendas.</span></div>
-    <div><b>Vuelo lateral y tabique</b><span>Validar con la arquitecta la pieza de vuelo atornillada en parcela y el detalle de junta oculta dentro del dormitorio 1.</span></div>
+    <div><b>M4 de 3,80 m y junta oculta</b><span>Pedir precio del transporte especial del M4 (estimado en 1.200 €) y validar con la arquitecta el voladizo lateral dentro del módulo y la junta oculta en el dormitorio 1.</span></div>
     <div><b>Precios de proveedor</b><span>Pedir oferta a Tabihaus (66, 81 y 136 mm) y del acabado exterior sobre panel, ahora estimado a 45 €/m².</span></div>
     <div><b>OCT y decenal</b><span>Presentar el sistema a la OCT y a la aseguradora del promotor antes de fabricar.</span></div>
     <div><b>Cimentación</b><span>El promotor ejecuta zapatas y placas de anclaje en los ejes 0,60 · 6,10 · 10,10. La solera Cáviti del proyecto desaparece.</span></div>

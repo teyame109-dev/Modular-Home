@@ -36,7 +36,7 @@ const sup = [
   ['efi', 'Ahorro de fábrica sobre las partidas que se hacen igual', 0, PCT, 'Prudente en el piloto: 0 %'],
   ['apr', 'Sobrecoste de primera unidad sobre mano de obra de fábrica', 0.15, PCT, 'Curva de aprendizaje del prototipo'],
   ['tmod', 'Transporte por módulo (coste 2024 €)', 900, EUR0, 'Sotopinilla 2024: 780 €'],
-  ['tesp', 'Transporte de la pieza de vuelo lateral (0,60 × 8,47 m)', 600, EUR0, 'Estimado: viaje aparte en camión pluma'],
+  ['tesp', 'Suplemento de transporte especial del M4 (3,80 m de ancho, con acompañamiento)', 1200, EUR0, 'ESTIMADO: pedir precio al transportista'],
   ['gru', 'Grúa: jornada completa (coste 2024 €)', 3120, EUR0, 'Sotopinilla 2024 (Moreno)'],
   ['hmon', 'Horas de montaje en parcela', 192, '0', '3 operarios × 8 días (primera unidad)'],
   ['diet', 'Dietas y desplazamientos sobre montaje', 0.15, PCT, ''],
@@ -44,7 +44,7 @@ const sup = [
   ['gfij', 'Gastos fijos de fábrica sin mano de obra (€/mes)', 20430, EUR0, 'Nave, oficina técnica, gestión, suministros, seguros'],
   ['ritmo', 'Viviendas al mes en serie', 2, N2, ''],
   ['mesp', 'Meses de fábrica imputados al piloto si se fabrica aislado', 1.5, N2, 'Primera unidad sin otras obras en la nave'],
-  ['mg', 'Margen RG21 (GG + beneficio)', 0.10, PCT, ''],
+  ['mg', 'Margen de referencia con el que se calculó la oferta (el precio ya está cerrado)', 0.10, PCT, 'Oferta aceptada por NIDO: 225.400 € piloto, 209.100 € pareada en serie'],
   ['ggbi', 'GG + BI de una contrata tradicional sobre PEM', 0.19, PCT, ''],
 ];
 const R = {}; sup.forEach(([k, l, v, f, c], i) => { const r = 5 + i; R[k] = `Supuestos!$B$${r}`; S.getRow(r).values = [l, v, c]; S.getCell(r, 2).numFmt = f; S.getCell(r, 2).fill = INPUT; S.getCell(r, 2).font = blue; });
@@ -53,11 +53,11 @@ const $ = k => R[k];
 // ---------- Módulos ----------
 const Mo = wb.addWorksheet('Módulos');
 [8, 8, 12, 12, 12, 12, 58].forEach((w, i) => Mo.getColumn(i + 1).width = w);
-title(Mo, 'MODULACIÓN DE LA VIVIENDA PAREADA (piloto)', 'Seis módulos de acero, tres por planta, sin cambiar la distribución: anchos de 3,20 / 2,30 / 2,35 m (juntas a 3,20 y 5,50 m en planta baja). La planta primera vuela 0,60 m en frente y lateral; el vuelo lateral es una pieza aparte (V) que se atornilla al M4 en parcela. La junta a 3,20 m cruza el dormitorio 1 y se oculta en suelo y techo.');
+title(Mo, 'MODULACIÓN DE LA VIVIENDA PAREADA (piloto)', 'Seis módulos de acero, tres por planta, sin cambiar la distribución: anchos de 3,20 / 2,30 / 2,35 m (juntas a 3,20 y 5,50 m en planta baja). La planta primera vuela 0,60 m en frente y lateral; el vuelo lateral va dentro del M4, que mide 3,80 m de ancho. La junta a 3,20 m cruza el dormitorio 1 y se oculta en suelo y techo.');
 Mo.getRow(4).values = ['Módulo', 'Planta', 'Ancho (m)', 'Largo (m)', 'Alto (m)', 'Superficie (m²)', 'Qué contiene']; hdr(Mo, 4);
-[...mods, { id: 'V', planta: 'P1', ancho: 0.60, largo: 8.47, alto: 0.30, uso: 'Pieza de vuelo lateral, se monta en parcela (no es módulo volumétrico)' }].forEach((m, i) => { const r = 5 + i; Mo.getRow(r).values = [m.id, m.planta, m.ancho, m.largo, m.alto, null, m.uso]; Mo.getCell(r, 6).value = { formula: `C${r}*D${r}` }; [3, 4, 5].forEach(c => { Mo.getCell(r, c).numFmt = N2; Mo.getCell(r, c).font = blue; }); Mo.getCell(r, 6).numFmt = N2; });
-Mo.getCell(12, 1).value = 'TOTAL'; Mo.getCell(12, 1).font = bold; Mo.getCell(12, 6).value = { formula: 'SUM(F5:F11)' }; Mo.getCell(12, 6).numFmt = N2; Mo.getCell(12, 6).font = bold;
-Mo.getCell(14, 1).value = 'Transporte: el módulo más alto mide unos 3,05 m; en góndola rebajada (0,85 m) queda en ≈ 3,90 m, dentro del límite de 4,00 m. Ningún módulo pasa de 3,20 m de ancho: todos viajan sin transporte especial. La pieza de vuelo va aparte.';
+mods.forEach((m, i) => { const r = 5 + i; Mo.getRow(r).values = [m.id, m.planta, m.ancho, m.largo, m.alto, null, m.uso]; Mo.getCell(r, 6).value = { formula: `C${r}*D${r}` }; [3, 4, 5].forEach(c => { Mo.getCell(r, c).numFmt = N2; Mo.getCell(r, c).font = blue; }); Mo.getCell(r, 6).numFmt = N2; });
+Mo.getCell(11, 1).value = 'TOTAL'; Mo.getCell(11, 1).font = bold; Mo.getCell(11, 6).value = { formula: 'SUM(F5:F10)' }; Mo.getCell(11, 6).numFmt = N2; Mo.getCell(11, 6).font = bold;
+Mo.getCell(14, 1).value = 'Transporte: el módulo más alto mide unos 3,05 m; en góndola rebajada (0,85 m) queda en ≈ 3,90 m, dentro del límite de 4,00 m. Todos superan 2,55 m de ancho y viajan con autorización especial; el M4, de 3,80 m, además con vehículo de acompañamiento.';
 Mo.mergeCells('A14:G14'); Mo.getCell('A14').alignment = { wrapText: true }; Mo.getRow(14).height = 30;
 
 // ---------- Acero ----------
@@ -122,7 +122,7 @@ const L = [
   ['Estructura y envolvente modular (hoja Sistema modular)', SIS, SIS],
   ['Partidas que se ejecutan igual (proyecto)', `${IG}*(1-${$('efi')})`, `${IG}*(1-${$('efi')})`],
   ['Sobrecoste de primera unidad en mano de obra de fábrica', `${MOFAB}*${$('apr')}`, `${MOFAB}*${$('apr')}`],
-  ['Transporte de 6 módulos + pieza de vuelo', `6*${$('tmod')}*(1+${$('ipc')})+${$('tesp')}`, `6*${$('tmod')}*(1+${$('ipc')})+${$('tesp')}`],
+  ['Transporte de 6 módulos, con el M4 como especial', `6*${$('tmod')}*(1+${$('ipc')})+${$('tesp')}`, `6*${$('tmod')}*(1+${$('ipc')})+${$('tesp')}`],
   ['Grúa (jornada completa)', `${$('gru')}*(1+${$('ipc')})`, `${$('gru')}*(1+${$('ipc')})`],
   ['Montaje en parcela', `${$('hmon')}*${$('mo')}*(1+${$('diet')})`, `${$('hmon')}*${$('mo')}*(1+${$('diet')})`],
   ['Ingeniería: cálculo modular y proyecto de fabricación', `${$('ing')}/16`, `${$('ing')}`],
@@ -131,8 +131,8 @@ const L = [
 L.forEach(([t, a, b], i) => { const r = 5 + i; Z.getCell(r, 1).value = t; Z.getCell(r, 2).value = { formula: a }; Z.getCell(r, 3).value = { formula: b }; [2, 3].forEach(c => Z.getCell(r, c).numFmt = EUR0); });
 const tail = [
   ['COSTE DEL PILOTO', 'SUM(B5:B12)', 'SUM(C5:C12)', true],
-  ['Margen RG21', `B13*${$('mg')}`, `C13*${$('mg')}`],
-  ['PRECIO DEL PILOTO (sin IVA)', 'B13+B14', 'C13+C14', true],
+  ['Margen RG21 (precio cerrado menos coste)', 'B15-B13', 'C15-C13'],
+  ['PRECIO CERRADO CON NIDO (sin IVA)', '225400', '273600', true],
   ['€/m² construido', 'B15/148.3', 'C15/148.3'],
   ['', null, null],
   ['Referencia: contrata tradicional del mismo alcance (PEM del proyecto × 1,19)', `(${sust.toFixed(2)}+${IG})*(1+${$('ggbi')})`, `(${sust.toFixed(2)}+${IG})*(1+${$('ggbi')})`],

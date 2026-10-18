@@ -34,7 +34,7 @@ const f = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 // ---------- geometría ----------
 const J1 = 3.80, J2 = 6.10; // juntas a 3,20 y 5,50 m desde la fachada lateral de planta baja (la de 3,20 cruza el dormitorio 1, oculta)
 const PB = [['M1', 0.60, J1, 0.60, 10.10], ['M2', J1, J2, 0.60, 10.10], ['M3', J2, 8.45, 0.60, 10.10]];
-const P1 = [['M4', 0.60, J1, 0, 8.47], ['M5', J1, J2, 0, 8.47], ['M6', J2, 8.45, 0, 10.10]];
+const P1 = [['M4', 0, J1, 0, 8.47], ['M5', J1, J2, 0, 8.47], ['M6', J2, 8.45, 0, 10.10]];
 const VUELO = [0, 0.60, 0, 8.47];
 const r2 = v => Math.round(v * 10) / 10;
 // planta en SVG (1 m = s px)
@@ -67,7 +67,6 @@ function explosionada() {
   const pb = PB.slice().sort((a, b) => (a[1] + a[3]) - (b[1] + b[3]));
   for (const [id, x0, x1, y0, y1] of pb) g += caja(P, x0, x1, y0, y1, 0, 3.05, '#F1EDE5', '#D6CFC2', '#E3DDD2');
   const p1 = P1.slice().sort((a, b) => (a[1] + a[3]) - (b[1] + b[3]));
-  g += caja(P, VUELO[0], VUELO[1], VUELO[2], VUELO[3], 5.0, 8.05, '#EFE6D6', '#D2C3A6', '#E2D3B8');
   for (const [id, x0, x1, y0, y1] of p1) g += caja(P, x0, x1, y0, y1, 5.0, 8.05, '#E2D3B8', '#B59E79', '#CDB894');
   // flechas de colocación
   for (const [id, x0, x1, y0, y1] of P1) { const [ax, ay] = P((x0 + x1) / 2, y1, 4.95), [bx, by] = P((x0 + x1) / 2, y1, 3.25); g += `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="#7A6347" stroke-width="3" stroke-dasharray="8 6"/>`; }
@@ -163,10 +162,10 @@ S.adaptacion = light('adaptacion', 'SISTEMA', 'Del proyecto al módulo', 'Mismo 
 S.plantas = light('plantas', 'MÓDULOS', 'Modulación de la vivienda pareada', 'Tres módulos por planta, sin tocar la distribución',
   `<div style="display:flex; flex-direction:row; gap:56px; align-items:flex-start">
 <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start"><p style="font-size:24px; font-weight:600; letter-spacing:4px; color:${C.acc}">PLANTA BAJA · M1 M2 M3</p>${planta(PB, C.pb, C.ink, { ys: [0.60, 6.10, 10.10], label: 'Planta baja: módulos de 3,20, 2,30 y 2,35 por 9,50 metros' })}</div>
-<div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start"><p style="font-size:24px; font-weight:600; letter-spacing:4px; color:${C.acc}">PLANTA PRIMERA · M4 M5 M6</p>${planta(P1, C.p1, C.ink, { ghost: true, terraza: true, vuelo: true, ys: [0, 5.69, 8.47], label: 'Planta primera: módulos de 3,20, 2,30 y 2,35 metros de ancho, con pieza de vuelo lateral de 0,60' })}</div>
+<div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start"><p style="font-size:24px; font-weight:600; letter-spacing:4px; color:${C.acc}">PLANTA PRIMERA · M4 M5 M6</p>${planta(P1, C.p1, C.ink, { ghost: true, terraza: true, ys: [0, 5.69, 8.47], label: 'Planta primera: módulos de 3,80, 2,30 y 2,35 metros de ancho; el M4 incluye el vuelo lateral de 0,60' })}</div>
 <div style="flex:1; display:flex; flex-direction:column; gap:20px">
 <p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta baja:</b> 7,85 × 9,50 m en módulos de 3,20, 2,30 y 2,35 m de ancho. Junta a 3,20 m oculta dentro del dormitorio 1 y junta a 5,50 m sobre tabiques.</p>
-<p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta primera:</b> los mismos anchos sobre los de abajo. Vuelo frontal de 0,60 m en los módulos y vuelo lateral como pieza aparte (beige).</p>
+<p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta primera:</b> las mismas juntas que abajo. Vuelo frontal de 0,60 m en los tres módulos; el vuelo lateral va dentro del M4, que mide 3,80 m.</p>
 <p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Terraza</b> de 9 m² sobre la cubierta de planta baja (gris).</p>
 <p style="font-size:24px; line-height:1.4; color:${C.foot}">Cuadrados negros: pilares IPE 160. Línea roja: medianera. Discontinuo azul: huella de planta baja.</p>
 </div></div>`, 36);
@@ -185,7 +184,7 @@ S.fabricacion = light('fabricacion', 'TALLER', 'Cómo se prefabrica un módulo',
 <p style="font-size:56px; font-weight:700; line-height:1; color:${C.acc}">0${n}</p>${modulo(n)}<h3 style="font-size:32px; font-weight:600; line-height:1.2">${h}</h3><p style="font-size:25px; line-height:1.45; color:${C.body}">${p}</p></div>`).join('')}</div>`, 32);
 
 S.parcela = light('parcela', 'PARCELA', 'Del taller a la parcela', 'Transporte, grúa y montaje',
-  `<div style="display:flex; flex-direction:row; gap:24px">${[['Transporte', 'Seis módulos por vivienda en góndola rebajada, de 2,30 a 3,20 m de ancho y menos de 4,00 m de altura total. El vuelo lateral viaja aparte.'], ['Colocación', 'Una jornada de grúa: primero los tres módulos de planta baja sobre las placas de anclaje, después los tres de planta primera y la pieza de vuelo lateral.'], ['Uniones', 'Atornillado entre módulos, conexión de instalaciones en los puntos previstos en fábrica, sellado de juntas y remate de fachada y cubierta.'], ['Entrega', 'Pruebas de servicio de fontanería y electricidad, estanqueidad de cubierta, limpieza final y entrega al promotor.']].map(([h, p], i) => `<div style="flex:1; display:flex; flex-direction:column; gap:16px; border-top:2px solid ${C.ink}; padding:30px 8px 0px 0px"><p style="font-size:64px; font-weight:700; line-height:1; color:${C.acc}">0${i + 1}</p><h3 style="font-size:32px; font-weight:600">${h}</h3><p style="font-size:25px; line-height:1.45; color:${C.body}">${p}</p></div>`).join('')}</div>`);
+  `<div style="display:flex; flex-direction:row; gap:24px">${[['Transporte', 'Seis módulos por vivienda en góndola rebajada, de 2,30 a 3,80 m de ancho y menos de 4,00 m de altura total. El M4, con el vuelo lateral, viaja con acompañamiento.'], ['Colocación', 'Una jornada de grúa: primero los tres módulos de planta baja sobre las placas de anclaje, después los tres de planta primera.'], ['Uniones', 'Atornillado entre módulos, conexión de instalaciones en los puntos previstos en fábrica, sellado de juntas y remate de fachada y cubierta.'], ['Entrega', 'Pruebas de servicio de fontanería y electricidad, estanqueidad de cubierta, limpieza final y entrega al promotor.']].map(([h, p], i) => `<div style="flex:1; display:flex; flex-direction:column; gap:16px; border-top:2px solid ${C.ink}; padding:30px 8px 0px 0px"><p style="font-size:64px; font-weight:700; line-height:1; color:${C.acc}">0${i + 1}</p><h3 style="font-size:32px; font-weight:600">${h}</h3><p style="font-size:25px; line-height:1.45; color:${C.body}">${p}</p></div>`).join('')}</div>`);
 
 S.sistema = light('sistema', 'CAPAS', 'Sistema constructivo', 'Fachada con U = 0,20 y estructura medida',
   `<div style="display:flex; flex-direction:row; gap:40px">
@@ -200,7 +199,7 @@ S.sistema = light('sistema', 'CAPAS', 'Sistema constructivo', 'Fachada con U = 0
 <tr style="background:#E9E4DA"><td><b>Total · U = 1 / R</b></td><td><b>184</b></td><td><b>U = 0,20</b></td></tr>
 </table>
 <div style="flex:1; display:flex; flex-direction:column; gap:18px">
-<div style="display:flex; flex-direction:row; gap:18px">${[['13.216 kg', 'de acero por vivienda'], ['89,1 kg/m²', 'construido']].map(([a, b]) => `<div style="flex:1; display:flex; flex-direction:column; gap:6px; background:${C.ink}; padding:28px"><p style="font-size:44px; font-weight:700; color:#F5F3EF">${a}</p><p style="font-size:24px; color:${C.dsub}">${b}</p></div>`).join('')}</div>
+<div style="display:flex; flex-direction:row; gap:18px">${[['12.889 kg', 'de acero por vivienda'], ['86,9 kg/m²', 'construido']].map(([a, b]) => `<div style="flex:1; display:flex; flex-direction:column; gap:6px; background:${C.ink}; padding:28px"><p style="font-size:44px; font-weight:700; color:#F5F3EF">${a}</p><p style="font-size:24px; color:${C.dsub}">${b}</p></div>`).join('')}</div>
 <p style="font-size:25px; line-height:1.45; color:${C.body}">Marcos de suelo y techo en IPE 200, 38 pilares IPE 160, correas HEA 100 y SHS 60.40.3, bordes en vuelo y voladizo lateral en IPE 220. Acero S275JR granallado, imprimado y con protección C2-C3.</p>
 <p style="font-size:25px; line-height:1.45; color:${C.body}">Muro de 184 mm frente a unos 330 mm de la solución de ladrillo, con la misma transmitancia.</p>
 </div></div>`);
@@ -310,7 +309,7 @@ const fichas = [
   ['mod_m1', 'M1', 'Módulo · planta baja · fachada lateral', 9.50, 3.20, [0, 5.50, 9.50], {}, 'Dormitorio 1, cocina y salón. La junta con el M2 cruza el dormitorio y se oculta en suelo y techo.'],
   ['mod_m2', 'M2', 'Módulo · planta baja · centro', 9.50, 2.30, [0, 5.50, 9.50], {}, 'Vestíbulo, arranque de escalera y salón. Juntas a 3,20 y 5,50 m.'],
   ['mod_m3', 'M3', 'Módulo · planta baja · medianera', 9.50, 2.35, [0, 5.50, 9.50], {}, 'Baño 1, lavadero y salón. Junta sobre el tabique del baño.'],
-  ['mod_m4', 'M4', 'Módulo · planta primera · fachada lateral', 8.47, 3.20, [0, 5.69, 8.47], { fr: 0.60 }, 'Dormitorio 3 y baño 2. El vuelo lateral se monta aparte.'],
+  ['mod_m4', 'M4', 'Módulo · planta primera · fachada lateral', 8.47, 3.80, [0, 5.69, 8.47], { fr: 0.60, lat: 0.60 }, 'Dormitorio 3 y baño 2, con los vuelos frontal y lateral de 0,60 dentro del módulo.'],
   ['mod_m5', 'M5', 'Módulo · planta primera · centro', 8.47, 2.30, [0, 5.69, 8.47], { fr: 0.60 }, 'Dormitorio 2, distribuidor y escalera. Vuelo frontal de 0,60.'],
   ['mod_m6', 'M6', 'Módulo · planta primera · medianera', 10.10, 2.35, [0, 5.69, 8.47, 10.10], { fr: 0.60 }, 'Escalera, vestidor y baño principal, que sale sobre la terraza.'],
 ];
@@ -318,7 +317,7 @@ for (const [sid, id, eb, L, A, ys, vu, nota] of fichas) {
   const nf = Math.ceil(L / 1.40) - 1, nc = Math.ceil(L / 0.60) - 1, np = ys.length * 2;
   const vig = kgDe(id, /IPE 200/), vb = kgDe(id, /IPE 220/), pil = kgDe(id, /Pilares/), cs = kgDe(id, /HEA 100/), ct = kgDe(id, /SHS/), ang = kgDe(id, /L 80/);
   const rows = [['Marcos de suelo y techo', 'IPE 200', fk(vig)]];
-  if (vb) rows.push(['Borde frontal en vuelo', 'IPE 220', fk(vb)]);
+  if (vb) rows.push([id === 'M4' ? 'Bordes en vuelo, frontal y lateral' : 'Borde frontal en vuelo', 'IPE 220', fk(vb)]);
   rows.push(['Pilares (' + np + ' ud × 2,65 m)', 'IPE 160', fk(pil)], ['Correas de suelo (' + nf + ' ud)', 'HEA 100', fk(cs)], ['Correas de techo (' + nc + ' ud)', 'SHS 60.40.3', fk(ct)]);
   if (!vb) rows.push(['Apoyo de panel', 'L 80.8', fk(ang)]);
   rows.push(['Total por módulo', '', fk(vig + vb + pil + cs + ct + ang)]);
@@ -368,7 +367,7 @@ const alzSlide = (id, eb, list, nota) => light(id, 'ALZADOS', eb, 'Cara larga y 
   '<p style="font-size:24px; line-height:1.4; color:' + C.body + '"><b style="color:' + C.ink + '">Discontinuo:</b> arriostramiento en testeros</p>' +
   '<p style="font-size:24px; line-height:1.4; color:' + C.body + '">' + nota + '</p></div></div>', 24);
 S.alz_pb = alzSlide('alz_pb', 'Alzados · planta baja · cotas en m', [[9.50, 3.20, [0, 5.50, 9.50], 0, 'M1'], [9.50, 2.30, [0, 5.50, 9.50], 0, 'M2'], [9.50, 2.35, [0, 5.50, 9.50], 0, 'M3']], 'Los tres comparten largo, altura y ejes de pilares; solo cambia el ancho.');
-S.alz_p1 = alzSlide('alz_p1', 'Alzados · planta primera · cotas en m', [[8.47, 3.20, [0, 5.69, 8.47], 0.60, 'M4'], [8.47, 2.30, [0, 5.69, 8.47], 0.60, 'M5'], [10.10, 2.35, [0, 5.69, 8.47, 10.10], 0.60, 'M6']], '<b style="color:#161616">Rayado:</b> vuelo frontal de 0,60 sin módulo debajo.');
+S.alz_p1 = alzSlide('alz_p1', 'Alzados · planta primera · cotas en m', [[8.47, 3.80, [0, 5.69, 8.47], 0.60, 'M4'], [8.47, 2.30, [0, 5.69, 8.47], 0.60, 'M5'], [10.10, 2.35, [0, 5.69, 8.47, 10.10], 0.60, 'M6']], '<b style="color:#161616">Rayado:</b> vuelo frontal de 0,60 sin módulo debajo.');
 
 // ---------- plantas de módulo con tabiques ----------
 // Coordenadas de cada planta: x desde la fachada lateral exterior, y desde la fachada principal. Muros [x0,x1,y0,y1].
@@ -380,7 +379,7 @@ const PBW = { W: 7.85, L: 9.50, mods: [['M1', 0, 3.20, 0, 9.50], ['M2', 3.20, 5.
     [4.55, 7.85, 3.25, 3.35], [5.45, 5.55, 3.35, 3.60], [5.45, 5.55, 4.30, 4.75], [5.45, 7.85, 4.65, 4.75]],
   stair: [4.55, 7.67, 2.00, 3.25],
   rooms: [['Dormitorio 1', '9,55 m²', 1.70, 1.70], ['Vestíbulo', '4,75 m²', 4.50, 1.10], ['Baño 1', '3,75 m²', 6.65, 0.95], ['Escalera', '2,50 m²', 6.10, 2.62], ['Lavadero', '4,00 m²', 6.65, 4.02], ['Cocina', '', 1.30, 4.15], ['Salón · comedor', '37,60 m²', 3.90, 7.10]] };
-const P1W = { W: 8.45, L: 10.10, mods: [['V', 0, 0.60, 0, 8.47], ['M4', 0.60, 3.80, 0, 8.47], ['M5', 3.80, 6.10, 0, 8.47], ['M6', 6.10, 8.45, 0, 10.10]],
+const P1W = { W: 8.45, L: 10.10, mods: [['M4', 0, 3.80, 0, 8.47], ['M5', 3.80, 6.10, 0, 8.47], ['M6', 6.10, 8.45, 0, 10.10]],
   walls: [[0, 8.45, 0, T], [0, 6.11, 8.47 - T, 8.47], [0, T, 0, 8.47], [8.45 - T, 8.45, 0, 10.10], [6.11, 6.11 + T, 8.47, 10.10], [6.11, 8.45, 10.10 - T, 10.10],
     [3.75, 3.85, T, 4.06], [T, 2.55, 3.96, 4.06], [3.35, 4.20, 3.96, 4.06], [4.95, 5.35, 3.96, 4.06], [5.25, 8.45 - T, 2.85, 2.95],
     [5.25, 5.35, 2.95, 5.15], [2.95, 3.05, 4.06, 4.30], [2.95, 3.05, 5.00, 5.70],
@@ -421,7 +420,7 @@ S.tab_p1 = light('tab_p1', 'TABIQUES', 'Plantas de módulo · planta primera', '
   `<div style="display:flex; flex-direction:row; gap:48px; align-items:flex-start">${plantaMods(P1W, 46, 44)}${notaTab([
     ['Junta a 3,80 m', 'Sobre el tabique entre los dormitorios 2 y 3, sin cambios en el proyecto.'],
     ['Junta a 6,10 m', 'Sobre el tabique del baño principal, que queda entero en el M6.'],
-    ['V · vuelo lateral', 'Pieza de 0,60 × 8,47 m que se atornilla al M4 en parcela: ningún módulo pasa de 3,20 m de ancho.'],
+    ['Vuelo lateral', 'Va dentro del M4, que mide 3,80 m: un módulo entero, sin pieza que atornillar en parcela. Viaja con acompañamiento.'],
     ['Sin alinear', 'La junta a 3,80 cruza el dormitorio principal en su parte trasera.']])}</div>`, 28);
 
 const order = ['cover', 'resumen', 'porque', 'adaptacion', 'plantas', 'volumen', 'mod_m1', 'mod_m2', 'mod_m3', 'mod_m4', 'mod_m5', 'mod_m6', 'alz_pb', 'alz_p1', 'tab_pb', 'tab_p1', 'fabricacion', 'parcela', 'sistema', 'calidades', 'optimizacion', 'alcance', 'precio', 'desglose', 'serie', 'condiciones', 'pasos', 'cierre'];

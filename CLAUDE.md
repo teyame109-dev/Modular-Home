@@ -22,10 +22,10 @@ Contexto completo del proyecto para que una sesión nueva pueda seguir sin el hi
 - **Modulación sin cambios de distribución**: 6 módulos, 3 por planta.
   - Planta baja: anchos de 3,20 / 2,30 / 2,35 m por 9,50 m de largo.
   - Planta primera: M4 y M5 de 8,47 m de largo y M6 de 10,10 m.
-  - Vuelo lateral de 0,60 × 8,47 m como pieza aparte, atornillada en parcela.
-  - Ningún módulo pasa de 3,20 m de ancho, así que todos van en góndola rebajada.
+  - **M4 entero (18/10/2026):** el vuelo lateral de 0,60 m va DENTRO del M4, que mide 3,80 × 8,47 m. Ya no hay pieza suelta. Sus pilares están en el eje de 0,60, sobre los del M1, y el voladizo lleva borde en IPE 220. Viaja como transporte especial con acompañamiento (estimado en 1.200 €; pendiente de pedir precio).
+  - Todos superan 2,55 m de ancho y viajan con autorización especial; el M4, de 3,80 m, además con acompañamiento.
   - **Decisión del 18/10/2026 (opción C):** el tabique del dormitorio 1 NO se mueve. Se queda como en el proyecto, con 3,10 m y 9,55 m². La junta a 3,20 m cruza el dormitorio a 0,30 m del tabique y se oculta en suelo y techo, como en el salón. Mover el tabique no lo arreglaba un transporte especial: las juntas tienen que coincidir en las dos plantas, y la de arriba cae sobre el tabique entre los dormitorios 2 y 3.
-- **Acero:** 13.216 kg por vivienda (89,1 kg/m²). En Mahón fueron 89 kg/m².
+- **Acero:** 12.889 kg por vivienda (86,9 kg/m²) con el M4 entero. En Mahón fueron 89 kg/m².
 
 ## Precios (todos SIN IVA)
 
@@ -38,6 +38,10 @@ Contexto completo del proyecto para que una sesión nueva pueda seguir sin el hi
 | Descartada: 18 % sobre venta del coste completo | 297.900 € | 279.200 € | 284.900 € | 4.478.600 € |
 
 NIDO pidió ajuste sobre la primera oferta e Iván decidió volver a la versión del 10 %. El precio del piloto vale si se adjudica la serie.
+
+## REGLA: el precio a NIDO está CERRADO
+
+NIDO aceptó 225.400 € el piloto, 209.100 € la pareada en serie, 214.100 € la aislada y 3.355.600 € las 16 viviendas, todo sin IVA. Esos importes son el presupuesto y **no se tocan** por mejoras o ahorros que encontremos. Cada mejora baja el coste y sube el margen de RG21. Con el M4 entero, el coste del modelo del piloto es de 203.970 €, y el margen sobre el precio cerrado, de 21.430 € (9,5 %).
 
 ## Coste y margen: lo que hay que saber
 
