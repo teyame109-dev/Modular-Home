@@ -36,9 +36,9 @@ button, a { touch-action: manipulation }
 /* ---------- barra de menú ---------- */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; padding-top: env(safe-area-inset-top, 0px); background: var(--nav-bg); backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); border-bottom: 1px solid var(--rule) }
 .nav-in { height: 64px; display: flex; align-items: center; gap: 28px }
-.logo { display: inline-grid; grid-template-columns: auto auto; column-gap: .45em; align-items: end; font-size: 26px; line-height: 1; text-decoration: none; color: var(--ink) }
-.logo .sq { width: .62em; height: .62em; border-top: .13em solid currentColor; border-left: .13em solid currentColor; position: relative; align-self: start; margin-top: .02em }
-.logo .sq::after { content: ""; position: absolute; left: 0; top: 0; width: .13em; height: .13em; background: var(--minio) }
+.logo { display: inline-grid; grid-template-columns: auto auto; column-gap: .14em; align-items: end; font-size: 26px; line-height: 1; text-decoration: none; color: var(--ink) }
+.logo .sq { width: .5em; height: .5em; border-top: .12em solid currentColor; border-left: .12em solid currentColor; position: relative; align-self: start; margin-top: .1em }
+.logo .sq::after { content: ""; position: absolute; left: 0; top: 0; width: .12em; height: .12em; background: var(--minio) }
 .logo b { font-weight: 900; letter-spacing: -.05em }
 .links { display: flex; gap: 22px; margin-left: auto; list-style: none; padding: 0 }
 .links a { text-decoration: none; font-size: 14.5px; font-weight: 600; color: var(--soft); padding: 6px 0; border-bottom: 2px solid transparent; transition: color 160ms ease, border-color 160ms ease }

@@ -6,12 +6,12 @@ const FONT = "font-family:'Archivo', Arial, sans-serif";
 const MONO = "font-family:'IBM Plex Mono', 'Courier New', monospace";
 let page = 0;
 // logo reducido: escuadra con placa de anclaje + rg21
-const LOGO = col => '<div style="position:absolute; left:128px; top:60px; width:220px; height:48px; display:flex; flex-direction:row; gap:14px; align-items:flex-start">'
-  + '<div style="width:30px; height:30px; border-top:7px solid ' + col + '; border-left:7px solid ' + col + '"><div style="width:7px; height:7px; background:#C8381F"></div></div>'
+const LOGO = col => '<div style="position:absolute; left:128px; top:60px; width:220px; height:48px; display:flex; flex-direction:row; gap:5px; align-items:flex-start">'
+  + '<div style="width:21px; height:21px; border-top:5px solid ' + col + '; border-left:5px solid ' + col + '"><div style="width:5px; height:5px; background:#C8381F"></div></div>'
   + '<p style="font-size:40px; font-weight:900; line-height:0.9; letter-spacing:-2px; color:' + col + '">rg21</p></div>';
 // logo completo: escuadra, rg21 y capital
-const LOGOFULL = (sz, col) => '<div style="display:flex; flex-direction:row; gap:' + Math.round(sz * 0.2) + 'px; align-items:flex-start">'
-  + '<div style="width:' + Math.round(sz * 0.62) + 'px; height:' + Math.round(sz * 0.62) + 'px; border-top:' + Math.round(sz * 0.13) + 'px solid ' + col + '; border-left:' + Math.round(sz * 0.13) + 'px solid ' + col + '"><div style="width:' + Math.round(sz * 0.13) + 'px; height:' + Math.round(sz * 0.13) + 'px; background:#C8381F"></div></div>'
+const LOGOFULL = (sz, col) => '<div style="display:flex; flex-direction:row; gap:' + Math.round(sz * 0.07) + 'px; align-items:flex-start">'
+  + '<div style="width:' + Math.round(sz * 0.5) + 'px; height:' + Math.round(sz * 0.5) + 'px; border-top:' + Math.round(sz * 0.12) + 'px solid ' + col + '; border-left:' + Math.round(sz * 0.12) + 'px solid ' + col + '"><div style="width:' + Math.round(sz * 0.12) + 'px; height:' + Math.round(sz * 0.12) + 'px; background:#C8381F"></div></div>'
   + '<div style="display:flex; flex-direction:column; gap:' + Math.round(sz * 0.14) + 'px">'
   + '<p style="font-size:' + sz + 'px; font-weight:900; line-height:0.85; letter-spacing:' + -Math.round(sz * 0.05) + 'px; color:' + col + '">rg21</p>'
   + '<p style="' + MONO + '; font-size:' + Math.max(24, Math.round(sz * 0.2)) + 'px; font-weight:500; line-height:1; letter-spacing:' + Math.round(sz * 0.08) + 'px; text-transform:uppercase; color:' + col + '">capital</p></div></div>';
