@@ -32,7 +32,7 @@ const card = (label, h, p, darkCard = false) => `<div style="flex:1; display:fle
 const f = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
 // ---------- geometría ----------
-const J1 = 3.80, J2 = 6.10; // juntas alineadas con tabiques (3,20 y 5,50 desde la fachada lateral de planta baja)
+const J1 = 3.80, J2 = 6.10; // juntas a 3,20 y 5,50 m desde la fachada lateral de planta baja (la de 3,20 cruza el dormitorio 1, oculta)
 const PB = [['M1', 0.60, J1, 0.60, 10.10], ['M2', J1, J2, 0.60, 10.10], ['M3', J2, 8.45, 0.60, 10.10]];
 const P1 = [['M4', 0.60, J1, 0, 8.47], ['M5', J1, J2, 0, 8.47], ['M6', J2, 8.45, 0, 10.10]];
 const VUELO = [0, 0.60, 0, 8.47];
@@ -160,12 +160,12 @@ S.adaptacion = light('adaptacion', 'SISTEMA', 'Del proyecto al módulo', 'Mismo 
 <tr><td><b>Cimentación</b></td><td style="color:${C.body}">Zapatas y vigas de atado</td><td>La ejecuta el promotor, con placas de anclaje en tres ejes</td></tr>
 </table>`);
 
-S.plantas = light('plantas', 'MÓDULOS', 'Modulación de la vivienda pareada', 'Tres módulos por planta con las juntas sobre tabiques',
+S.plantas = light('plantas', 'MÓDULOS', 'Modulación de la vivienda pareada', 'Tres módulos por planta, sin tocar la distribución',
   `<div style="display:flex; flex-direction:row; gap:56px; align-items:flex-start">
 <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start"><p style="font-size:24px; font-weight:600; letter-spacing:4px; color:${C.acc}">PLANTA BAJA · M1 M2 M3</p>${planta(PB, C.pb, C.ink, { ys: [0.60, 6.10, 10.10], label: 'Planta baja: módulos de 3,20, 2,30 y 2,35 por 9,50 metros' })}</div>
 <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start"><p style="font-size:24px; font-weight:600; letter-spacing:4px; color:${C.acc}">PLANTA PRIMERA · M4 M5 M6</p>${planta(P1, C.p1, C.ink, { ghost: true, terraza: true, vuelo: true, ys: [0, 5.69, 8.47], label: 'Planta primera: módulos de 3,20, 2,30 y 2,35 metros de ancho, con pieza de vuelo lateral de 0,60' })}</div>
 <div style="flex:1; display:flex; flex-direction:column; gap:20px">
-<p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta baja:</b> 7,85 × 9,50 m en módulos de 3,20, 2,30 y 2,35 m de ancho. Juntas a 3,20 y 5,50 m, sobre tabiques.</p>
+<p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta baja:</b> 7,85 × 9,50 m en módulos de 3,20, 2,30 y 2,35 m de ancho. Junta a 3,20 m oculta dentro del dormitorio 1 y junta a 5,50 m sobre tabiques.</p>
 <p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Planta primera:</b> los mismos anchos sobre los de abajo. Vuelo frontal de 0,60 m en los módulos y vuelo lateral como pieza aparte (beige).</p>
 <p style="font-size:26px; line-height:1.45; color:${C.body}"><b style="color:${C.ink}">Terraza</b> de 9 m² sobre la cubierta de planta baja (gris).</p>
 <p style="font-size:24px; line-height:1.4; color:${C.foot}">Cuadrados negros: pilares IPE 160. Línea roja: medianera. Discontinuo azul: huella de planta baja.</p>
@@ -307,7 +307,7 @@ const calc = require('../nevtec/piloto_calc');
 const kgDe = (id, re) => calc.acero.filter(r => r[0] === id && re.test(r[1])).reduce((a, r) => a + r[2] * r[3], 0);
 const fk = n => f(n) + ' kg';
 const fichas = [
-  ['mod_m1', 'M1', 'Módulo · planta baja · fachada lateral', 9.50, 3.20, [0, 5.50, 9.50], {}, 'Dormitorio 1, cocina y salón. Junta sobre el tabique del dormitorio.'],
+  ['mod_m1', 'M1', 'Módulo · planta baja · fachada lateral', 9.50, 3.20, [0, 5.50, 9.50], {}, 'Dormitorio 1, cocina y salón. La junta con el M2 cruza el dormitorio y se oculta en suelo y techo.'],
   ['mod_m2', 'M2', 'Módulo · planta baja · centro', 9.50, 2.30, [0, 5.50, 9.50], {}, 'Vestíbulo, arranque de escalera y salón. Juntas a 3,20 y 5,50 m.'],
   ['mod_m3', 'M3', 'Módulo · planta baja · medianera', 9.50, 2.35, [0, 5.50, 9.50], {}, 'Baño 1, lavadero y salón. Junta sobre el tabique del baño.'],
   ['mod_m4', 'M4', 'Módulo · planta primera · fachada lateral', 8.47, 3.20, [0, 5.69, 8.47], { fr: 0.60 }, 'Dormitorio 3 y baño 2. El vuelo lateral se monta aparte.'],
@@ -375,11 +375,11 @@ S.alz_p1 = alzSlide('alz_p1', 'Alzados · planta primera · cotas en m', [[8.47,
 const T = 0.18, t = 0.10;
 const PBW = { W: 7.85, L: 9.50, mods: [['M1', 0, 3.20, 0, 9.50], ['M2', 3.20, 5.50, 0, 9.50], ['M3', 5.50, 7.85, 0, 9.50]],
   walls: [[0, 7.85, 0, T], [0, 7.85, 9.50 - T, 9.50], [0, T, 0, 9.50], [7.85 - T, 7.85, 0, 9.50],
-    [3.15, 3.25, T, 2.35], [3.15, 3.25, 3.15, 3.50], [T, 3.15, 3.40, 3.50],
+    [3.45, 3.55, T, 2.35], [3.45, 3.55, 3.15, 3.50], [T, 3.45, 3.40, 3.50],
     [5.45, 5.55, T, 1.05], [5.45, 5.55, 1.75, 1.90], [5.55, 7.85, 1.90, 2.00],
     [4.55, 7.85, 3.25, 3.35], [5.45, 5.55, 3.35, 3.60], [5.45, 5.55, 4.30, 4.75], [5.45, 7.85, 4.65, 4.75]],
   stair: [4.55, 7.67, 2.00, 3.25],
-  rooms: [['Dormitorio 1', '8,70 m²', 1.62, 1.70], ['Vestíbulo', '4,75 m²', 4.50, 1.10], ['Baño 1', '3,75 m²', 6.65, 0.95], ['Escalera', '2,50 m²', 6.10, 2.62], ['Lavadero', '4,00 m²', 6.65, 4.02], ['Cocina', '', 1.30, 4.15], ['Salón · comedor', '37,60 m²', 3.90, 7.10]] };
+  rooms: [['Dormitorio 1', '9,55 m²', 1.70, 1.70], ['Vestíbulo', '4,75 m²', 4.50, 1.10], ['Baño 1', '3,75 m²', 6.65, 0.95], ['Escalera', '2,50 m²', 6.10, 2.62], ['Lavadero', '4,00 m²', 6.65, 4.02], ['Cocina', '', 1.30, 4.15], ['Salón · comedor', '37,60 m²', 3.90, 7.10]] };
 const P1W = { W: 8.45, L: 10.10, mods: [['V', 0, 0.60, 0, 8.47], ['M4', 0.60, 3.80, 0, 8.47], ['M5', 3.80, 6.10, 0, 8.47], ['M6', 6.10, 8.45, 0, 10.10]],
   walls: [[0, 8.45, 0, T], [0, 6.11, 8.47 - T, 8.47], [0, T, 0, 8.47], [8.45 - T, 8.45, 0, 10.10], [6.11, 6.11 + T, 8.47, 10.10], [6.11, 8.45, 10.10 - T, 10.10],
     [3.75, 3.85, T, 4.06], [T, 2.55, 3.96, 4.06], [3.35, 4.20, 3.96, 4.06], [4.95, 5.35, 3.96, 4.06], [5.25, 8.45 - T, 2.85, 2.95],
@@ -413,7 +413,7 @@ function plantaMods(F, s, gap) {
 const notaTab = items => `<div style="flex:1; display:flex; flex-direction:column; gap:18px">${items.map(([h, p]) => `<div style="display:flex; flex-direction:column; gap:6px; border-left:6px solid ${C.ink}; background:${C.card}; padding:18px 24px"><h3 style="font-size:28px; font-weight:600">${h}</h3><p style="font-size:24px; line-height:1.4; color:${C.body}">${p}</p></div>`).join('')}</div>`;
 S.tab_pb = light('tab_pb', 'TABIQUES', 'Plantas de módulo · planta baja', 'M1, M2 y M3 con la tabiquería del proyecto',
   `<div style="display:flex; flex-direction:row; gap:48px; align-items:flex-start">${plantaMods(PBW, 46, 44)}${notaTab([
-    ['Junta a 3,20 m', 'Sobre el tabique del dormitorio 1, desplazado 0,30 m: el dormitorio pasa de 3,10 a 2,80 m de ancho (8,70 m²).'],
+    ['Junta a 3,20 m', 'Cruza el dormitorio 1 a 0,30 m de su tabique y se oculta en suelo y techo, como en el salón. El dormitorio queda como en el proyecto: 3,10 m de ancho y 9,55 m².'],
     ['Junta a 5,50 m', 'Sobre los tabiques del baño 1 y del lavadero, sin cambios en el proyecto.'],
     
     ['Salón', 'Los 7,43 m libres del salón quedan repartidos entre los tres módulos; ahí las juntas se ocultan con el suelo y el falso techo.']])}</div>`, 28);

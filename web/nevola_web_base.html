@@ -201,7 +201,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 
   <section class="block" id="modulos">
     <div class="wrap">
-      <div class="head"><h2>Mismo proyecto, otro sistema constructivo</h2><p>La pareada tipo se divide en seis módulos con las juntas sobre tabiques. Misma distribución, mismas cotas y los mismos 148,30 m² construidos. Ningún módulo pasa de 3,20 m de ancho.</p></div>
+      <div class="head"><h2>Mismo proyecto, otro sistema constructivo</h2><p>La pareada tipo se divide en seis módulos sin tocar la distribución del proyecto. Misma distribución, mismas cotas y los mismos 148,30 m² construidos. Ningún módulo pasa de 3,20 m de ancho.</p></div>
       <div class="tscroll">
         <table>
           <thead><tr><th>Módulo</th><th>Planta</th><th class="n" style="text-align:right">Ancho × largo</th><th class="n" style="text-align:right">Superficie</th><th class="n" style="text-align:right">Acero</th><th>Contiene</th></tr></thead>
@@ -323,7 +323,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   // Medidas reales del piloto (m). x: de la fachada lateral a la medianera; y: de la fachada principal al jardín; z: altura.
   var MODS = [
     { id: 'M1', x: [0.6, 3.8], y: [0.6, 10.1], z: [0, 3.05], kg: '2.081', s: '30,40', dim: '3,20 × 9,50', t: 'Dormitorio 1, cocina y salón', note: 'El primero que se coloca y el último que queda: un marco soldado de IPE 200 con pilares IPE 160.' },
-    { id: 'M2', x: [3.8, 6.1], y: [0.6, 10.1], z: [0, 3.05], kg: '1.813', s: '21,85', dim: '2,30 × 9,50', t: 'Vestíbulo, escalera y salón', note: 'La junta con el M1 cae sobre el tabique del dormitorio 1.' },
+    { id: 'M2', x: [3.8, 6.1], y: [0.6, 10.1], z: [0, 3.05], kg: '1.813', s: '21,85', dim: '2,30 × 9,50', t: 'Vestíbulo, escalera y salón', note: 'La junta con el M1 cruza el dormitorio 1 y se oculta en suelo y techo, como en el salón.' },
     { id: 'M3', x: [6.1, 8.45], y: [0.6, 10.1], z: [0, 3.05], kg: '1.828', s: '22,32', dim: '2,35 × 9,50', t: 'Baño 1, lavadero y salón', note: 'Contra la medianera. Concentra las instalaciones húmedas de planta baja.' },
     { id: 'V', x: [0, 0.6], y: [0, 8.47], z: [3.05, 6.1], kg: '591', s: '5,08', dim: '0,60 × 8,47', t: 'Vuelo lateral', note: 'Pieza aparte que se atornilla al M4 en parcela. Así ningún módulo pasa de 3,20 m de ancho.' },
     { id: 'M4', x: [0.6, 3.8], y: [0, 8.47], z: [3.05, 6.1], kg: '1.940', s: '27,10', dim: '3,20 × 8,47', t: 'Dormitorio 3, baño 2 y dormitorio principal', note: 'Arranca 0,60 m por delante de la planta baja: el borde en vuelo lleva IPE 220.' },

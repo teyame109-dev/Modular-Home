@@ -53,7 +53,7 @@ const $ = k => R[k];
 // ---------- Módulos ----------
 const Mo = wb.addWorksheet('Módulos');
 [8, 8, 12, 12, 12, 12, 58].forEach((w, i) => Mo.getColumn(i + 1).width = w);
-title(Mo, 'MODULACIÓN DE LA VIVIENDA PAREADA (piloto)', 'Seis módulos de acero, tres por planta, con juntas alineadas con tabiques: anchos de 3,20 / 2,30 / 2,35 m (juntas a 3,20 y 5,50 m en planta baja). La planta primera vuela 0,60 m en frente y lateral; el vuelo lateral es una pieza aparte (V) que se atornilla al M4 en parcela. Exige desplazar 0,30 m el tabique del dormitorio 1 (pasa a 8,70 m²).');
+title(Mo, 'MODULACIÓN DE LA VIVIENDA PAREADA (piloto)', 'Seis módulos de acero, tres por planta, sin cambiar la distribución: anchos de 3,20 / 2,30 / 2,35 m (juntas a 3,20 y 5,50 m en planta baja). La planta primera vuela 0,60 m en frente y lateral; el vuelo lateral es una pieza aparte (V) que se atornilla al M4 en parcela. La junta a 3,20 m cruza el dormitorio 1 y se oculta en suelo y techo.');
 Mo.getRow(4).values = ['Módulo', 'Planta', 'Ancho (m)', 'Largo (m)', 'Alto (m)', 'Superficie (m²)', 'Qué contiene']; hdr(Mo, 4);
 [...mods, { id: 'V', planta: 'P1', ancho: 0.60, largo: 8.47, alto: 0.30, uso: 'Pieza de vuelo lateral, se monta en parcela (no es módulo volumétrico)' }].forEach((m, i) => { const r = 5 + i; Mo.getRow(r).values = [m.id, m.planta, m.ancho, m.largo, m.alto, null, m.uso]; Mo.getCell(r, 6).value = { formula: `C${r}*D${r}` }; [3, 4, 5].forEach(c => { Mo.getCell(r, c).numFmt = N2; Mo.getCell(r, c).font = blue; }); Mo.getCell(r, 6).numFmt = N2; });
 Mo.getCell(12, 1).value = 'TOTAL'; Mo.getCell(12, 1).font = bold; Mo.getCell(12, 6).value = { formula: 'SUM(F5:F11)' }; Mo.getCell(12, 6).numFmt = N2; Mo.getCell(12, 6).font = bold;

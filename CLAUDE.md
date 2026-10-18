@@ -19,12 +19,12 @@ Contexto completo del proyecto para que una sesión nueva pueda seguir sin el hi
 ## Sistema constructivo (tipología del proyecto de Mahón, 182)
 
 - Marcos de acero soldados: IPE 200 en suelo y techo, pilares IPE 160, correas de suelo HEA 100 y de techo SHS 60.40.3. Panel sándwich Tabihaus y trasdosado interior.
-- **Modulación alineada con tabiques**: 6 módulos, 3 por planta.
+- **Modulación sin cambios de distribución**: 6 módulos, 3 por planta.
   - Planta baja: anchos de 3,20 / 2,30 / 2,35 m por 9,50 m de largo.
   - Planta primera: M4 y M5 de 8,47 m de largo y M6 de 10,10 m.
   - Vuelo lateral de 0,60 × 8,47 m como pieza aparte, atornillada en parcela.
   - Ningún módulo pasa de 3,20 m de ancho, así que todos van en góndola rebajada.
-  - Requiere mover 0,30 m el tabique del dormitorio 1 (pasa a 8,70 m²). **Pendiente de aprobación** por la arquitecta y el promotor.
+  - **Decisión del 18/10/2026 (opción C):** el tabique del dormitorio 1 NO se mueve. Se queda como en el proyecto, con 3,10 m y 9,55 m². La junta a 3,20 m cruza el dormitorio a 0,30 m del tabique y se oculta en suelo y techo, como en el salón. Mover el tabique no lo arreglaba un transporte especial: las juntas tienen que coincidir en las dos plantas, y la de arriba cae sobre el tabique entre los dormitorios 2 y 3.
 - **Acero:** 13.216 kg por vivienda (89,1 kg/m²). En Mahón fueron 89 kg/m².
 
 ## Precios (todos SIN IVA)
@@ -103,7 +103,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - El acero se calcula a 90 kg/m², el dato real de Mahón.
 - Precios IPC 2024→2026: +12 %.
 - Margen único del 10 % sobre el coste del modelo. Es la versión vigente.
-- Se mantiene la modulación alineada con tabiques.
+- Se mantiene la modulación de 3,20 / 2,30 / 2,35 m. El dormitorio 1 queda como en el proyecto, con la junta oculta (opción C, 18/10/2026).
 - Identidad visual: dirección **«Plano de taller»**.
   - Papel #E7E8E3, tinta #141414 y rojo minio #C8381F.
   - Letras: Archivo, Archivo Narrow para cifras e IBM Plex Mono.
@@ -113,7 +113,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 ## Pendientes
 
 - Forma de pago y validez de la oferta: siguen como huecos en la diapositiva de condiciones.
-- Aprobación del desplazamiento del tabique y de la pieza de vuelo por parte de la arquitecta, la OCT y el decenal.
+- Aprobación, por parte de la arquitecta, la OCT y el decenal, del detalle de junta oculta dentro del dormitorio 1 y de la pieza de vuelo.
 - Precio actual de ArcelorMittal, cálculo de estructura del módulo, precio de taller por kg, ofertas de Tabihaus y de la carpintería de PVC.
 - Confirmar el posible doble conteo de la gestión y el coste de la nave real.
 - Redactar la cláusula del piloto «a riesgo».
