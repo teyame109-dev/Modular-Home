@@ -1,0 +1,446 @@
+<title>Névola RG21</title>
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E7E8E3">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@500..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: web de una sola página. Barra fija arriba; la portada es un tramo de scroll largo con la vivienda pegada a la pantalla, que la grúa desmonta módulo a módulo; debajo, secciones de lectura en columna de 1180 px. */
+:root {
+  --paper: #E7E8E3; --panel: #EFF0EB; --ink: #141414; --soft: #4F5256; --rule: #C3C5BF; --minio: #C8381F; --minio-soft: #F2D3C8;
+  --m-top: #F4F4F1; --m-right: #D3D5CF; --m-front: #BFC1BB; --m-line: #141414;
+  --nav-bg: rgb(231 232 227 / .86);
+  --display: "Archivo", Arial, sans-serif; --figure: "Archivo Narrow", "Arial Narrow", Arial, sans-serif; --mono: "IBM Plex Mono", "Courier New", monospace;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #141414; --panel: #1C1E20; --ink: #ECEDE8; --soft: #A9ABA6; --rule: #34363A; --minio: #EE6A4E; --minio-soft: #4A2620;
+  --m-top: #3A3D41; --m-right: #2A2D30; --m-front: #222427; --m-line: #C9CBC5; --nav-bg: rgb(20 20 20 / .82); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #141414; --panel: #1C1E20; --ink: #ECEDE8; --soft: #A9ABA6; --rule: #34363A; --minio: #EE6A4E; --minio-soft: #4A2620;
+  --m-top: #3A3D41; --m-right: #2A2D30; --m-front: #222427; --m-line: #C9CBC5; --nav-bg: rgb(20 20 20 / .82); color-scheme: dark }
+
+* { box-sizing: border-box }
+html { -webkit-tap-highlight-color: transparent; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 76px }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto } }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--display); font-size: 17px; line-height: 1.55 }
+h1, h2, h3, p, ul, ol { margin: 0 }
+h1, h2 { text-wrap: balance }
+a { color: inherit }
+button, a { touch-action: manipulation }
+.mono { font-family: var(--mono); letter-spacing: .06em; text-transform: uppercase; font-size: 13px }
+.fig { font-family: var(--figure); font-variant-numeric: tabular-nums; letter-spacing: -0.01em }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px) }
+
+/* ---------- barra de menú ---------- */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 10; padding-top: env(safe-area-inset-top, 0px); background: var(--nav-bg); backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%); border-bottom: 1px solid var(--rule) }
+.nav-in { height: 64px; display: flex; align-items: center; gap: 28px }
+.logo { display: inline-grid; grid-template-columns: auto auto; column-gap: .14em; align-items: end; font-size: 26px; line-height: 1; text-decoration: none; color: var(--ink) }
+.logo .sq { width: .5em; height: .5em; border-top: .12em solid currentColor; border-left: .12em solid currentColor; position: relative; align-self: start; margin-top: .1em }
+.logo .sq::after { content: ""; position: absolute; left: 0; top: 0; width: .12em; height: .12em; background: var(--minio) }
+.logo b { font-weight: 900; letter-spacing: -.05em }
+.links { display: flex; gap: 22px; margin-left: auto; list-style: none; padding: 0 }
+.links a { text-decoration: none; font-size: 14.5px; font-weight: 600; color: var(--soft); padding: 6px 0; border-bottom: 2px solid transparent; transition: color 160ms ease, border-color 160ms ease }
+.links a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--minio) }
+@media (hover: hover) and (pointer: fine) { .links a:hover { color: var(--ink) } }
+.cta { font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; background: var(--ink); color: var(--paper); padding: 10px 14px; border-radius: 2px; white-space: nowrap; transition: transform 160ms var(--ease-out); user-select: none }
+.cta:active { transform: scale(0.97) }
+.menu-btn { display: none; margin-left: auto; font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink); border-radius: 2px; padding: 9px 12px; cursor: pointer; transition: transform 160ms var(--ease-out); user-select: none }
+.menu-btn:active { transform: scale(0.97) }
+.panel { position: absolute; right: clamp(16px, 4vw, 40px); top: calc(100% + 8px); width: min(300px, calc(100vw - 32px)); background: var(--panel); border: 1px solid var(--ink); padding: 8px; display: flex; flex-direction: column; transform-origin: top right; transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out) }
+.panel[hidden] { display: flex !important; opacity: 0; transform: scale(0.95); pointer-events: none; visibility: hidden }
+.panel a { text-decoration: none; padding: 12px 10px; font-weight: 600; border-bottom: 1px solid var(--rule) }
+.panel a:last-child { border-bottom: 0 }
+:focus-visible { outline: 2px solid var(--minio); outline-offset: 3px }
+@media (max-width: 900px) { .links, .nav-in > .cta { display: none } .menu-btn { display: block } }
+
+/* ---------- portada con desmontaje ---------- */
+.track { position: relative; height: 640svh }
+.stage { position: sticky; top: 0; height: 100svh; padding-top: calc(64px + env(safe-area-inset-top, 0px)); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; gap: 24px; max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px) }
+.copy { position: relative; min-height: 340px }
+.hero, .cap { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; transition: opacity 320ms ease, transform 320ms var(--ease-out) }
+.hero h1 { font-size: clamp(54px, 8.4vw, 118px); font-weight: 900; letter-spacing: -0.055em; line-height: .86 }
+.hero p.lede { font-size: clamp(18px, 1.7vw, 22px); font-weight: 500; max-width: 30ch; line-height: 1.3 }
+.hero .figs { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0; border-top: 2px solid var(--ink); margin-top: 6px; width: fit-content }
+.hero .figs div { padding: 10px 22px 0 0; display: flex; flex-direction: column }
+.hero .figs div + div { padding-left: 18px; border-left: 1px solid var(--rule) }
+.hero .figs b { white-space: nowrap; font-family: var(--figure); font-size: 30px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums }
+.hint { color: var(--soft) }
+.cap { opacity: 0; transform: translateY(10px); pointer-events: none }
+.cap.on { opacity: 1; transform: none }
+.hero.off { opacity: 0; transform: translateY(-10px); pointer-events: none }
+.cap .id { font-family: var(--figure); font-size: clamp(64px, 9vw, 120px); font-weight: 700; line-height: .85; color: var(--minio) }
+.cap h2 { font-size: clamp(24px, 2.6vw, 34px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.08 }
+.cap p { color: var(--soft); max-width: 40ch }
+.cap dl { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; border-top: 2px solid var(--ink); width: fit-content; margin: 0 }
+.cap dl div { padding: 8px 20px 0 0 }
+.cap dl div + div { padding-left: 16px; border-left: 1px solid var(--rule) }
+.cap dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--soft) }
+.cap dd { margin: 0; white-space: nowrap; font-family: var(--figure); font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums }
+.house { width: 100%; max-height: calc(100svh - 150px); height: auto; display: block }
+.rail { position: absolute; left: clamp(16px, 4vw, 40px); right: clamp(16px, 4vw, 40px); bottom: 22px; display: flex; gap: 6px; align-items: center }
+.rail span { flex: 1; height: 4px; background: var(--rule); position: relative; overflow: hidden }
+.rail span i { position: absolute; inset: 0; background: var(--minio); transform-origin: left; transform: scaleX(0) }
+.rail em { font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--soft); width: 2.4em; text-align: center }
+@media (max-width: 860px) {
+  .stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; align-items: start; gap: 8px; padding-bottom: 54px }
+  .copy { min-height: 400px; order: 2 }
+  .hero, .cap { justify-content: flex-start; gap: 12px }
+  .hero h1 { font-size: clamp(48px, 15vw, 80px) }
+  .hero .figs b { font-size: 24px }
+  .hero .figs div { padding-right: 14px } .hero .figs div + div { padding-left: 12px }
+  .cap .id { font-size: 56px }
+  .cap dd { font-size: 21px }
+  .cap dl div { padding-right: 12px } .cap dl div + div { padding-left: 10px }
+  .house { max-height: 34svh; margin: 0 auto }
+}
+
+/* ---------- secciones ---------- */
+section.block { padding-block: clamp(64px, 9vw, 120px); border-top: 2px solid var(--ink) }
+.head { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; max-width: 760px }
+.head .mono { color: var(--minio) }
+.head h2 { font-size: clamp(32px, 4.4vw, 56px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.02 }
+.head p { color: var(--soft); font-size: 18px; max-width: 60ch }
+.ruled { display: grid; gap: 2px; background: var(--ink); border: 2px solid var(--ink) }
+.ruled > * { background: var(--paper); padding: 22px 24px; display: flex; flex-direction: column; gap: 8px; min-width: 0 }
+.ruled h3 { font-size: 20px; font-weight: 800; letter-spacing: -0.015em }
+.ruled p { color: var(--soft); font-size: 16px }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+.step .n { font-family: var(--figure); font-size: 44px; font-weight: 700; line-height: 1; color: var(--minio) }
+@media (max-width: 860px) { .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+@media (max-width: 560px) { .g2, .g4 { grid-template-columns: minmax(0, 1fr) } }
+.tscroll { overflow-x: auto; border: 2px solid var(--ink) }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15.5px; font-variant-numeric: tabular-nums; background: var(--paper) }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--rule); vertical-align: top }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); border-bottom: 2px solid var(--ink) }
+td.n { text-align: right; font-family: var(--mono); white-space: nowrap }
+tr:last-child td { border-bottom: 0 }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start }
+@media (max-width: 860px) { .split { grid-template-columns: minmax(0, 1fr) } }
+.big { display: flex; flex-direction: column; gap: 6px }
+.big b { font-family: var(--figure); font-size: clamp(64px, 9vw, 120px); font-weight: 700; line-height: .9; font-variant-numeric: tabular-nums }
+.big span { color: var(--soft) }
+.quals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; list-style: none; padding: 0 }
+.quals li { padding: 14px 0; border-bottom: 1px solid var(--rule); color: var(--soft) }
+.quals b { color: var(--ink) }
+@media (max-width: 700px) { .quals { grid-template-columns: minmax(0, 1fr) } }
+.offer { background: var(--ink); color: var(--paper); border-top: 0 }
+.offer .head .mono { color: var(--minio) }
+.offer .head p, .offer .note { color: color-mix(in srgb, var(--paper) 70%, var(--ink)) }
+.prices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 2px solid var(--paper); gap: 2px; background: var(--paper) }
+.prices > div { background: var(--ink); padding: 28px; display: flex; flex-direction: column; gap: 8px; min-width: 0 }
+.prices b { font-family: var(--figure); font-size: clamp(54px, 7vw, 96px); font-weight: 700; line-height: .95; font-variant-numeric: tabular-nums }
+.prices .mono { color: var(--minio) }
+.serie { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; border-top: 2px solid var(--paper) }
+.serie div { padding: 16px 20px 0 0; display: flex; flex-direction: column; gap: 4px }
+.serie div + div { padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--paper) 25%, var(--ink)) }
+.serie b { font-family: var(--figure); font-size: 36px; font-weight: 700; font-variant-numeric: tabular-nums }
+.serie span { font-family: var(--mono); font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: color-mix(in srgb, var(--paper) 65%, var(--ink)) }
+@media (max-width: 700px) { .prices, .serie { grid-template-columns: minmax(0, 1fr) } .serie div + div { padding-left: 0; border-left: 0; border-top: 1px solid color-mix(in srgb, var(--paper) 25%, var(--ink)) } }
+.incl { margin-top: 40px }
+.incl ul { list-style: none; padding: 0; display: flex; flex-direction: column }
+.incl li { padding: 10px 0; border-bottom: 1px solid var(--rule) }
+footer { border-top: 2px solid var(--ink); padding-block: 40px calc(40px + env(safe-area-inset-bottom, 0px)) }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: end }
+</style>
+
+<nav class="nav" aria-label="Principal">
+  <div class="wrap nav-in" style="position:relative">
+    <a class="logo" href="#inicio" aria-label="RG21 Capital, inicio"><span class="sq"></span><b>rg21</b></a>
+    <ul class="links">
+      <li><a href="#piloto">El piloto</a></li>
+      <li><a href="#porque">Por qué</a></li>
+      <li><a href="#modulos">Módulos</a></li>
+      <li><a href="#fabricacion">Fabricación</a></li>
+      <li><a href="#sistema">Sistema</a></li>
+      <li><a href="#calidades">Calidades</a></li>
+    </ul>
+    <a class="cta" href="#oferta">Ver la oferta</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel">Menú</button>
+    <div class="panel" id="menuPanel" hidden>
+      <a href="#piloto">El piloto</a><a href="#porque">Por qué</a><a href="#modulos">Módulos</a><a href="#fabricacion">Fabricación</a><a href="#sistema">Sistema</a><a href="#calidades">Calidades</a><a href="#oferta">La oferta</a>
+    </div>
+  </div>
+</nav>
+
+<main id="inicio">
+  <!-- Portada y desmontaje: el tramo de scroll -->
+  <div class="track" id="piloto">
+    <div class="stage">
+      <div class="copy" aria-live="polite">
+        <div class="hero" id="hero">
+          <p class="mono hint">Propuesta para Nido Capital · Guadalix de la Sierra</p>
+          <h1>Névola</h1>
+          <p class="lede">Dieciséis viviendas fabricadas en taller y montadas en parcela, sobre el proyecto de ejecución de julio de 2026.</p>
+          <div class="figs">
+            <div><b>148,30 m²</b><span class="mono hint">Por vivienda</span></div>
+            <div><b>6</b><span class="mono hint">Módulos</span></div>
+            <div><b>16</b><span class="mono hint">Viviendas</span></div>
+          </div>
+          <p class="mono hint">Baja para desmontarla</p>
+        </div>
+      </div>
+      <svg class="house" id="house" role="img" aria-label="Vivienda piloto de Névola en seis módulos de acero y una pieza de vuelo; al bajar, la grúa los retira uno a uno"></svg>
+      <div class="rail" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <section class="block" id="porque">
+    <div class="wrap">
+      <div class="head"><p class="mono">Industrializar</p><h2>Menos obra en la parcela, más control en fábrica</h2></div>
+      <div class="ruled g2">
+        <div><h3>Calidad controlada</h3><p>Cada módulo se fabrica y se revisa a cubierto, con un equipo fijo por oficio.</p></div>
+        <div><h3>Fábrica y parcela a la vez</h3><p>Mientras el promotor ejecuta la cimentación, las viviendas avanzan en taller.</p></div>
+        <div><h3>Precio cerrado por vivienda</h3><p>Presupuesto por partidas sobre las mediciones del propio proyecto de ejecución.</p></div>
+        <div><h3>Eficiencia energética</h3><p>Envolvente continua con U = 0,20, aerotermia y suelo radiante: la calificación A+ del proyecto.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="modulos">
+    <div class="wrap">
+      <div class="head"><h2>Mismo proyecto, otro sistema constructivo</h2><p>La pareada tipo se divide en seis módulos con las juntas sobre tabiques. Misma distribución, mismas cotas y los mismos 148,30 m² construidos. Ningún módulo pasa de 3,20 m de ancho.</p></div>
+      <div class="tscroll">
+        <table>
+          <thead><tr><th>Módulo</th><th>Planta</th><th class="n" style="text-align:right">Ancho × largo</th><th class="n" style="text-align:right">Superficie</th><th class="n" style="text-align:right">Acero</th><th>Contiene</th></tr></thead>
+          <tbody>
+            <tr><td><b>M1</b></td><td>Baja</td><td class="n">3,20 × 9,50 m</td><td class="n">30,40 m²</td><td class="n">2.081 kg</td><td>Dormitorio 1, cocina y salón</td></tr>
+            <tr><td><b>M2</b></td><td>Baja</td><td class="n">2,30 × 9,50 m</td><td class="n">21,85 m²</td><td class="n">1.813 kg</td><td>Vestíbulo, escalera y salón</td></tr>
+            <tr><td><b>M3</b></td><td>Baja</td><td class="n">2,35 × 9,50 m</td><td class="n">22,32 m²</td><td class="n">1.828 kg</td><td>Baño 1, lavadero y salón</td></tr>
+            <tr><td><b>M4</b></td><td>Primera</td><td class="n">3,20 × 8,47 m</td><td class="n">27,10 m²</td><td class="n">1.940 kg</td><td>Dormitorio 3, baño 2 y dormitorio principal</td></tr>
+            <tr><td><b>M5</b></td><td>Primera</td><td class="n">2,30 × 8,47 m</td><td class="n">19,48 m²</td><td class="n">1.685 kg</td><td>Dormitorio 2 y distribuidor</td></tr>
+            <tr><td><b>M6</b></td><td>Primera</td><td class="n">2,35 × 10,10 m</td><td class="n">23,73 m²</td><td class="n">2.018 kg</td><td>Escalera, vestidor y baño principal</td></tr>
+            <tr><td><b>V</b></td><td>Primera</td><td class="n">0,60 × 8,47 m</td><td class="n">5,08 m²</td><td class="n">591 kg</td><td>Vuelo lateral, se atornilla en parcela</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="fabricacion">
+    <div class="wrap">
+      <div class="head"><h2>Del perfil de acero a la vivienda entregada</h2></div>
+      <div class="ruled g4">
+        <div class="step"><span class="n">01</span><h3>Estructura</h3><p>Corte y soldadura del marco: vigas IPE 200 de suelo y techo, pilares IPE 160 y correas.</p></div>
+        <div class="step"><span class="n">02</span><h3>Suelo y cerramientos</h3><p>Panel sándwich de suelo y fachada, aislamiento y huecos de carpintería.</p></div>
+        <div class="step"><span class="n">03</span><h3>Instalaciones</h3><p>Fontanería, saneamiento, electricidad, suelo radiante y conductos de ventilación.</p></div>
+        <div class="step"><span class="n">04</span><h3>Acabados</h3><p>Pladur, carpinterías, solados y pintura. Se cierra, se protege y se prueba.</p></div>
+      </div>
+      <div class="ruled g4" style="margin-top:28px">
+        <div class="step"><span class="n">05</span><h3>Transporte</h3><p>Seis módulos en góndola rebajada, de 2,30 a 3,20 m de ancho. El vuelo lateral viaja aparte.</p></div>
+        <div class="step"><span class="n">06</span><h3>Colocación</h3><p>Una jornada de grúa: los tres módulos de planta baja sobre las placas de anclaje y después los tres de planta primera.</p></div>
+        <div class="step"><span class="n">07</span><h3>Uniones</h3><p>Atornillado entre módulos, conexión de instalaciones, sellado de juntas y remates de fachada y cubierta.</p></div>
+        <div class="step"><span class="n">08</span><h3>Entrega</h3><p>Pruebas de servicio, estanqueidad de cubierta, limpieza final y entrega al promotor.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="sistema">
+    <div class="wrap split">
+      <div class="head" style="margin:0"><h2>Fachada con U = 0,20 y estructura medida</h2><p>Muro de 184 mm frente a unos 330 mm de la solución de ladrillo, con la misma transmitancia. Acero S275JR granallado, imprimado y con protección C2-C3.</p>
+        <div class="big" style="margin-top:20px"><b>13.216 kg</b><span>de acero por vivienda · 89,1 kg/m² construido</span></div>
+      </div>
+      <div class="tscroll">
+        <table style="min-width:420px">
+          <thead><tr><th>Fachada, de exterior a interior</th><th class="n" style="text-align:right">mm</th><th class="n" style="text-align:right">R</th></tr></thead>
+          <tbody>
+            <tr><td>Placa de cemento y monocapa</td><td class="n">15</td><td class="n">0,03</td></tr>
+            <tr><td>Panel Tabihaus 8+50+8, núcleo PIR</td><td class="n">66</td><td class="n">2,27</td></tr>
+            <tr><td>PET reciclado</td><td class="n">40</td><td class="n">1,14</td></tr>
+            <tr><td>Trasdosado W625 con lana mineral</td><td class="n">48</td><td class="n">1,37</td></tr>
+            <tr><td>Placa de yeso laminado</td><td class="n">15</td><td class="n">0,06</td></tr>
+            <tr><td>Resistencias superficiales</td><td class="n">-</td><td class="n">0,17</td></tr>
+            <tr><td><b>Total</b></td><td class="n"><b>184</b></td><td class="n"><b>U = 0,20</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="calidades">
+    <div class="wrap">
+      <div class="head"><h2>Las calidades del proyecto de ejecución</h2><p>Se fabrica con la memoria de calidades del proyecto. Opcionalmente, hasta 15.600 € menos por vivienda con marcas equivalentes y ajustes del sistema modular.</p></div>
+      <ul class="quals">
+        <li><b>Climatización.</b> Aerotermia Vaillant aroTHERM plus 10 kW, suelo radiante y refrescante Polytherm, termostato por estancia.</li>
+        <li><b>Ventilación.</b> Mecánica de simple flujo autorregulable con extracción en baños y cocina.</li>
+        <li><b>Carpintería exterior.</b> PVC Kömmerling Eurofutur 70, foliado RAL 7016, vidrio bajo emisivo y persiana.</li>
+        <li><b>Carpintería interior.</b> Puertas lacadas en blanco de 725 mm, armario empotrado y vestidor.</li>
+        <li><b>Pavimentos.</b> Laminado AC5 Terhürne en zonas secas y porcelánico en baños, cocina, lavadero y escalera.</li>
+        <li><b>Tabiquería y techos.</b> Knauf W112 con aislamiento, placa hidrófuga en zonas húmedas y falso techo continuo.</li>
+        <li><b>Baños.</b> Sanitarios Gala gama media, platos de resina, bañera en el baño 2 y mampara.</li>
+        <li><b>Electricidad.</b> Electrificación elevada, TV y datos en estancias, videoportero y punto de recarga.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block offer" id="oferta">
+    <div class="wrap">
+      <div class="head"><p class="mono">La oferta</p><h2>Precio de la vivienda piloto pareada</h2><p>Fabricación, transporte, grúa y montaje incluidos. Importes sin IVA.</p></div>
+      <div class="prices">
+        <div><span class="mono">Con la memoria del proyecto</span><b>225.400 €</b><span>1.520 €/m² construido</span></div>
+        <div><span class="mono">Con las optimizaciones</span><b>209.800 €</b><span>1.415 €/m² construido</span></div>
+      </div>
+      <div class="serie">
+        <div><span>Pareada en serie</span><b>209.100 €</b></div>
+        <div><span>Aislada en serie</span><b>214.100 €</b></div>
+        <div><span>Las 16 viviendas</span><b>3.355.600 €</b></div>
+      </div>
+      <p class="note" style="margin-top:22px; max-width:70ch">El precio del piloto se aplica con la adjudicación de la serie; como unidad independiente, 273.600 €. El precio definitivo se cierra con el cálculo de la estructura modular y las ofertas de proveedor.</p>
+      <div class="split incl">
+        <div><p class="mono" style="color:var(--minio); margin-bottom:8px">Incluido</p><ul><li>Ingeniería del módulo y proyecto de fabricación</li><li>Vivienda terminada según el proyecto de ejecución</li><li>Transporte, grúa, colocación y montaje</li><li>Uniones, remates y conexión de instalaciones interiores</li><li>Pruebas de servicio, limpieza y entrega</li></ul></div>
+        <div><p class="mono" style="color:var(--minio); margin-bottom:8px">No incluido</p><ul><li>Movimiento de tierras, cimentación y placas de anclaje</li><li>Saneamiento enterrado, acometidas y urbanización</li><li>Terraza y jardín de planta baja, vallados, piscina y zonas comunes</li><li>Muebles de cocina y electrodomésticos</li><li>Dirección facultativa, OCT, seguro decenal, licencias y tasas</li></ul></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="logo" style="font-size:40px"><span class="sq"></span><b>rg21</b></span>
+    <p class="mono" style="color:var(--soft)">RG21 Capital · Propuesta Névola · Octubre 2026</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // ---------- menú móvil: origen arriba a la derecha, 200 ms ----------
+  var btn = document.getElementById('menuBtn'), panel = document.getElementById('menuPanel');
+  function setMenu(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', String(open)); btn.textContent = open ? 'Cerrar' : 'Menú'; }
+  btn.addEventListener('click', function () { setMenu(panel.hidden); });
+  panel.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { setMenu(false); btn.focus(); } });
+
+  // ---------- enlace activo según la sección visible ----------
+  var links = document.querySelectorAll('.links a');
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + e.target.id)); }); });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ['piloto', 'porque', 'modulos', 'fabricacion', 'sistema', 'calidades', 'oferta'].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+
+  // ---------- la vivienda ----------
+  // Medidas reales del piloto (m). x: de la fachada lateral a la medianera; y: de la fachada principal al jardín; z: altura.
+  var MODS = [
+    { id: 'M1', x: [0.6, 3.8], y: [0.6, 10.1], z: [0, 3.05], kg: '2.081', s: '30,40', dim: '3,20 × 9,50', t: 'Dormitorio 1, cocina y salón', note: 'El primero que se coloca y el último que queda: un marco soldado de IPE 200 con pilares IPE 160.' },
+    { id: 'M2', x: [3.8, 6.1], y: [0.6, 10.1], z: [0, 3.05], kg: '1.813', s: '21,85', dim: '2,30 × 9,50', t: 'Vestíbulo, escalera y salón', note: 'La junta con el M1 cae sobre el tabique del dormitorio 1.' },
+    { id: 'M3', x: [6.1, 8.45], y: [0.6, 10.1], z: [0, 3.05], kg: '1.828', s: '22,32', dim: '2,35 × 9,50', t: 'Baño 1, lavadero y salón', note: 'Contra la medianera. Concentra las instalaciones húmedas de planta baja.' },
+    { id: 'V', x: [0, 0.6], y: [0, 8.47], z: [3.05, 6.1], kg: '591', s: '5,08', dim: '0,60 × 8,47', t: 'Vuelo lateral', note: 'Pieza aparte que se atornilla al M4 en parcela. Así ningún módulo pasa de 3,20 m de ancho.' },
+    { id: 'M4', x: [0.6, 3.8], y: [0, 8.47], z: [3.05, 6.1], kg: '1.940', s: '27,10', dim: '3,20 × 8,47', t: 'Dormitorio 3, baño 2 y dormitorio principal', note: 'Arranca 0,60 m por delante de la planta baja: el borde en vuelo lleva IPE 220.' },
+    { id: 'M5', x: [3.8, 6.1], y: [0, 8.47], z: [3.05, 6.1], kg: '1.685', s: '19,48', dim: '2,30 × 8,47', t: 'Dormitorio 2 y distribuidor', note: 'Termina en 8,47 m: detrás queda la terraza de 9 m² sobre la planta baja.' },
+    { id: 'M6', x: [6.1, 8.45], y: [0, 10.1], z: [3.05, 6.1], kg: '2.018', s: '23,73', dim: '2,35 × 10,10', t: 'Escalera, vestidor y baño principal', note: 'El más largo: llega a 10,10 m y recoge entero el baño principal.' }
+  ];
+  // Orden de desmontaje: el inverso al montaje en parcela.
+  var ORDER = ['M6', 'M5', 'V', 'M4', 'M3', 'M2'];
+  var LIFT = 8.5; // metros que sube la grúa cada módulo antes de desaparecer
+  var byId = {}; MODS.forEach(function (m) { byId[m.id] = m; });
+
+  // curva fuerte de entrada y salida (0.77, 0, 0.175, 1) para el movimiento en pantalla
+  function bezier(x1, y1, x2, y2) {
+    var cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx, cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+    function sx(t) { return ((ax * t + bx) * t + cx) * t; } function sy(t) { return ((ay * t + by) * t + cy) * t; } function dx(t) { return (3 * ax * t + 2 * bx) * t + cx; }
+    return function (x) { if (x <= 0) return 0; if (x >= 1) return 1; var t = x; for (var i = 0; i < 8; i++) { var e = sx(t) - x; if (Math.abs(e) < 1e-5) break; var d = dx(t); if (Math.abs(d) < 1e-6) break; t -= e / d; } return sy(t); };
+  }
+  var easeIO = bezier(0.77, 0, 0.175, 1);
+
+  var C = Math.cos(Math.PI / 6), S = Math.sin(Math.PI / 6);
+  function P(x, y, z) { return [(x - y) * C, (x + y) * S - z]; }
+  function pts(a) { return a.map(function (p) { var q = P(p[0], p[1], p[2]); return q[0].toFixed(3) + ',' + q[1].toFixed(3); }).join(' '); }
+
+  var svg = document.getElementById('house'), NS = 'http://www.w3.org/2000/svg';
+  // encuadre fijo: la casa entera más la altura de izado
+  var all = []; MODS.forEach(function (m) { [m.x[0], m.x[1]].forEach(function (x) { [m.y[0], m.y[1]].forEach(function (y) { [0, m.z[1] + LIFT * 0.55].forEach(function (z) { all.push(P(x, y, z)); }); }); }); });
+  var xs = all.map(function (p) { return p[0]; }), ys = all.map(function (p) { return p[1]; });
+  var minx = Math.min.apply(null, xs) - 0.6, maxx = Math.max.apply(null, xs) + 0.6, miny = Math.min.apply(null, ys) - 0.4, maxy = Math.max.apply(null, ys) + 0.6;
+  svg.setAttribute('viewBox', [minx, miny, maxx - minx, maxy - miny].map(function (v) { return v.toFixed(2); }).join(' '));
+
+  function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+  // suelo: huella y placas de anclaje en los ejes reales
+  var ground = el('g', {});
+  ground.appendChild(el('polygon', { points: pts([[0.6, 0.6, 0], [8.45, 0.6, 0], [8.45, 10.1, 0], [0.6, 10.1, 0]]), style: 'fill:none;stroke:var(--m-line);stroke-opacity:.35', 'stroke-width': '.04', 'stroke-dasharray': '.25 .15' }));
+  [0.6, 3.8, 6.1, 8.45].forEach(function (x) { [0.6, 6.1, 10.1].forEach(function (y) { ground.appendChild(el('polygon', { points: pts([[x - .12, y - .12, 0], [x + .12, y - .12, 0], [x + .12, y + .12, 0], [x - .12, y + .12, 0]]), style: 'fill:var(--minio)' })); }); });
+  svg.appendChild(ground);
+  var layer = el('g', { 'stroke-linejoin': 'round' }); svg.appendChild(layer);
+  var cable = el('line', { style: 'stroke:var(--m-line)', 'stroke-width': '.04', opacity: '0' }); svg.appendChild(cable);
+
+  MODS.forEach(function (m) {
+    var g = el('g', {});
+    m.right = el('polygon', { 'stroke-width': '.045' }); m.front = el('polygon', { 'stroke-width': '.045' }); m.top = el('polygon', { 'stroke-width': '.045' });
+    m.label = el('text', { 'font-size': '.62', 'font-family': 'Archivo Narrow, Arial, sans-serif', 'font-weight': '700', 'text-anchor': 'middle' });
+    m.label.textContent = m.id;
+    g.appendChild(m.right); g.appendChild(m.front); g.appendChild(m.top); g.appendChild(m.label);
+    m.g = g; layer.appendChild(g);
+  });
+
+  // carril de progreso con los módulos en el orden en que se retiran
+  var rail = document.querySelector('.rail'); var bars = [];
+  ORDER.forEach(function (id) { var em = document.createElement('em'); em.textContent = id; var sp = document.createElement('span'); var i = document.createElement('i'); sp.appendChild(i); rail.appendChild(em); rail.appendChild(sp); bars.push(i); });
+
+  // textos que acompañan a cada módulo retirado
+  var copy = document.querySelector('.copy'), hero = document.getElementById('hero'), caps = [];
+  ORDER.concat(['M1']).forEach(function (id, k) {
+    var m = byId[id], d = document.createElement('div'); d.className = 'cap';
+    var last = id === 'M1';
+    d.innerHTML = '<span class="id">' + m.id + '</span><h2>' + (last ? 'Queda el primer módulo' : (id === 'V' ? 'Fuera el vuelo lateral' : 'Fuera el ' + m.id)) + ': ' + m.t.charAt(0).toLowerCase() + m.t.slice(1) + '</h2><p>' + m.note + '</p>'
+      + '<dl><div><dt>Medidas</dt><dd>' + m.dim + ' m</dd></div><div><dt>Superficie</dt><dd>' + m.s + ' m²</dd></div><div><dt>Acero</dt><dd>' + m.kg + ' kg</dd></div></dl>';
+    copy.appendChild(d); caps.push(d);
+  });
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var track = document.getElementById('piloto');
+  var START = 0.06, SEG = 0.135; // cada módulo ocupa un 13,5 % del tramo
+
+  function render(p) {
+    var lifting = null, liftAmt = 0;
+    // estado de cada módulo
+    MODS.forEach(function (m) {
+      var k = ORDER.indexOf(m.id), t = 0;
+      if (k >= 0) t = Math.min(1, Math.max(0, (p - (START + k * SEG)) / SEG));
+      if (reduce.matches) t = t < 0.5 ? 0 : 1; // sin movimiento: el módulo desaparece de golpe al pasar su tramo
+      var e = easeIO(t), dz = LIFT * e, op = t <= 0.55 ? 1 : Math.max(0, 1 - (t - 0.55) / 0.45);
+      m.pr = t;
+      var x0 = m.x[0], x1 = m.x[1], y0 = m.y[0], y1 = m.y[1], z0 = m.z[0] + dz, z1 = m.z[1] + dz;
+      var active = t > 0 && t < 1;
+      m.top.setAttribute('points', pts([[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]]));
+      m.right.setAttribute('points', pts([[x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1]]));
+      m.front.setAttribute('points', pts([[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]]));
+      var hl = active || (m.id === 'M1' && p > START + ORDER.length * SEG);
+      m.top.setAttribute('style', 'fill:' + (hl ? 'var(--minio-soft)' : 'var(--m-top)') + ';stroke:var(--m-line)');
+      m.right.setAttribute('style', 'fill:' + (hl ? 'var(--minio)' : 'var(--m-right)') + ';stroke:var(--m-line)');
+      m.front.setAttribute('style', 'fill:' + (hl ? 'var(--minio)' : 'var(--m-front)') + ';fill-opacity:' + (hl ? '.75' : '1') + ';stroke:var(--m-line)');
+      var c = P((x0 + x1) / 2, (y0 + y1) / 2, z1);
+      m.label.setAttribute('x', c[0].toFixed(3)); m.label.setAttribute('y', (c[1] + 0.22).toFixed(3));
+      m.label.setAttribute('style', 'fill:var(--m-line)');
+      m.g.setAttribute('opacity', op.toFixed(3));
+      m.g.style.display = op <= 0.001 ? 'none' : '';
+      if (active) { lifting = m; liftAmt = dz; }
+    });
+    // el módulo que sube se pinta encima de todo: está por encima del resto
+    MODS.forEach(function (m) { if (m !== lifting) layer.appendChild(m.g); });
+    if (lifting) layer.appendChild(lifting.g);
+    // cable de la grúa
+    if (lifting && !reduce.matches) {
+      var top = P((lifting.x[0] + lifting.x[1]) / 2, (lifting.y[0] + lifting.y[1]) / 2, lifting.z[1] + liftAmt);
+      cable.setAttribute('x1', top[0].toFixed(3)); cable.setAttribute('x2', top[0].toFixed(3)); cable.setAttribute('y1', top[1].toFixed(3)); cable.setAttribute('y2', (miny - 1).toFixed(2));
+      cable.setAttribute('opacity', String(lifting.g.getAttribute('opacity')));
+    } else cable.setAttribute('opacity', '0');
+    // carril y textos
+    ORDER.forEach(function (id, k) { bars[k].style.transform = 'scaleX(' + byId[id].pr.toFixed(3) + ')'; });
+    var step = -1; ORDER.forEach(function (id, k) { if (byId[id].pr > 0.35) step = k; });
+    if (p > START + ORDER.length * SEG - SEG * 0.2) step = ORDER.length;
+    hero.classList.toggle('off', p > START * 0.6);
+    caps.forEach(function (c, k) { c.classList.toggle('on', k === step); });
+  }
+
+  var raf = 0, running = false, lastP = -1;
+  function frame() {
+    var r = track.getBoundingClientRect(), span = r.height - window.innerHeight;
+    var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+    if (Math.abs(p - lastP) > 0.0004) { render(p); lastP = p; }
+    raf = running ? requestAnimationFrame(frame) : 0;
+  }
+  // el bucle solo corre mientras el tramo está en pantalla
+  new IntersectionObserver(function (es) { es.forEach(function (e) { running = e.isIntersecting; if (running && !raf) raf = requestAnimationFrame(frame); }); }).observe(track);
+  render(0);
+})();
+</script>
