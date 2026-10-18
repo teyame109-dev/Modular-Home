@@ -43,6 +43,8 @@ NIDO pidió ajuste sobre la primera oferta e Iván decidió volver a la versión
 
 NIDO aceptó 225.400 € el piloto, 209.100 € la pareada en serie, 214.100 € la aislada y 3.355.600 € las 16 viviendas, todo sin IVA. Esos importes son el presupuesto y **no se tocan** por mejoras o ahorros que encontremos. Cada mejora baja el coste y sube el margen de RG21. Con el M4 entero, el coste del modelo del piloto es de 203.970 €, y el margen sobre el precio cerrado, de 21.430 € (9,5 %).
 
+La propuesta que NIDO recibió y aceptó está en `enviado-a-nido/Propuesta_RG21_Piloto_Nevola_ENVIADA.pdf`: la propuesta integral de 28 diapositivas, con los precios de arriba. Esa versión todavía llevaba el tabique del dormitorio 1 desplazado (8,70 m²), la pieza de vuelo suelta y 13.216 kg de acero, y salió con la forma de pago y la validez sin rellenar.
+
 ## Coste y margen: lo que hay que saber
 
 - **Coste del modelo:** piloto 204.889 €; pareada en serie ≈ 190.091 €. Incluye mano de obra de fábrica a coste empresa (nómina + Seguridad Social, 23 €/h de 2024) y gastos fijos de nave repartidos a **2 viviendas/mes**.
