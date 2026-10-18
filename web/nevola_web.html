@@ -516,7 +516,7 @@ tr.tot td { font-weight: 800; border-top: 2px solid var(--ink) } tr.tot td.n { c
     } else cable.setAttribute('opacity', '0');
     // carril y textos
     ORDER.forEach(function (id, k) { bars[k].style.transform = 'scaleX(' + byId[id].pr.toFixed(3) + ')'; });
-    var step = -1; ORDER.forEach(function (id, k) { if (byId[id].pr > 0.35) step = k; });
+    var step = -1; ORDER.forEach(function (id, k) { if (byId[id].pr > 0.02) step = k; });
     if (p > START + ORDER.length * SEG - SEG * 0.2) step = ORDER.length;
     hero.classList.toggle('off', p > START * 0.6);
     caps.forEach(function (c, k) { c.classList.toggle('on', k === step); });
