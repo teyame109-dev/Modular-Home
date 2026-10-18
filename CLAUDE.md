@@ -153,3 +153,12 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 ## Forma de trabajar con Iván
 
 Proponer y confirmar antes de cambiar nada. Él toca archivos en paralelo, así que hay que verificar el estado antes de editar. Escribe en español de España, claro y directo. Cifras siempre sin IVA y con su origen.
+
+## Herramientas externas evaluadas
+
+- **Skills de DataDrivenConstruction** (github.com/datadrivenconstruction/DDC_Skills_for_AI_Agents_in_Construction, MIT). Revisada el 18/10/2026.
+  - La skill `dwg-to-excel` depende de un ejecutable cerrado, `DwgExporter.exe`, que no se ha descargado.
+  - Para Névola no aporta: las mediciones están en el BC3.
+  - Decisión: se deja para proyectos que lleguen sin BC3. En ese caso, pedir los planos en DXF y leerlos con `ezdxf` (Python).
+  - Los DWG de Névola son de AutoCAD 2007 (AC1021).
+  - La base de precios CWICR de DDC tiene licencia no comercial.
