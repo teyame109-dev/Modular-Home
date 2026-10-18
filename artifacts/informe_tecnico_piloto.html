@@ -1,0 +1,335 @@
+<title>Piloto modular Névola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@500..700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: plano de taller RG21. Papel gris frío, tinta, un único rojo minio; columna de lectura con láminas a ancho completo y cajetín al pie. */
+:root{
+  --bg:#E7E8E3; --paper:#EFF0EB; --ink:#141414; --muted:#4F5256; --rule:#C3C5BF; --accent:#C8381F;
+  --pb:#D5D7D1; --pbline:#141414; --p1:#F2D3C8; --p1line:#9C2E18; --med:#C8381F; --hatch:#8E9093; --col:#141414;
+  --display:'Archivo', Arial, sans-serif; --figure:'Archivo Narrow', 'Arial Narrow', Arial, sans-serif; --body:'Archivo', Arial, sans-serif; --mono:'IBM Plex Mono', 'Courier New', monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --muted:#A9ABA6; --rule:#34363A; --accent:#EE6A4E;
+  --pb:#2A2D30; --pbline:#C9CBC5; --p1:#40241D; --p1line:#EE6A4E; --med:#EE6A4E; --hatch:#6A6D70; --col:#ECEDE8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --muted:#A9ABA6; --rule:#34363A; --accent:#EE6A4E;
+  --pb:#2A2D30; --pbline:#C9CBC5; --p1:#40241D; --p1line:#EE6A4E; --med:#EE6A4E; --hatch:#6A6D70; --col:#ECEDE8; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;padding-inline:16px;padding-block:28px 48px}
+.wrap{max-width:1080px;margin-inline:auto;display:flex;flex-direction:column;gap:44px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.lg{display:inline-grid;grid-template-columns:auto auto;column-gap:.5em;align-items:end;font-family:var(--display);font-size:34px;line-height:1;color:var(--ink)}
+.lg .sq{width:.62em;height:.62em;border-top:.13em solid currentColor;border-left:.13em solid currentColor;position:relative;align-self:start;margin-top:.02em}
+.lg .sq::after{content:"";position:absolute;left:0;top:0;width:.13em;height:.13em;background:var(--accent)}
+.lg b{font-weight:900;letter-spacing:-.05em}
+.lg i{grid-column:2;font-style:normal;font-family:var(--mono);font-weight:500;font-size:.3em;letter-spacing:.42em;text-transform:uppercase;margin-top:.5em;padding-left:.1em}
+.stamp{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.7}
+header{display:flex;flex-direction:column;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:24px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(32px,5.4vw,54px);line-height:1;letter-spacing:-.035em;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:800;font-size:24px;letter-spacing:-.02em;margin:0 0 6px;text-wrap:balance}
+h3{font-family:var(--display);font-weight:700;font-size:16px;margin:0}
+p{margin:0;max-width:68ch}
+.lede{color:var(--muted);max-width:72ch}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--ink);border:1px solid var(--ink)}
+.fig{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fig b{font-family:var(--figure);font-weight:700;font-size:30px;line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.fig span{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:14px}
+ul.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
+ul.steps li::marker{color:var(--accent)}
+.sheet{background:var(--paper);border:1px solid var(--ink);padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sheet .cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:8px}
+.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:18px}
+.scroll{overflow-x:auto}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--mono);fill:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:6px;border:1px solid var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:2px solid var(--ink)}
+td.n,th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.sub td{font-weight:700;border-top:1px solid var(--ink)}
+tr.tot td{font-weight:800;font-size:16px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+tr.tot td.n{color:var(--accent)}
+tr.grp td{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);padding-top:16px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+.note{font-size:13px;color:var(--muted)}
+.risk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:var(--ink);border:1px solid var(--ink)}
+.risk div{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.risk b{font-family:var(--display);font-weight:800}
+.risk span{font-size:14px;color:var(--muted)}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+</style>
+
+<div class="wrap">
+<div class="topbar"><span class="lg" aria-label="RG21 Capital"><span class="sq"></span><b>rg21</b><i>capital</i></span><p class="stamp">Estudio técnico interno<br>Octubre 2026</p></div>
+<header>
+  <div class="eyebrow">Névola · Vivienda piloto</div>
+  <h1>Piloto modular Névola: vivienda pareada tipo</h1>
+  <p class="lede">Paso a sistema modular, con las juntas alineadas con tabiques, del proyecto de ejecución de julio de 2026 (14 pareadas y 2 aisladas en Guadalix de la Sierra), con la tipología de módulo del proyecto de Mahón (182): marcos de acero soldados, panel sándwich Tabihaus y trasdosado. Medición y coste de la primera unidad.</p>
+  <div class="figs">
+    <div class="fig"><b>6 módulos</b><span>3 por planta · juntas sobre tabiques</span></div>
+    <div class="fig"><b>13.216 kg</b><span>acero · 89,1 kg/m² (Mahón: 89)</span></div>
+    <div class="fig"><b>225.400 €</b><span>piloto dentro de la serie · 1.520 €/m²</span></div>
+    <div class="fig"><b>273.600 €</b><span>piloto aislado · 1.845 €/m²</span></div>
+  </div>
+</header>
+
+<section>
+  <h2>Cómo se pasa el proyecto a módulos</h2>
+  <ul class="steps">
+    <li><b>Retícula alineada con tabiques.</b> La planta baja mide 7,85 × 9,50 m hasta el eje de medianera. Se divide en tres módulos de 3,20, 2,30 y 2,35 m que corren de fachada a fachada. Las juntas, a 3,20 y 5,50 m, caen sobre tabiques en las dos plantas; para ello el tabique del dormitorio 1 se desplaza 0,30 m (pasa a 8,70 m²).</li>
+    <li><b>Vuelos.</b> La planta primera vuela 0,60 m en frente y lateral (8,45 m de ancho). Los tres módulos de arriba arrancan 0,60 m por delante de los de abajo, con el borde frontal en IPE 220. El vuelo lateral es una pieza aparte de 0,60 × 8,47 m que se atornilla al M4 en parcela: ningún módulo pasa de 3,20 m de ancho.</li>
+    <li><b>Apoyos.</b> Cada módulo lleva pilares IPE 160 en esquinas y en el eje intermedio. Los de planta primera descargan sobre los marcos de planta baja en los ejes y = 0,60 · 6,10 · 10,10 m. El salón (7,43 m libres en el proyecto) queda con luces de 5,50 y 4,00 m.</li>
+    <li><b>Terraza y baño principal.</b> M4 y M5 terminan en 8,47 m. Sobre la cubierta de planta baja queda la terraza de 9 m². M6 llega hasta 10,10 m y recoge entero el baño principal que sobresale.</li>
+    <li><b>Alturas.</b> Se mantienen las cotas del proyecto: suelo de planta baja +0,20, de planta primera +3,35 y cubierta +6,40. Módulos de unos 3,05 m de alto: en góndola rebajada quedan por debajo de 4,00 m.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Croquis de modulación</h2>
+  <div class="legend"><span><i style="background:var(--pb)"></i>Módulo de planta baja</span><span><i style="background:var(--p1)"></i>Módulo de planta primera</span><span><i style="background:var(--col)"></i>Pilar IPE 160</span><span><i style="background:var(--med);border-color:var(--med)"></i>Medianera</span></div>
+  <div class="plates">
+    <div class="sheet">
+      <div class="cap"><span>Lámina 1 · Planta baja</span><span>cotas en m</span></div>
+      <div class="scroll"><svg viewBox="0 0 520 600" role="img" aria-label="Planta baja con tres módulos de 3,20, 2,30 y 2,35 por 9,50 metros, juntas sobre tabiques">
+        <g transform="translate(40,40) scale(48)" stroke-linejoin="miter">
+          <text x="4.52" y="0.25" font-size="0.26" text-anchor="middle">FACHADA PRINCIPAL · ACCESO</text>
+          <rect x="0.6" y="0.60" width="3.200" height="9.50" style="fill:var(--pb);stroke:var(--pbline)" stroke-width="0.04"/><rect x="3.8" y="0.60" width="2.300" height="9.50" style="fill:var(--pb);stroke:var(--pbline)" stroke-width="0.04"/><rect x="6.1" y="0.60" width="2.350" height="9.50" style="fill:var(--pb);stroke:var(--pbline)" stroke-width="0.04"/>
+          <line x1="0.60" y1="6.10" x2="8.45" y2="6.10" stroke-width="0.02" stroke-dasharray="0.12 0.08" style="stroke:var(--pbline)"/>
+          <line x1="8.45" y1="0.35" x2="8.45" y2="10.35" stroke-width="0.06" stroke-dasharray="0.25 0.1" style="stroke:var(--med)"/>
+          <g style="fill:var(--col)"><rect x="0.6" y="0.6" width="0.16" height="0.16"/><rect x="0.6" y="6.02" width="0.16" height="0.16"/><rect x="0.6" y="9.94" width="0.16" height="0.16"/><rect x="3.64" y="0.6" width="0.16" height="0.16"/><rect x="3.64" y="6.02" width="0.16" height="0.16"/><rect x="3.64" y="9.94" width="0.16" height="0.16"/><rect x="3.8" y="0.6" width="0.16" height="0.16"/><rect x="3.8" y="6.02" width="0.16" height="0.16"/><rect x="3.8" y="9.94" width="0.16" height="0.16"/><rect x="5.94" y="0.6" width="0.16" height="0.16"/><rect x="5.94" y="6.02" width="0.16" height="0.16"/><rect x="5.94" y="9.94" width="0.16" height="0.16"/><rect x="6.1" y="0.6" width="0.16" height="0.16"/><rect x="6.1" y="6.02" width="0.16" height="0.16"/><rect x="6.1" y="9.94" width="0.16" height="0.16"/><rect x="8.29" y="0.6" width="0.16" height="0.16"/><rect x="8.29" y="6.02" width="0.16" height="0.16"/><rect x="8.29" y="9.94" width="0.16" height="0.16"/></g>
+          <g font-size="0.42" font-weight="500" text-anchor="middle"><text x="2.20" y="1.5">M1</text><text x="4.95" y="1.5">M2</text><text x="7.27" y="1.5">M3</text></g>
+          <g font-size="0.22" text-anchor="middle" style="fill:var(--muted)">
+            <text x="2.20" y="2.9">Dormitorio 1</text><text x="2.20" y="4.9">Cocina</text>
+            <text x="4.95" y="2.2">Vestíbulo</text><text x="4.95" y="4.6">Escalera</text>
+            <text x="7.27" y="2.0">Baño 1</text><text x="7.27" y="4.9">Lavadero</text>
+            <text x="4.52" y="8.2">Salón · comedor · 7,43 m libres</text>
+          </g>
+          <g stroke-width="0.015" fill="none" style="stroke:var(--ink)">
+            <line x1="0.60" y1="10.65" x2="8.45" y2="10.65"/><line x1="0.6" y1="10.55" x2="0.6" y2="10.75"/><line x1="3.8" y1="10.55" x2="3.8" y2="10.75"/><line x1="6.1" y1="10.55" x2="6.1" y2="10.75"/><line x1="8.45" y1="10.55" x2="8.45" y2="10.75"/>
+            <line x1="0.15" y1="0.60" x2="0.15" y2="10.10"/><line x1="0.05" y1="0.60" x2="0.25" y2="0.60"/><line x1="0.05" y1="6.10" x2="0.25" y2="6.10"/><line x1="0.05" y1="10.10" x2="0.25" y2="10.10"/>
+          </g>
+          <g font-size="0.22" text-anchor="middle">
+            <text x="2.20" y="10.55">3,20</text><text x="4.95" y="10.55">2,30</text><text x="7.27" y="10.55">2,35</text>
+            <text x="4.52" y="11.05">7,85 hasta eje de medianera</text>
+            <text transform="translate(-0.02,3.35) rotate(-90)">5,50</text><text transform="translate(-0.02,8.10) rotate(-90)">4,00</text>
+          </g>
+          <text x="4.52" y="10.38" font-size="0.22" text-anchor="middle" style="fill:var(--muted)">FACHADA POSTERIOR · JARDÍN</text>
+        </g>
+      </svg></div>
+      <p class="note">Módulos de 3,20, 2,30 y 2,35 × 9,50 m. Las juntas caen sobre el tabique del dormitorio 1 y sobre los del baño 1 y el lavadero. Línea discontinua: eje de pilares intermedio (y = 6,10).</p>
+    </div>
+
+    <div class="sheet">
+      <div class="cap"><span>Lámina 2 · Planta primera</span><span>cotas en m</span></div>
+      <div class="scroll"><svg viewBox="0 0 520 600" role="img" aria-label="Planta primera con módulos de 3,20, 2,30 y 2,35 metros de ancho y pieza de vuelo lateral de 0,60">
+        <g transform="translate(40,40) scale(48)">
+          <rect x="0.60" y="0.60" width="7.85" height="9.50" fill="none" stroke-width="0.025" stroke-dasharray="0.15 0.1" style="stroke:var(--pbline)"/>
+          <defs><pattern id="hat" width="0.25" height="0.25" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="0.25" stroke-width="0.03" style="stroke:var(--hatch)"/></pattern></defs>
+          <rect x="0.60" y="8.47" width="5.50" height="1.63" fill="url(#hat)" stroke-width="0.02" style="stroke:var(--hatch)"/>
+          <rect x="0" y="0" width="0.60" height="8.47" fill="url(#hat)" stroke-width="0.03" stroke-dasharray="0.12 0.08" style="stroke:var(--p1line)"/>
+          <rect x="0.6" y="0" width="3.20" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="3.8" y="0" width="2.30" height="8.47" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/><rect x="6.1" y="0" width="2.35" height="10.1" style="fill:var(--p1);stroke:var(--p1line)" stroke-width="0.04"/>
+          <line x1="8.45" y1="-0.25" x2="8.45" y2="10.35" stroke-width="0.06" stroke-dasharray="0.25 0.1" style="stroke:var(--med)"/>
+          <g style="fill:var(--col)"><rect x="0.6" y="0" width="0.16" height="0.16"/><rect x="0.6" y="5.61" width="0.16" height="0.16"/><rect x="0.6" y="8.31" width="0.16" height="0.16"/><rect x="3.64" y="0" width="0.16" height="0.16"/><rect x="3.64" y="5.61" width="0.16" height="0.16"/><rect x="3.64" y="8.31" width="0.16" height="0.16"/><rect x="3.8" y="0" width="0.16" height="0.16"/><rect x="3.8" y="5.61" width="0.16" height="0.16"/><rect x="3.8" y="8.31" width="0.16" height="0.16"/><rect x="5.94" y="0" width="0.16" height="0.16"/><rect x="5.94" y="5.61" width="0.16" height="0.16"/><rect x="5.94" y="8.31" width="0.16" height="0.16"/><rect x="6.1" y="0" width="0.16" height="0.16"/><rect x="6.1" y="5.61" width="0.16" height="0.16"/><rect x="6.1" y="8.31" width="0.16" height="0.16"/><rect x="8.29" y="0" width="0.16" height="0.16"/><rect x="8.29" y="5.61" width="0.16" height="0.16"/><rect x="8.29" y="8.31" width="0.16" height="0.16"/><rect x="6.1" y="9.94" width="0.16" height="0.16"/><rect x="8.29" y="9.94" width="0.16" height="0.16"/></g>
+          <g font-size="0.42" font-weight="500" text-anchor="middle"><text x="2.20" y="1.0">M4</text><text x="4.95" y="1.0">M5</text><text x="7.27" y="1.0">M6</text></g>
+          <g font-size="0.22" text-anchor="middle" style="fill:var(--muted)">
+            <text x="2.20" y="2.6">Dormitorio 3</text><text x="2.20" y="4.9">Baño 2</text>
+            <text x="4.95" y="2.2">Dormitorio 2</text><text x="4.95" y="4.9">Distribuidor</text>
+            <text x="3.0" y="7.2">Dormitorio principal</text>
+            <text x="7.27" y="3.6">Escalera</text><text x="7.27" y="6.6">Vestidor</text><text x="7.27" y="9.3">Baño principal</text>
+            <text x="3.35" y="9.4">Terraza 9 m² sobre planta baja</text>
+          </g>
+          <g font-size="0.2" text-anchor="middle" style="fill:var(--p1line)"><text transform="translate(0.36,4.2) rotate(-90)">V · vuelo 0,60</text><text x="4.5" y="0.42">vuelo 0,60 sobre fachada principal</text></g>
+          <g stroke-width="0.015" style="stroke:var(--ink)"><line x1="0" y1="10.65" x2="8.45" y2="10.65"/><line x1="0" y1="10.55" x2="0" y2="10.75"/><line x1="0.6" y1="10.55" x2="0.6" y2="10.75"/><line x1="3.8" y1="10.55" x2="3.8" y2="10.75"/><line x1="6.1" y1="10.55" x2="6.1" y2="10.75"/><line x1="8.45" y1="10.55" x2="8.45" y2="10.75"/></g>
+          <g font-size="0.22" text-anchor="middle"><text x="0.30" y="10.55">0,60</text><text x="2.20" y="10.55">3,20</text><text x="4.95" y="10.55">2,30</text><text x="7.27" y="10.55">2,35</text><text x="4.22" y="11.05">8,45 hasta eje de medianera</text></g>
+        </g>
+      </svg></div>
+      <p class="note">Discontinuo azul: huella de planta baja. M4 y M5 de 8,47 m; M6 de 10,10 m con el baño principal. Rayado: terraza y pieza de vuelo lateral (V). Juntas sobre el tabique entre dormitorios 2 y 3 y sobre el del baño principal.</p>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <div class="cap"><span>Lámina 3 · Sección longitudinal por M2 / M5</span><span>cotas de nivel del proyecto</span></div>
+    <div class="scroll"><svg viewBox="0 0 980 470" role="img" aria-label="Sección longitudinal con módulo de planta baja de 9,50 metros, módulo de planta primera de 8,47 metros con vuelo de 0,60, terraza y cimentación del promotor">
+      <g transform="translate(70,40)">
+        <g transform="scale(52)">
+          <line x1="-1" y1="7.4" x2="12" y2="7.4" stroke-width="0.03"/ style="stroke:var(--ink)">
+          <g fill="url(#hat2)" stroke-width="0.02" style="stroke:var(--hatch)">
+            <rect x="0.30" y="7.45" width="0.8" height="0.75"/><rect x="5.80" y="7.45" width="0.8" height="0.75"/><rect x="9.70" y="7.45" width="0.8" height="0.75"/>
+          </g>
+          <defs><pattern id="hat2" width="0.2" height="0.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="0.2" stroke-width="0.03"/ style="stroke:var(--hatch)"></pattern></defs>
+          <rect x="0.60" y="4.05" width="9.50" height="3.15" stroke-width="0.04"/ style="fill:var(--pb);stroke:var(--pbline)">
+          <rect x="0.60" y="7.06" width="9.50" height="0.14" opacity="0.55"/ style="fill:var(--pbline)">
+          <rect x="0" y="0.25" width="8.47" height="3.80" stroke-width="0.04"/ style="fill:var(--p1);stroke:var(--p1line)">
+          <rect x="0" y="3.91" width="8.47" height="0.14" opacity="0.55"/ style="fill:var(--p1line)">
+          <rect x="0" y="0.85" width="8.47" height="0.22" opacity="0.35"/ style="fill:var(--p1line)">
+          <rect x="0" y="0.25" width="0.12" height="0.60"/ style="fill:var(--p1line)"><rect x="8.35" y="0.25" width="0.12" height="0.60"/ style="fill:var(--p1line)">
+          <rect x="8.47" y="3.80" width="1.63" height="0.25" opacity="0.6"/ style="fill:var(--hatch)">
+          <line x1="10.10" y1="2.95" x2="10.10" y2="3.80" stroke-width="0.03"/ style="stroke:var(--ink)">
+          <g stroke-width="0.04" style="stroke:var(--ink)"><line x1="0.68" y1="4.05" x2="0.68" y2="7.06"/><line x1="6.10" y1="4.05" x2="6.10" y2="7.06"/><line x1="10.02" y1="4.05" x2="10.02" y2="7.06"/><line x1="0.08" y1="1.07" x2="0.08" y2="3.91"/><line x1="5.69" y1="1.07" x2="5.69" y2="3.91"/><line x1="8.39" y1="1.07" x2="8.39" y2="3.91"/></g>
+        </g>
+        <g font-size="13">
+          <text x="0" y="398">▼ +0,00 terreno</text>
+          <text x="300" y="358">Panel 8+120+8 · suelo PB ▼ +0,20</text>
+          <text x="300" y="196">Panel 8+65+8 · suelo P1 ▼ +3,35</text>
+          <text x="40" y="58">Cubierta: panel 8+65+8 + pendientes + impermeabilización + grava ▼ +6,40</text>
+          <text x="20" y="34" style="fill:var(--p1line)">peto 0,75</text>
+          <text x="455" y="185" style="fill:var(--muted)">Terraza transitable 9 m²</text>
+          <text x="-60" y="148" style="fill:var(--p1line)">vuelo 0,60</text>
+          <text x="560" y="300" style="fill:var(--pbline)">Módulo M2 · 9,50 × 2,30 × 3,05</text>
+          <text x="140" y="130" style="fill:var(--p1line)">Módulo M5 · 8,47 × 2,30 × 3,05</text>
+          <text x="10" y="450" style="fill:var(--muted)">Zapatas y placas de anclaje: obra del promotor (ejes 0,60 · 6,10 · 10,10)</text>
+        </g>
+      </g>
+    </svg></div>
+    <p class="note">Vertical: pilares IPE 160 de cada módulo. Bandas oscuras: forjados de panel. La cimentación sigue siendo del promotor, con placas de anclaje en los tres ejes de apoyo.</p>
+  </div>
+
+  <div class="two">
+    <div class="sheet">
+      <div class="cap"><span>Lámina 4 · Fachada tipo</span><span>de exterior a interior</span></div>
+      <table>
+        <thead><tr><th>Capa</th><th class="n">e (mm)</th><th class="n">R (m²K/W)</th></tr></thead>
+        <tbody>
+          <tr><td>Resistencia superficial exterior</td><td class="n">–</td><td class="n">0,04</td></tr>
+          <tr><td>Acabado: placa de cemento + monocapa</td><td class="n">15</td><td class="n">0,03</td></tr>
+          <tr><td>Panel Tabihaus 8+50+8 (núcleo PIR, λ 0,022)</td><td class="n">66</td><td class="n">2,27</td></tr>
+          <tr><td>PET reciclado (λ 0,035)</td><td class="n">40</td><td class="n">1,14</td></tr>
+          <tr><td>Trasdosado W625: perfil + lana mineral (λ 0,035)</td><td class="n">48</td><td class="n">1,37</td></tr>
+          <tr><td>Placa de yeso laminado</td><td class="n">15</td><td class="n">0,06</td></tr>
+          <tr><td>Resistencia superficial interior</td><td class="n">–</td><td class="n">0,13</td></tr>
+          <tr class="tot"><td>Total · U = 1 / R</td><td class="n">≈ 184</td><td class="n">5,04 → U = 0,20</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Cumple la U = 0,20 W/m²K que fija el proyecto para fachadas. El muro tiene 184 mm, frente a los unos 330 mm de la solución de ladrillo.</p>
+    </div>
+    <div class="sheet">
+      <div class="cap"><span>Módulos</span><span>m · m²</span></div>
+      <table>
+        <thead><tr><th>Módulo</th><th class="n">Ancho</th><th class="n">Largo</th><th class="n">m²</th><th>Contiene</th></tr></thead>
+        <tbody>
+          <tr><td>M1 · PB</td><td class="n">3,20</td><td class="n">9,50</td><td class="n">30,40</td><td>Dormitorio 1, cocina, salón</td></tr>
+          <tr><td>M2 · PB</td><td class="n">2,30</td><td class="n">9,50</td><td class="n">21,85</td><td>Vestíbulo, escalera, salón</td></tr>
+          <tr><td>M3 · PB</td><td class="n">2,35</td><td class="n">9,50</td><td class="n">22,32</td><td>Baño 1, lavadero, salón</td></tr>
+          <tr><td>M4 · P1</td><td class="n">3,20</td><td class="n">8,47</td><td class="n">27,10</td><td>Dormitorio 3, baño 2, dormitorio principal</td></tr>
+          <tr><td>M5 · P1</td><td class="n">2,30</td><td class="n">8,47</td><td class="n">19,48</td><td>Dormitorio 2, distribuidor</td></tr>
+          <tr><td>M6 · P1</td><td class="n">2,35</td><td class="n">10,10</td><td class="n">23,73</td><td>Escalera, vestidor, baño principal</td></tr>
+          <tr><td>V · vuelo</td><td class="n">0,60</td><td class="n">8,47</td><td class="n">5,08</td><td>Voladizo lateral, se monta en parcela</td></tr>
+          <tr class="tot"><td>Total</td><td></td><td></td><td class="n">149,96</td><td>148,30 m² construidos en proyecto</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Anchos de 2,30 a 3,20 m: todos viajan en góndola rebajada. La pieza de vuelo va aparte.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Medición de acero</h2>
+  <p class="lede">Mismos perfiles que Mahón: marcos de suelo y techo en IPE 200, pilares IPE 160, correas HEA 100 y SHS 60.40.3, angular L 80.8 de apoyo del panel. Los bordes en vuelo, en IPE 220.</p>
+  <div class="sheet"><table>
+    <thead><tr><th>Elemento</th><th class="n">kg</th><th class="n">kg/m²</th></tr></thead>
+    <tbody>
+      <tr><td>Vigas de marco IPE 200 (suelo y techo de cada módulo)</td><td class="n">6.182</td><td class="n">41,7</td></tr>
+      <tr><td>Bordes frontales en vuelo IPE 220 (M4, M5, M6)</td><td class="n">422</td><td class="n">2,8</td></tr>
+      <tr><td>Pieza de vuelo lateral: bordes IPE 220 y ménsulas IPE 160</td><td class="n">591</td><td class="n">4,0</td></tr>
+      <tr><td>Pilares IPE 160 (38 ud)</td><td class="n">1.631</td><td class="n">11,0</td></tr>
+      <tr><td>Correas de suelo HEA 100</td><td class="n">1.548</td><td class="n">10,4</td></tr>
+      <tr><td>Correas de techo SHS 60.40.3</td><td class="n">1.242</td><td class="n">8,4</td></tr>
+      <tr><td>Angular L 80.8 de apoyo de panel</td><td class="n">339</td><td class="n">2,3</td></tr>
+      <tr><td>Escalera metálica</td><td class="n">450</td><td class="n">3,0</td></tr>
+      <tr><td>Refuerzos, remates y pletinas de arriostramiento</td><td class="n">810</td><td class="n">5,5</td></tr>
+      <tr class="tot"><td>Total</td><td class="n">13.216</td><td class="n">89,1</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">kg/m² sobre 148,30 m² construidos. Mahón (182, dos plantas): 13.516 kg y 89 kg/m². Con un cálculo específico para módulos apilados se puede bajar: cada 10 kg/m² son unos 3.900 € por vivienda.</p>
+</section>
+
+<section>
+  <h2>Coste del piloto</h2>
+  <p class="lede">Coste real de 2026 sin IVA. Lo que se hace igual que en el proyecto (instalaciones, carpinterías, acabados) va con sus mediciones y precios. Margen de RG21 del 10 %, aplicado una sola vez.</p>
+  <div class="sheet scroll"><table>
+    <thead><tr><th>Partida</th><th class="n">Piloto dentro de la serie</th><th class="n">Piloto aislado</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3">Sistema modular</td></tr>
+      <tr><td>Estructura de acero · 13.216 kg × 2,60 €/kg</td><td class="n">34.362 €</td><td class="n">34.362 €</td></tr>
+      <tr><td>Fachadas, medianera y vuelos: panel, trasdosado, aislamiento y acabado</td><td class="n">32.026 €</td><td class="n">32.026 €</td></tr>
+      <tr><td>Cubierta y terraza: panel y sistema de cubierta</td><td class="n">13.701 €</td><td class="n">13.701 €</td></tr>
+      <tr><td>Forjados de panel: suelo de planta baja y de planta primera</td><td class="n">11.948 €</td><td class="n">11.948 €</td></tr>
+      <tr><td>Juntas entre módulos y colectores suspendidos</td><td class="n">2.767 €</td><td class="n">2.767 €</td></tr>
+      <tr class="grp"><td colspan="3">Igual que el proyecto</td></tr>
+      <tr><td>Instalaciones: electricidad, fontanería, climatización, ventilación</td><td class="n">38.300 €</td><td class="n">38.300 €</td></tr>
+      <tr><td>Carpinterías exterior e interior</td><td class="n">16.301 €</td><td class="n">16.301 €</td></tr>
+      <tr><td>Tabiquería, techos, solados, alicatados y pintura</td><td class="n">24.766 €</td><td class="n">24.766 €</td></tr>
+      <tr class="grp"><td colspan="3">Primera unidad, transporte y montaje</td></tr>
+      <tr><td>Sobrecoste de aprendizaje (15 % de la mano de obra de fábrica)</td><td class="n">3.722 €</td><td class="n">3.722 €</td></tr>
+      <tr><td>Transporte de 6 módulos y la pieza de vuelo</td><td class="n">6.648 €</td><td class="n">6.648 €</td></tr>
+      <tr><td>Grúa, jornada completa</td><td class="n">3.494 €</td><td class="n">3.494 €</td></tr>
+      <tr><td>Montaje en parcela · 192 h</td><td class="n">5.078 €</td><td class="n">5.078 €</td></tr>
+      <tr><td>Ingeniería: cálculo modular y proyecto de fabricación</td><td class="n">1.563 €</td><td class="n">25.000 €</td></tr>
+      <tr><td>Gastos fijos de fábrica</td><td class="n">10.215 €</td><td class="n">30.645 €</td></tr>
+      <tr class="sub"><td>Coste</td><td class="n">204.889 €</td><td class="n">248.757 €</td></tr>
+      <tr><td>Margen RG21 (10 %)</td><td class="n">20.489 €</td><td class="n">24.876 €</td></tr>
+      <tr class="tot"><td>Precio del piloto</td><td class="n">225.378 €</td><td class="n">273.632 €</td></tr>
+      <tr><td>€/m² construido</td><td class="n">1.520</td><td class="n">1.845</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Piloto dentro de la serie: la ingeniería se reparte entre 16 viviendas y los gastos fijos van al ritmo de 2 viviendas/mes. Piloto aislado: carga toda la ingeniería y 1,5 meses de fábrica; es el coste si después no hay serie. Referencia: una contrata tradicional del mismo alcance saldría a unos 155.700 € (PEM del proyecto × 1,19).</p>
+</section>
+
+<section>
+  <h2>Memoria de calidades: dónde se puede ahorrar</h2>
+  <p class="lede">Las calidades que fija el proyecto (marcas y precios del BC3), al lado de una alternativa más barata. Hay tres tipos de ahorro: el que trae el propio sistema modular o evita pagar dos veces lo mismo (no cambia nada para el comprador), el cambio a una marca equivalente que la memoria permite con su «o similar», y ajustar el alcance a lo que promete la memoria comercial. Importes por vivienda pareada.</p>
+  <div class="figs">
+    <div class="fig"><b>14.187 €</b><span>ahorro de coste por vivienda</span></div>
+    <div class="fig"><b>15.606 €</b><span>bajada de precio con el margen del 10 %</span></div>
+    <div class="fig"><b>209.772 €</b><span>piloto dentro de la serie · 1.415 €/m²</span></div>
+    <div class="fig"><b>3.106.069 €</b><span>serie de 16 con todos los ahorros</span></div>
+  </div>
+  <div class="sheet scroll"><table>
+    <thead><tr><th>Partida</th><th>Proyecto</th><th class="n">€/viv. proyecto</th><th>Alternativa</th><th class="n">Ahorro €/viv.</th></tr></thead>
+    <tbody>
+<tr class="grp"><td colspan="5">Sistema modular o duplicidad · 5.692 €</td></tr>
+<tr><td><b>Bomba circuladora</b><br><span class="note">Climatización</span></td><td>Ebara Ego Easy 25/80 aparte</td><td class="n">595 €</td><td>La integrada en el módulo hidráulico de la aerotermia (un solo circuito con colectores)</td><td class="n">400 €</td></tr>
+<tr><td><b>Falso techo de cuartos secos y húmedos</b><br><span class="note">Techos</span></td><td>Knauf D47 suspendido con maestras (27,74 y 31,01 €/m²)</td><td class="n">3.447 €</td><td>Placa atornillada directamente a las correas del techo del módulo, sin estructura suspendida</td><td class="n">1.180 €</td></tr>
+<tr><td><b>Falso techo exterior de placa de cemento</b><br><span class="note">Techos</span></td><td>Aquapanel Outdoor bajo vuelos (101,73 €/m²)</td><td class="n">992 €</td><td>Ya incluido: el vuelo del módulo lleva panel con acabado exterior</td><td class="n">992 €</td></tr>
+<tr><td><b>Aplacado de gres en fachada</b><br><span class="note">Fachada</span></td><td>Porcelánico en capa fina sobre mortero (48,34 €/m², 31 m²)</td><td class="n">1.504 €</td><td>Se mantiene el aplacado y se descuenta esa superficie del acabado exterior del panel (no duplicar)</td><td class="n">1.400 €</td></tr>
+<tr><td><b>Red de toma de tierra de estructura</b><br><span class="note">Electricidad</span></td><td>Cable de 35 mm² soldado a la armadura de cada zapata (40,65 m)</td><td class="n">2.061 €</td><td>Conexión equipotencial de los marcos de acero al anillo de cimentación del promotor</td><td class="n">1.200 €</td></tr>
+<tr><td><b>Recercado de huecos</b><br><span class="note">Carpintería exterior</span></td><td>Chapa de aluminio lacado, desarrollo 400 mm (29,03 €/m)</td><td class="n">1.681 €</td><td>Pliegues de chapa galvanizada lacada fabricados en el propio taller</td><td class="n">520 €</td></tr>
+<tr class="grp"><td colspan="5">Marca o gama equivalente · 6.605 €</td></tr>
+<tr><td><b>Aerotermia</b><br><span class="note">Climatización</span></td><td>Vaillant aroTHERM plus uniTOWER biblock, 10,1 kW, A+++</td><td class="n">8.376 €</td><td>Panasonic Aquarea All in One o LG Therma V con depósito de 200 l, dimensionada a 8 kW (vivienda A+ de 125 m² útiles)</td><td class="n">2.000 €</td></tr>
+<tr><td><b>Suelo radiante</b><br><span class="note">Climatización</span></td><td>Polytherm Premium, panel termoconformado (35,86 €/m²)</td><td class="n">4.483 €</td><td>Sistema estándar de panel liso (Uponor, Orkli o Giacomini) a unos 30 €/m²</td><td class="n">750 €</td></tr>
+<tr><td><b>Cuadro general</b><br><span class="note">Electricidad</span></td><td>Electrificación elevada, 24 elementos, 12 circuitos</td><td class="n">1.171 €</td><td>Mismo esquema montado en fábrica con aparamenta de gama media (Hager, Schneider Resi9)</td><td class="n">320 €</td></tr>
+<tr><td><b>Videoportero</b><br><span class="note">Electricidad</span></td><td>Digital 3 hilos + coaxial, monitor b/n 4"</td><td class="n">730 €</td><td>Kit de 2 hilos en color (Fermax o Golmar)</td><td class="n">280 €</td></tr>
+<tr><td><b>Tarima laminada</b><br><span class="note">Pavimentos</span></td><td>Terhürne Comfloor Akustec AC5/32, 8,5 mm (36,32 €/m²)</td><td class="n">3.245 €</td><td>Laminado AC5 de 8 mm de fabricante nacional (Finsa, Faus) a unos 28 €/m²</td><td class="n">715 €</td></tr>
+<tr><td><b>Gres porcelánico interior, alicatado y peldaños</b><br><span class="note">Pavimentos</span></td><td>Porcelánico de 20 €/m² de material</td><td class="n">3.918 €</td><td>Compra directa a fábrica de Castellón por volumen de 16 viviendas (unos 13 €/m² de material)</td><td class="n">700 €</td></tr>
+<tr><td><b>Pintura plástica</b><br><span class="note">Pintura</span></td><td>Sikkens Alphalux SF (8,11 y 10,45 €/m²)</td><td class="n">3.748 €</td><td>Plástica mate lavable profesional (Titan, Jotun o Bruguer)</td><td class="n">850 €</td></tr>
+<tr><td><b>Ventanas y puertas balconeras</b><br><span class="note">Carpintería exterior</span></td><td>PVC Kömmerling Eurofutur 70, foliado RAL 7016, persiana</td><td class="n">8.012 €</td><td>Perfil equivalente de 70 mm (Veka Softline o Rehau Euro-Design) con el mismo foliado y vidrio</td><td class="n">650 €</td></tr>
+<tr><td><b>Barandilla de terraza</b><br><span class="note">Carpintería exterior</span></td><td>Comenza GlassFit SV-1401 Top (197,86 €/m)</td><td class="n">1.408 €</td><td>Vidrio laminar con perfil de base genérico, misma imagen</td><td class="n">340 €</td></tr>
+<tr class="grp"><td colspan="5">Alcance de la memoria comercial · 1.890 €</td></tr>
+<tr><td><b>Tabiques interiores</b><br><span class="note">Tabiquería</span></td><td>Knauf W112, doble placa por cara (29,94 €/m²)</td><td class="n">3.910 €</td><td>Placa sencilla de 15 mm por cara (W111) entre estancias de la misma vivienda; W112 solo en baños y escalera</td><td class="n">1.000 €</td></tr>
+<tr><td><b>Punto de recarga de vehículo</b><br><span class="note">Electricidad</span></td><td>Caja de recarga 2,3 kW instalada</td><td class="n">1.242 €</td><td>Preinstalación (canalización y línea), que es lo que promete la memoria comercial</td><td class="n">890 €</td></tr>
+      <tr class="tot"><td colspan="4">Ahorro total por vivienda (coste)</td><td class="n">14.187 €</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">Ahorros estimados a precio de mercado de 2026: hay que confirmarlos con ofertas de proveedor. Las alternativas de marca mantienen la clase de eficiencia, el desgaste AC5, el foliado RAL 7016 y la gama media de sanitarios que fija la memoria. Sin tocar: sanitarios Gala (ya son gama media), puertas lacadas de MDF (221 €/ud) y armarios de melamina.</p>
+</section>
+
+<section>
+  <h2>Lo que hay que cerrar antes de fabricar</h2>
+  <div class="risk">
+    <div><b>Cálculo estructural</b><span>Validar marcos, pilares y vuelos de 0,60 m con un calculista. Es la partida con más margen de ahorro.</span></div>
+    <div><b>Medianera</b><span>Cada vivienda cierra sus módulos (68 m² de panel). Estudiar una medianera compartida con protección contra incendios EI 60 entre las dos viviendas.</span></div>
+    <div><b>Vuelo lateral y tabique</b><span>Validar con la arquitecta la pieza de vuelo atornillada en parcela y el desplazamiento de 0,30 m del tabique del dormitorio 1.</span></div>
+    <div><b>Precios de proveedor</b><span>Pedir oferta a Tabihaus (66, 81 y 136 mm) y del acabado exterior sobre panel, ahora estimado a 45 €/m².</span></div>
+    <div><b>OCT y decenal</b><span>Presentar el sistema a la OCT y a la aseguradora del promotor antes de fabricar.</span></div>
+    <div><b>Cimentación</b><span>El promotor ejecuta zapatas y placas de anclaje en los ejes 0,60 · 6,10 · 10,10. La solera Cáviti del proyecto desaparece.</span></div>
+  </div>
+  <p class="note">Excel con todas las mediciones y fórmulas: Documentos\Dwaih\ModularHome\Nevola_piloto_estudio_costes.xlsx</p>
+</section>
+<footer><span>RG21 Capital · Piloto modular Névola</span><span>Uso interno · No enviar al promotor</span></footer>
+</div>

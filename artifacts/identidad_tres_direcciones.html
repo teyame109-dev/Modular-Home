@@ -1,0 +1,379 @@
+<title>Identidad RG21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=Geist:wght@200..700&family=Geist+Mono:wght@400;500&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Fragment+Mono&display=swap">
+<style>
+/* Layout: tablero de presentación. Cada dirección es una banda con logo, sistema y tres diapositivas 16:9 dibujadas en unidades de contenedor. */
+:root {
+  --bg: #EEEFED; --fg: #131416; --muted: #5E6268; --line: #D3D5D2; --panel: #F7F7F6;
+  --ui: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --ui-mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #101113; --fg: #ECEDEE; --muted: #9A9FA6; --line: #2A2D31; --panel: #17191C; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #101113; --fg: #ECEDEE; --muted: #9A9FA6; --line: #2A2D31; --panel: #17191C; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--fg); font-family: var(--ui); font-size: 16px; line-height: 1.55; margin: 0 }
+.wrap { max-width: 1320px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 56px); padding-block: 56px 96px; display: flex; flex-direction: column; gap: 104px }
+h1, h2, h3 { text-wrap: balance; margin: 0 }
+p { margin: 0 }
+
+/* cabecera del documento */
+.intro { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 48px; align-items: end }
+.intro h1 { font-size: clamp(34px, 5vw, 60px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.02 }
+.intro .lede { color: var(--muted); font-size: 18px; max-width: 58ch }
+.diag { border-top: 1px solid var(--fg); padding-top: 18px; display: flex; flex-direction: column; gap: 10px; font-size: 15px }
+.diag b { font-weight: 600 }
+.diag p { color: var(--muted) }
+
+/* banda de dirección */
+.dir { display: flex; flex-direction: column; gap: 36px }
+.dir-head { display: grid; grid-template-columns: 120px minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 22px }
+.dir-head .tag { font-family: var(--ui-mono); font-size: 13px; color: var(--muted) }
+.dir-head h2 { font-size: clamp(28px, 3.2vw, 40px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05 }
+.dir-head p { color: var(--muted); max-width: 52ch }
+
+.sys { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px }
+.logos { display: grid; grid-template-columns: 1fr 1fr 0.55fr; gap: 12px }
+.tile { border-radius: 4px; min-height: 190px; display: flex; align-items: center; justify-content: center; padding: 28px; container-type: inline-size; position: relative; overflow: hidden }
+.spec { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 24px; display: flex; flex-direction: column; gap: 18px; min-width: 0 }
+.chips { display: flex; gap: 8px; flex-wrap: wrap }
+.chip { display: flex; flex-direction: column; gap: 6px; font-family: var(--ui-mono); font-size: 11.5px; color: var(--muted) }
+.chip i { display: block; width: 58px; height: 40px; border-radius: 3px; border: 1px solid var(--line) }
+.typo { display: flex; flex-direction: column; gap: 4px }
+.typo .big { font-size: 40px; line-height: 1.05 }
+.typo small { font-family: var(--ui-mono); font-size: 12px; color: var(--muted) }
+.notes { font-size: 14.5px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; padding: 0; margin: 0; list-style: none }
+.notes li::before { content: "+ "; color: var(--fg) }
+
+.slides { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px }
+.slide { aspect-ratio: 16 / 9; max-width: 100%; container-type: inline-size; position: relative; overflow: hidden; border-radius: 3px; box-shadow: 0 1px 2px rgb(0 0 0 / .06), 0 8px 28px rgb(0 0 0 / .07) }
+.slide > * { position: absolute }
+.cap { font-family: var(--ui-mono); font-size: 12px; color: var(--muted); margin-top: 8px }
+.slide-cell { min-width: 0 }
+
+/* ====== A · PLANO ====== */
+.A { --a-paper: #E7E8E3; --a-ink: #141414; --a-red: #C8381F; --a-grid: rgb(20 20 20 / .13); background: var(--a-paper); color: var(--a-ink); font-family: "Archivo", Arial, sans-serif }
+.A .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .04em; text-transform: uppercase }
+.lgA { display: inline-grid; grid-template-columns: auto auto; column-gap: .55em; align-items: end; font-family: "Archivo", Arial, sans-serif; color: currentColor; line-height: 1 }
+.lgA .sq { width: .62em; height: .62em; border-top: .13em solid currentColor; border-left: .13em solid currentColor; position: relative; align-self: start; margin-top: .02em }
+.lgA .sq::after { content: ""; position: absolute; left: -.13em; top: .7em; width: .13em; height: .13em; background: var(--a-red) }
+.lgA b { font-weight: 860; font-stretch: 118%; letter-spacing: -.045em; font-size: 1em }
+.lgA i { grid-column: 2; font-style: normal; font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: .2em; letter-spacing: .42em; text-transform: uppercase; margin-top: .55em; padding-left: .12em }
+
+/* ====== B · GRAFITO ====== */
+.B { --b-bg: #15171A; --b-surf: #1E2125; --b-silver: #C5CAD0; --b-text: #ECEEF0; --b-mute: #868C93; --b-steel: #8DAECB; background: var(--b-bg); color: var(--b-text); font-family: "Geist", Arial, sans-serif }
+.B .mono { font-family: "Geist Mono", monospace; letter-spacing: .06em; text-transform: uppercase }
+.lgB { display: inline-flex; flex-direction: column; gap: .2em; font-family: "Geist", Arial, sans-serif; line-height: 1; color: currentColor; position: relative; padding: .28em 0 0 .34em }
+.lgB::before { content: ""; position: absolute; left: 0; top: 0; width: .5em; height: .42em; border-top: .028em solid currentColor; border-left: .028em solid currentColor }
+.lgB b { font-weight: 250; font-size: 1em; letter-spacing: -.06em }
+.lgB i { font-style: normal; font-family: "Geist Mono", monospace; font-size: .155em; letter-spacing: .5em; text-transform: uppercase; opacity: .7; padding-left: .2em }
+
+/* ====== C · COBALTO ====== */
+.C { --c-paper: #F6F6F4; --c-ink: #0F1012; --c-blue: #2135C4; --c-mute: #6B6E75; background: var(--c-paper); color: var(--c-ink); font-family: "Schibsted Grotesk", Arial, sans-serif }
+.C .mono { font-family: "Fragment Mono", monospace; letter-spacing: .02em }
+.lgC { display: inline-grid; grid-template-columns: auto auto; column-gap: .16em; align-items: start; font-family: "Schibsted Grotesk", Arial, sans-serif; line-height: .8; color: currentColor }
+.lgC .sq { width: .5em; height: .5em; position: relative; margin-top: .02em }
+.lgC .sq::before, .lgC .sq::after { content: ""; position: absolute; left: 0; top: 0; background: var(--sqc, var(--c-blue)) }
+.lgC .sq::before { width: 100%; height: .16em }
+.lgC .sq::after { width: .16em; height: 100% }
+.lgC b { font-weight: 850; font-size: 1em; letter-spacing: -.065em; padding-right: .04em }
+.lgC i { grid-column: 2; font-style: italic; font-weight: 500; font-size: .25em; letter-spacing: -.01em; margin-top: .3em; padding-left: .04em }
+
+.reco { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 48px; border-top: 1px solid var(--fg); padding-top: 26px }
+.reco h2 { font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08 }
+.reco .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px }
+.reco .cols div { display: flex; flex-direction: column; gap: 6px; min-width: 0 }
+.reco .cols b { font-weight: 600 }
+.reco .cols p { color: var(--muted); font-size: 15px }
+
+@media (max-width: 960px) {
+  .intro, .sys, .reco { grid-template-columns: minmax(0, 1fr) }
+  .dir-head { grid-template-columns: minmax(0, 1fr); gap: 8px }
+  .slides { grid-template-columns: minmax(0, 1fr) }
+  .reco .cols { grid-template-columns: minmax(0, 1fr) }
+}
+@media (max-width: 560px) { .logos { grid-template-columns: 1fr 1fr } .logos .tile:last-child { grid-column: span 2 } }
+</style>
+
+<main class="wrap">
+  <header class="intro">
+    <div style="display:flex; flex-direction:column; gap:22px">
+      <h1>Tres direcciones para las presentaciones de RG21</h1>
+      <p class="lede">Se mantiene el logo de siempre: la escuadra, «rg21» en minúscula y «capital» debajo. Cambia todo lo que hay a su alrededor. Cada dirección sale del oficio de la empresa: el plano de taller, el capital que financia y la monografía de arquitectura.</p>
+    </div>
+    <div class="diag">
+      <b>Por qué la imagen actual parece hecha con IA</b>
+      <p>Montserrat, fondo crema, acento bronce y palabras gigantes en gris claro detrás de los títulos. Es la combinación que hoy repiten casi todas las presentaciones generadas con IA.</p>
+      <p>El logo tiene buena idea pero poca precisión: la escuadra no guarda relación con el grosor de las letras, y «capital» flota sin alinearse con nada.</p>
+    </div>
+  </header>
+
+  <!-- ================= A ================= -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="tag">Dirección A</span>
+      <h2>Plano de taller</h2>
+      <p>El documento técnico como estética: papel gris frío, retícula visible que es la modulación real de los módulos, cotas en mono y un único rojo minio, el color de la imprimación del acero.</p>
+    </div>
+    <div class="sys">
+      <div class="logos">
+        <div class="tile A" style="font-size:20cqw"><span class="lgA"><span class="sq"></span><b>rg21</b><i>capital</i></span></div>
+        <div class="tile A" style="background:var(--a-ink); color:var(--a-paper); font-size:20cqw"><span class="lgA"><span class="sq"></span><b>rg21</b><i>capital</i></span></div>
+        <div class="tile A" style="background:var(--a-red); color:#F2F1EC; font-size:34cqw"><span class="lgA"><span class="sq" style="--x:0"></span><b>21</b></span></div>
+      </div>
+      <div class="spec">
+        <div class="chips">
+          <span class="chip"><i style="background:#E7E8E3"></i>Papel E7E8E3</span>
+          <span class="chip"><i style="background:#141414"></i>Tinta 141414</span>
+          <span class="chip"><i style="background:#C8381F"></i>Minio C8381F</span>
+          <span class="chip"><i style="background:#B9BBB5"></i>Retícula B9BBB5</span>
+        </div>
+        <div class="typo">
+          <span class="big" style="font-family:Archivo,Arial,sans-serif; font-weight:860; font-stretch:118%; letter-spacing:-.04em">NÉVOLA 148,30</span>
+          <small>Archivo expandida 860 · IBM Plex Mono para cotas y datos</small>
+        </div>
+        <ul class="notes">
+          <li>La escuadra lleva el mismo grosor que el trazo de la «r».</li>
+          <li>«capital» se alinea con el arranque de «rg21» y se compone en mono espaciada.</li>
+          <li>Un cuadrado minio marca la esquina: es la placa de anclaje del módulo.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slides">
+      <!-- A1 portada -->
+      <div class="slide-cell">
+        <div class="slide A">
+          <svg viewBox="0 0 1600 900" style="inset:0; width:100%; height:100%" aria-hidden="true">
+            <g stroke="#141414" stroke-opacity=".13" stroke-width="1.5">
+              <line x1="560" y1="0" x2="560" y2="900"/><line x1="968" y1="0" x2="968" y2="900"/><line x1="1262" y1="0" x2="1262" y2="900"/><line x1="1562" y1="0" x2="1562" y2="900"/>
+              <line x1="0" y1="740" x2="1600" y2="740"/>
+            </g>
+            <g fill="#C8381F"><rect x="554" y="734" width="12" height="12"/><rect x="962" y="734" width="12" height="12"/><rect x="1256" y="734" width="12" height="12"/><rect x="1556" y="734" width="12" height="12"/></g>
+            <g font-family="IBM Plex Mono, monospace" font-size="19" fill="#141414" fill-opacity=".62" letter-spacing="1"><text x="764" y="716" text-anchor="middle">3,20</text><text x="1115" y="716" text-anchor="middle">2,30</text><text x="1412" y="716" text-anchor="middle">2,35</text></g>
+          </svg>
+          <span class="lgA" style="left:5.5cqw; top:5.5cqw; font-size:3.4cqw"><span class="sq"></span><b>rg21</b><i>capital</i></span>
+          <p class="mono" style="right:5.5cqw; top:6cqw; font-size:1.05cqw; text-align:right; line-height:1.6">Propuesta para Nido Capital<br>Octubre 2026</p>
+          <h3 style="left:5.5cqw; bottom:21cqw; font-size:12.4cqw; font-weight:880; font-stretch:122%; letter-spacing:-.05em; line-height:.86">NÉVOLA</h3>
+          <p style="left:5.6cqw; bottom:12.8cqw; width:30cqw; font-size:1.7cqw; line-height:1.3; font-weight:500">16 viviendas industrializadas en Guadalix de la Sierra</p>
+          <p class="mono" style="left:5.6cqw; bottom:4.4cqw; font-size:1cqw">Planta baja en módulos de 3,20 / 2,30 / 2,35 m</p>
+        </div>
+        <p class="cap">Portada</p>
+      </div>
+      <!-- A2 cifra -->
+      <div class="slide-cell">
+        <div class="slide A">
+          <span class="lgA" style="left:5.5cqw; top:5.5cqw; font-size:1.9cqw"><span class="sq"></span><b>rg21</b></span>
+          <p class="mono" style="left:5.5cqw; top:15cqw; font-size:1.15cqw; color:var(--a-red)">Precio de la vivienda piloto</p>
+          <h3 style="left:5cqw; top:18cqw; font-size:15.5cqw; font-weight:880; font-stretch:72%; letter-spacing:-.035em; line-height:1">297.900<span style="font-size:.32em; font-stretch:100%; letter-spacing:0; margin-left:.12em">€</span></h3>
+          <div style="left:5.5cqw; right:5.5cqw; bottom:6cqw; display:grid; grid-template-columns:repeat(3,1fr); border-top:.14cqw solid var(--a-ink)">
+            <div style="padding-top:1.4cqw; display:flex; flex-direction:column; gap:.5cqw"><span class="mono" style="font-size:.95cqw; opacity:.62">Por m² construido</span><b style="font-size:3cqw; font-weight:760; font-stretch:90%">2.009 €</b></div>
+            <div style="padding-top:1.4cqw; display:flex; flex-direction:column; gap:.5cqw; border-left:.1cqw solid var(--a-grid); padding-left:1.6cqw"><span class="mono" style="font-size:.95cqw; opacity:.62">Superficie</span><b style="font-size:3cqw; font-weight:760; font-stretch:90%">148,30 m²</b></div>
+            <div style="padding-top:1.4cqw; display:flex; flex-direction:column; gap:.5cqw; border-left:.1cqw solid var(--a-grid); padding-left:1.6cqw"><span class="mono" style="font-size:.95cqw; opacity:.62">Serie de 16</span><b style="font-size:3cqw; font-weight:760; font-stretch:90%">4.478.600 €</b></div>
+          </div>
+        </div>
+        <p class="cap">Cifra clave</p>
+      </div>
+      <!-- A3 técnica -->
+      <div class="slide-cell">
+        <div class="slide A">
+          <span class="lgA" style="left:5.5cqw; top:5.5cqw; font-size:1.9cqw"><span class="sq"></span><b>rg21</b></span>
+          <h3 style="left:5.5cqw; top:15cqw; width:30cqw; font-size:3.6cqw; font-weight:780; font-stretch:105%; letter-spacing:-.03em; line-height:1">Planta baja en tres módulos</h3>
+          <p style="left:5.5cqw; top:27cqw; width:28cqw; font-size:1.35cqw; line-height:1.45; opacity:.8">Las juntas caen sobre tabiques a 3,20 y 5,50 m. Ningún módulo pasa de 3,20 m de ancho, así que todos viajan en góndola rebajada.</p>
+          <p class="mono" style="left:5.5cqw; bottom:5cqw; font-size:.95cqw; opacity:.62">Lámina 01 · Escala gráfica</p>
+          <svg viewBox="-1.4 -1.6 10.6 12.6" style="right:5cqw; top:6cqw; height:83%; width:auto" aria-label="Planta baja con tres módulos">
+            <g fill="none" stroke="#141414" stroke-width=".06"><rect x="0" y="0" width="3.2" height="9.5"/><rect x="3.2" y="0" width="2.3" height="9.5"/><rect x="5.5" y="0" width="2.35" height="9.5"/></g>
+            <line x1="7.85" y1="-.6" x2="7.85" y2="10.1" stroke="#141414" stroke-width=".05" stroke-dasharray=".3 .15"/>
+            <g fill="#C8381F"><rect x="-.09" y="-.09" width=".18" height=".18"/><rect x="3.11" y="-.09" width=".18" height=".18"/><rect x="5.41" y="-.09" width=".18" height=".18"/><rect x="7.76" y="-.09" width=".18" height=".18"/><rect x="-.09" y="9.41" width=".18" height=".18"/><rect x="3.11" y="9.41" width=".18" height=".18"/><rect x="5.41" y="9.41" width=".18" height=".18"/><rect x="7.76" y="9.41" width=".18" height=".18"/></g>
+            <g stroke="#C8381F" stroke-width=".035"><line x1="0" y1="10.35" x2="7.85" y2="10.35"/><line x1="0" y1="10.2" x2="0" y2="10.5"/><line x1="3.2" y1="10.2" x2="3.2" y2="10.5"/><line x1="5.5" y1="10.2" x2="5.5" y2="10.5"/><line x1="7.85" y1="10.2" x2="7.85" y2="10.5"/><line x1="-.55" y1="0" x2="-.55" y2="9.5"/><line x1="-.7" y1="0" x2="-.4" y2="0"/><line x1="-.7" y1="9.5" x2="-.4" y2="9.5"/></g>
+            <g font-family="IBM Plex Mono, monospace" font-size=".36" fill="#C8381F" text-anchor="middle"><text x="1.6" y="10.95">3,20</text><text x="4.35" y="10.95">2,30</text><text x="6.67" y="10.95">2,35</text><text transform="translate(-.75 4.75) rotate(-90)">9,50</text></g>
+            <g font-family="Archivo, Arial" font-weight="800" font-size=".62" fill="#141414" text-anchor="middle"><text x="1.6" y="1.3">M1</text><text x="4.35" y="1.3">M2</text><text x="6.67" y="1.3">M3</text></g>
+          </svg>
+        </div>
+        <p class="cap">Lámina técnica</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= B ================= -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="tag">Dirección B</span>
+      <h2>Grafito</h2>
+      <p>La de una firma de capital privado: fondo grafito, cifras enormes en peso fino, plata y un azul acero apagado. Calla mucho y deja que hablen los números y el volumen del edificio.</p>
+    </div>
+    <div class="sys">
+      <div class="logos">
+        <div class="tile B" style="font-size:24cqw"><span class="lgB"><b>rg21</b><i>capital</i></span></div>
+        <div class="tile B" style="background:#E9EBED; color:#15171A; font-size:24cqw"><span class="lgB"><b>rg21</b><i>capital</i></span></div>
+        <div class="tile B" style="background:var(--b-surf); color:var(--b-steel); font-size:36cqw"><span class="lgB"><b>21</b></span></div>
+      </div>
+      <div class="spec">
+        <div class="chips">
+          <span class="chip"><i style="background:#15171A"></i>Grafito 15171A</span>
+          <span class="chip"><i style="background:#1E2125"></i>Superficie 1E2125</span>
+          <span class="chip"><i style="background:#C5CAD0"></i>Plata C5CAD0</span>
+          <span class="chip"><i style="background:#8DAECB"></i>Acero 8DAECB</span>
+        </div>
+        <div class="typo">
+          <span class="big" style="font-family:Geist,Arial,sans-serif; font-weight:220; letter-spacing:-.05em">297.900 €</span>
+          <small>Geist 220 para cifras · Geist Mono para etiquetas</small>
+        </div>
+        <ul class="notes">
+          <li>La escuadra pasa a línea de plano, con el grosor del trazo fino de la letra.</li>
+          <li>«rg21» en peso 250, más cerca de una marca financiera que de una constructora.</li>
+          <li>Funciona en relieve sobre papel y en una placa de latón para la nave.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slides">
+      <div class="slide-cell">
+        <div class="slide B">
+          <span class="lgB" style="left:5.5cqw; top:5.5cqw; font-size:3cqw"><b>rg21</b><i>capital</i></span>
+          <h3 style="left:5.2cqw; bottom:17cqw; font-size:10.5cqw; font-weight:200; letter-spacing:-.06em; line-height:.9">Névola</h3>
+          <p style="left:5.6cqw; bottom:10.5cqw; width:34cqw; font-size:1.7cqw; line-height:1.35; color:var(--b-mute)">16 viviendas industrializadas en Guadalix de la Sierra. Propuesta para Nido Capital.</p>
+          <p class="mono" style="left:5.6cqw; bottom:5cqw; font-size:.95cqw; color:var(--b-mute)">Octubre 2026</p>
+          <svg class="iso" data-explode="0" style="right:4cqw; top:9cqw; width:52cqw; height:auto" aria-label="Volumen de la vivienda en seis módulos"></svg>
+        </div>
+        <p class="cap">Portada</p>
+      </div>
+      <div class="slide-cell">
+        <div class="slide B">
+          <span class="lgB" style="left:5.5cqw; top:5.5cqw; font-size:1.8cqw"><b>rg21</b></span>
+          <p class="mono" style="left:5.6cqw; top:17cqw; font-size:1.05cqw; color:var(--b-steel)">Vivienda piloto, sin IVA</p>
+          <h3 style="left:5cqw; top:20cqw; font-size:16cqw; font-weight:180; letter-spacing:-.065em; line-height:1; color:var(--b-silver)">297.900<span style="font-size:.3em; letter-spacing:-.02em; margin-left:.15em; color:var(--b-mute)">€</span></h3>
+          <div style="left:5.6cqw; right:5.6cqw; bottom:6.5cqw; display:flex; gap:7cqw; padding-top:1.6cqw; border-top:.08cqw solid #3A3F45">
+            <div style="display:flex; flex-direction:column; gap:.4cqw"><b style="font-size:2.6cqw; font-weight:300; letter-spacing:-.03em">2.009 €/m²</b><span class="mono" style="font-size:.9cqw; color:var(--b-mute)">Precio por m² construido</span></div>
+            <div style="display:flex; flex-direction:column; gap:.4cqw"><b style="font-size:2.6cqw; font-weight:300; letter-spacing:-.03em">6 módulos</b><span class="mono" style="font-size:.9cqw; color:var(--b-mute)">Fabricados en taller</span></div>
+            <div style="display:flex; flex-direction:column; gap:.4cqw"><b style="font-size:2.6cqw; font-weight:300; letter-spacing:-.03em">148,30 m²</b><span class="mono" style="font-size:.9cqw; color:var(--b-mute)">Construidos</span></div>
+          </div>
+        </div>
+        <p class="cap">Cifra clave</p>
+      </div>
+      <div class="slide-cell">
+        <div class="slide B">
+          <span class="lgB" style="left:5.5cqw; top:5.5cqw; font-size:1.8cqw"><b>rg21</b></span>
+          <h3 style="left:5.5cqw; top:16cqw; width:30cqw; font-size:3.8cqw; font-weight:300; letter-spacing:-.045em; line-height:1.05">Seis módulos, tres por planta</h3>
+          <p style="left:5.5cqw; top:28cqw; width:27cqw; font-size:1.35cqw; line-height:1.5; color:var(--b-mute)">Estructura de acero con 13.216 kg y envolvente de panel sándwich con U = 0,20. Se montan en parcela en una jornada de grúa.</p>
+          <svg class="iso" data-explode="1.6" style="right:3cqw; top:5cqw; width:58cqw; height:auto" aria-label="Despiece de los seis módulos"></svg>
+        </div>
+        <p class="cap">Lámina técnica</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= C ================= -->
+  <section class="dir">
+    <div class="dir-head">
+      <span class="tag">Dirección C</span>
+      <h2>Cobalto</h2>
+      <p>La monografía de arquitectura: papel casi blanco, negro y un único azul cobalto en bloques grandes. Tipografía grotesca muy apretada, como en las publicaciones de estudios suizos y holandeses.</p>
+    </div>
+    <div class="sys">
+      <div class="logos">
+        <div class="tile C" style="font-size:25cqw"><span class="lgC"><span class="sq"></span><b>rg21</b><i>capital</i></span></div>
+        <div class="tile C" style="background:var(--c-blue); color:#F6F6F4; --sqc:#F6F6F4; font-size:25cqw"><span class="lgC"><span class="sq"></span><b>rg21</b><i>capital</i></span></div>
+        <div class="tile C" style="background:var(--c-ink); color:#F6F6F4; font-size:40cqw"><span class="lgC"><span class="sq"></span><b>21</b></span></div>
+      </div>
+      <div class="spec">
+        <div class="chips">
+          <span class="chip"><i style="background:#F6F6F4"></i>Papel F6F6F4</span>
+          <span class="chip"><i style="background:#0F1012"></i>Negro 0F1012</span>
+          <span class="chip"><i style="background:#2135C4"></i>Cobalto 2135C4</span>
+          <span class="chip"><i style="background:#6B6E75"></i>Gris 6B6E75</span>
+        </div>
+        <div class="typo">
+          <span class="big" style="font-family:'Schibsted Grotesk',Arial,sans-serif; font-weight:850; letter-spacing:-.06em">névola <i style="font-weight:500; letter-spacing:-.02em">piloto</i></span>
+          <small>Schibsted Grotesk 850 y cursiva · Fragment Mono para datos</small>
+        </div>
+        <ul class="notes">
+          <li>La escuadra se vuelve sólida y en cobalto: es el sello de la marca.</li>
+          <li>«capital» en cursiva de la misma familia, colgada del arranque de la «g».</li>
+          <li>El «21» con escuadra sirve como avatar, sello de lacre o marca de agua en planos.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slides">
+      <div class="slide-cell">
+        <div class="slide C" style="background:var(--c-blue); color:#F6F6F4; --sqc:#F6F6F4">
+          <span class="lgC" style="left:5.5cqw; top:5.5cqw; font-size:3.6cqw"><span class="sq"></span><b>rg21</b><i>capital</i></span>
+          <p class="mono" style="right:5.5cqw; top:6cqw; font-size:1.1cqw; text-align:right; line-height:1.55">Nido Capital<br>Octubre 2026</p>
+          <h3 style="left:4.8cqw; bottom:13.5cqw; font-size:17cqw; font-weight:850; letter-spacing:-.075em; line-height:.8">névola</h3>
+          <p style="left:5.5cqw; bottom:5.5cqw; width:44cqw; font-size:1.8cqw; line-height:1.3; font-weight:500">16 viviendas industrializadas en <i>Guadalix de la Sierra</i></p>
+        </div>
+        <p class="cap">Portada</p>
+      </div>
+      <div class="slide-cell">
+        <div class="slide C">
+          <div style="left:0; top:0; bottom:0; width:47cqw; background:var(--c-ink); color:#F6F6F4"></div>
+          <span class="lgC" style="left:5cqw; top:5cqw; font-size:1.9cqw; color:#F6F6F4"><span class="sq"></span><b>rg21</b></span>
+          <p style="left:5cqw; bottom:19cqw; font-size:1.5cqw; color:#F6F6F4; font-style:italic">Vivienda piloto</p>
+          <h3 style="left:4.4cqw; bottom:5cqw; font-size:11.2cqw; font-weight:850; letter-spacing:-.07em; line-height:.9; color:#F6F6F4">297.900</h3>
+          <div style="left:53cqw; right:5.5cqw; top:12cqw; display:flex; flex-direction:column; gap:3.2cqw">
+            <div style="display:flex; flex-direction:column; gap:.6cqw; border-top:.35cqw solid var(--c-blue); padding-top:1.2cqw"><b style="font-size:4.4cqw; font-weight:800; letter-spacing:-.05em; line-height:1">2.009 €/m²</b><span style="font-size:1.35cqw; color:var(--c-mute)">sobre 148,30 m² construidos</span></div>
+            <div style="display:flex; flex-direction:column; gap:.6cqw; border-top:.12cqw solid var(--c-ink); padding-top:1.2cqw"><b style="font-size:4.4cqw; font-weight:800; letter-spacing:-.05em; line-height:1">4.478.600 €</b><span style="font-size:1.35cqw; color:var(--c-mute)">la serie de 16 viviendas</span></div>
+            <p class="mono" style="position:static; font-size:1cqw; color:var(--c-mute)">Importes en euros, sin IVA</p>
+          </div>
+        </div>
+        <p class="cap">Cifra clave</p>
+      </div>
+      <div class="slide-cell">
+        <div class="slide C">
+          <span class="lgC" style="left:5.5cqw; top:5.5cqw; font-size:1.9cqw"><span class="sq"></span><b>rg21</b></span>
+          <h3 style="left:5.5cqw; top:15cqw; width:34cqw; font-size:4.6cqw; font-weight:850; letter-spacing:-.06em; line-height:.95">Juntas sobre <i style="font-weight:500; color:var(--c-blue)">tabiques</i></h3>
+          <p style="left:5.5cqw; top:29cqw; width:30cqw; font-size:1.4cqw; line-height:1.45; color:var(--c-mute)">Moviendo 0,30 m el tabique del dormitorio 1, las juntas de los módulos quedan ocultas en las dos plantas.</p>
+          <svg viewBox="-.8 -.9 9.6 11.6" style="right:5cqw; top:6cqw; height:84%; width:auto" aria-label="Planta baja con las juntas de módulo">
+            <rect x="0" y="0" width="7.85" height="9.5" fill="#E8E9F6"/>
+            <g fill="#2135C4"><rect x="3.15" y="0" width=".1" height="3.5"/><rect x="5.45" y="0" width=".1" height="2.6"/><rect x="0" y="3.4" width="3.2" height=".1"/><rect x="5.5" y="2.5" width="2.35" height=".1"/><rect x="5.5" y="4.4" width="2.35" height=".1"/></g>
+            <g fill="none" stroke="#0F1012" stroke-width=".05"><rect x="0" y="0" width="7.85" height="9.5"/></g>
+            <g stroke="#2135C4" stroke-width=".035" stroke-dasharray=".22 .12"><line x1="3.2" y1="-.5" x2="3.2" y2="10"/><line x1="5.5" y1="-.5" x2="5.5" y2="10"/></g>
+            <g font-family="Fragment Mono, monospace" font-size=".33" fill="#0F1012" text-anchor="middle"><text x="1.6" y="10.4">3,20</text><text x="4.35" y="10.4">2,30</text><text x="6.67" y="10.4">2,35</text></g>
+            <g font-family="Schibsted Grotesk, Arial" font-size=".34" fill="#6B6E75" text-anchor="middle"><text x="1.6" y="1.9">Dormitorio 1</text><text x="6.67" y="1.4">Baño 1</text><text x="6.67" y="3.6">Lavadero</text><text x="3.9" y="7.2">Salón · comedor</text></g>
+          </svg>
+        </div>
+        <p class="cap">Lámina técnica</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reco">
+    <h2>Mi recomendación: Plano de taller para los promotores, Grafito para los inversores</h2>
+    <div class="cols">
+      <div><b>A · Plano de taller</b><p>Es la única que no podría usar otra empresa: la retícula son vuestros módulos y el rojo es vuestro acero. Encaja con un promotor que quiere ver control técnico.</p></div>
+      <div><b>B · Grafito</b><p>La más sobria y la que mejor soporta cifras grandes. Sirve para hablar con fondos y bancos, como hará RG21 Capital al financiar la serie.</p></div>
+      <div><b>C · Cobalto</b><p>La más memorable de primeras y la más arriesgada. Pide buenas fotos de obra y de fábrica para no quedarse en solo tipografía.</p></div>
+    </div>
+  </section>
+</main>
+
+<script>
+// Volumen isométrico de los seis módulos (medidas reales del piloto, en metros)
+(function () {
+  var c = Math.cos(Math.PI / 6), s = Math.sin(Math.PI / 6);
+  var P = function (x, y, z) { return [(x - y) * c, (x + y) * s - z]; };
+  var mods = [
+    [0, 3.2, 0.6, 10.1, 0, 3.05], [3.2, 5.5, 0.6, 10.1, 0, 3.05], [5.5, 7.85, 0.6, 10.1, 0, 3.05],
+    [-0.6, 3.2, 0, 8.47, 3.05, 6.1], [3.2, 5.5, 0, 8.47, 3.05, 6.1], [5.5, 7.85, 0, 10.1, 3.05, 6.1]
+  ];
+  document.querySelectorAll('svg.iso').forEach(function (svg) {
+    var ex = parseFloat(svg.getAttribute('data-explode')) || 0;
+    var out = [], pts = [];
+    mods.forEach(function (m, i) {
+      var x0 = m[0], x1 = m[1], y0 = m[2], y1 = m[3], z0 = m[4] + (i > 2 ? ex : 0), z1 = m[5] + (i > 2 ? ex : 0);
+      var f = function (arr) { return arr.map(function (p) { var q = P(p[0], p[1], p[2]); pts.push(q); return q[0].toFixed(3) + ',' + q[1].toFixed(3); }).join(' '); };
+      var top = f([[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]]);
+      var right = f([[x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1]]);
+      var front = f([[x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]]);
+      out.push('<polygon points="' + right + '" fill="#23272C" stroke="#C5CAD0" stroke-width=".035"/>');
+      out.push('<polygon points="' + front + '" fill="#1B1E22" stroke="#C5CAD0" stroke-width=".035"/>');
+      out.push('<polygon points="' + top + '" fill="#2C3137" stroke="#C5CAD0" stroke-width=".035"/>');
+      if (ex) { var q = P((x0 + x1) / 2, y1, (z0 + z1) / 2); out.push('<text x="' + (q[0] - .25).toFixed(2) + '" y="' + (q[1] + .5).toFixed(2) + '" font-family="Geist Mono, monospace" font-size=".42" fill="#8DAECB">M' + (i + 1) + '</text>'); }
+    });
+    var xs = pts.map(function (p) { return p[0]; }), ys = pts.map(function (p) { return p[1]; });
+    var minx = Math.min.apply(null, xs) - .4, miny = Math.min.apply(null, ys) - .4, w = Math.max.apply(null, xs) - minx + .4, h = Math.max.apply(null, ys) - miny + .4;
+    svg.setAttribute('viewBox', minx.toFixed(2) + ' ' + miny.toFixed(2) + ' ' + w.toFixed(2) + ' ' + h.toFixed(2));
+    svg.innerHTML = out.join('');
+  });
+})();
+</script>
