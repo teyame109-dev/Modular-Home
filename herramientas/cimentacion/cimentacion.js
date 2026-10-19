@@ -62,8 +62,8 @@ pl += cotaV(Y[1], Y[2], 9.35, '5,50') + cotaV(Y[2], Y[3], 9.35, '4,00') + cotaV(
 pl += `<text x="${PX(2.20)}" y="${PY(3.4)}" text-anchor="middle" class="lb">M1</text><text x="${PX(4.95)}" y="${PY(3.4)}" text-anchor="middle" class="lb">M2</text><text x="${PX(7.27)}" y="${PY(3.4)}" text-anchor="middle" class="lb">M3</text>`;
 pl += `<text x="${PX(2.20)}" y="${PY(4.0)}" text-anchor="middle" class="sm">cámara sanitaria</text><text x="${PX(4.95)}" y="${PY(4.0)}" text-anchor="middle" class="sm">ventilada</text>`;
 pl += `<text x="${PX(0.30)}" y="${PY(4.6)}" text-anchor="middle" class="sm" transform="rotate(-90 ${PX(0.30)} ${PY(4.6)})">vuelo M4 · sin cimentación</text>`;
-pl += `<text x="${PX(9.0)}" y="${PY(5.2)}" class="sm" transform="rotate(90 ${PX(9.0)} ${PY(5.2)})">vivienda pareada colindante</text>`;
-const plantaSVG = `<svg viewBox="0 0 ${Math.round(PX(10.6))} ${Math.round(PY(11.85))}" role="img" aria-label="Planta de cimentación: cuatro muros corridos bajo los lados largos de los módulos, dos muretes de cierre y placas de anclaje en cada pilar">
+pl += `<text x="${PX(10.35)}" y="${PY(3.2)}" class="sm" transform="rotate(90 ${PX(10.35)} ${PY(3.2)})">vivienda pareada colindante →</text>`;
+const plantaSVG = `<svg viewBox="0 0 ${Math.round(PX(10.75))} ${Math.round(PY(11.85))}" role="img" aria-label="Planta de cimentación: cuatro muros corridos bajo los lados largos de los módulos, dos muretes de cierre y placas de anclaje en cada pilar">
 <defs><pattern id="vuelo" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" style="stroke:var(--soft)" stroke-width="1"/></pattern></defs>${pl}</svg>`;
 
 // ---------- sección transversal A-A (por y = 3,00)
@@ -89,10 +89,10 @@ const mod = (x0, x1, za, zb, t, op) => `<rect x="${SX(x0)}" y="${SZ(zb)}" width=
 se += mod(0.60, 3.80, -0.05, 3.10, 'M1') + mod(3.80, 6.10, -0.05, 3.10, 'M2') + mod(6.10, 8.45, -0.05, 3.10, 'M3');
 se += mod(0.00, 3.80, 3.10, 6.15, 'M4') + mod(3.80, 6.10, 3.10, 6.15, 'M5') + mod(6.10, 8.45, 3.10, 6.15, 'M6');
 // niveles
-const niv = (z, t, side = 'R', dy = 0) => { const x = side === 'R' ? 9.0 : -0.55; const tx = side === 'R' ? SX(9.6) : SX(-0.95); return `<line x1="${SX(x - 0.2)}" y1="${SZ(z)}" x2="${SX(x + 0.5)}" y2="${SZ(z)}" style="stroke:var(--accent)" stroke-width="1"/><path d="M${SX(x)} ${SZ(z)} l-6 -9 h12 Z" style="fill:var(--accent)"/><text x="${tx}" y="${SZ(z) + 4 + dy}" class="ct" text-anchor="${side === 'R' ? 'start' : 'end'}">${t}</text>`; };
+const niv = (z, t, side = 'R', dy = 0) => { const x = side === 'R' ? 9.45 : -0.55; const tx = side === 'R' ? SX(10.05) : SX(-0.95); return `<line x1="${SX(x - 0.2)}" y1="${SZ(z)}" x2="${SX(x + 0.5)}" y2="${SZ(z)}" style="stroke:var(--accent)" stroke-width="1"/><path d="M${SX(x)} ${SZ(z)} l-6 -9 h12 Z" style="fill:var(--accent)"/><text x="${tx}" y="${SZ(z) + 4 + dy}" class="ct" text-anchor="${side === 'R' ? 'start' : 'end'}">${t}</text>`; };
 se += niv(6.40, '+6,40 cubierta') + niv(3.35, '+3,35 suelo P1') + niv(0.20, '+0,20 suelo PB', 'R', -5) + niv(0, '±0,00 rasante del proyecto', 'R', 9) + niv(-0.05, '−0,05 coronación de muro', 'L', -6) + niv(-0.20, '−0,20 terreno junto a fachada', 'L', 12) + niv(-0.70, '−0,70 cara superior de zapata') + niv(-1.20, '−1,20 fondo de zapata (a confirmar)');
-se += `<text x="${SX(-1.0)}" y="${SZ(5.6)}" class="sm">vuelo lateral 0,60</text>`;
-const seccionSVG = `<svg viewBox="0 0 ${Math.round(SX(14.6))} ${Math.round(SZ(-1.85))}" role="img" aria-label="Sección transversal: los seis módulos apoyados en los cuatro muros sobre zapata corrida, con cámara sanitaria y niveles">${se}</svg>`;
+se += `<text x="${SX(-0.15)}" y="${SZ(4.6)}" class="sm" text-anchor="end">vuelo lateral 0,60 →</text>`;
+const seccionSVG = `<svg viewBox="0 0 ${Math.round(SX(15.1))} ${Math.round(SZ(-1.85))}" role="img" aria-label="Sección transversal: los seis módulos apoyados en los cuatro muros sobre zapata corrida, con cámara sanitaria y niveles">${se}</svg>`;
 
 // ---------- detalle de apoyo (muro interior M-2)
 const d = 300, dx = 60, dz = 140; // 1 m = 300 px
