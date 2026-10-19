@@ -184,6 +184,18 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   </div>
 </section>
 
+<section class="obra montaje" style="display:flex;flex-direction:column;gap:14px">
+  <h2>Y después: los módulos sobre los muros</h2>
+  <p class="lede">La misma obra, ya con los módulos colocados. Así se ve en real cómo apoya el sistema en la cimentación y cómo se monta en parcela.</p>
+  <div class="fotos">
+    <figure class="f-ancha"><img src="img/montaje-1-modulos-sobre-muros.jpg" alt="Módulos de planta baja apoyados sobre los muros de hormigón, con un remate de chapa entre el muro y la fachada" loading="lazy" width="1500" height="1125"><figcaption>1 · Módulos de planta baja apoyados en los muros. El muro queda visto como zócalo y un remate de chapa cierra el encuentro con la fachada.</figcaption></figure>
+    <figure><img src="img/montaje-2-grua-planta-primera.jpg" alt="Una grúa coloca un módulo de planta primera sobre los módulos de planta baja ya instalados" loading="lazy" width="1125" height="1500"><figcaption>2 · La grúa coloca un módulo de planta primera sobre los de abajo.</figcaption></figure>
+    <figure><img src="img/montaje-3-planta-baja-colocada.jpg" alt="Planta baja modular colocada, con el panel de cubierta aún sin terminar, junto a muros de hormigón y la piscina en obra" loading="lazy" width="1125" height="1500"><figcaption>3 · Planta baja colocada sobre su cimentación, con la cubierta todavía por rematar.</figcaption></figure>
+    <figure><img src="img/montaje-4-encuentro-plantas.jpg" alt="Esquina de la vivienda con dos plantas de módulos apiladas sobre el zócalo de hormigón" loading="lazy" width="1125" height="1500"><figcaption>4 · Dos plantas apiladas sobre el zócalo: la junta entre módulos queda en la línea de la fachada.</figcaption></figure>
+    <figure><img src="img/montaje-5-vivienda-montada.jpg" alt="Vivienda modular de dos plantas ya montada, con la estructura de la pérgola y la terraza en obra" loading="lazy" width="1125" height="1500"><figcaption>5 · Vivienda montada, con la pérgola y la terraza pendientes de terminar.</figcaption></figure>
+  </div>
+</section>
+
 <section style="display:flex;flex-direction:column;gap:14px">
   <h2>Cómo funciona</h2>
   <div class="notes">
