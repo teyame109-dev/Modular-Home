@@ -142,6 +142,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - Tres direcciones de identidad (Plano de taller, Grafito, Cobalto): https://claude.ai/artifact/PNKmqYami7eeBuaYU3rFau
 - Variante «Hoja de taller», cinco diapositivas de muestra: https://claude.ai/artifact/FiCUvV71AhLFdGpT838gUn
 - Web de la propuesta completa, con la vivienda que se desmonta al hacer scroll. **Publicada en Vercel y PÚBLICA: https://nevola-rg21.vercel.app** (proyecto nevola-rg21, cuenta teyame109-8303; se despliega desde `web/site/` de este repo, y desde el 19/10/2026 **automáticamente con cada push a main**, en unos 15 s: no hay que desplegar a mano). Copia privada: https://claude.ai/artifact/SiAEFHbvzW83WzgZ7GM2qD. Se regenera con `node web/build_web.js`, que toma `web/nevola_web_base.html` (portada y desmontaje) y los dibujos de `herramientas/propuesta/project/slides/`.
+- Documentación técnica de taller para los operarios, SIN nada económico (21 diapositivas): https://claude.ai/artifact/9hfjR9rXmtMZxrKbrBDKHd. Se genera con `herramientas/tecnica/tecnica_build.js` a partir de las diapositivas de la propuesta y falla si queda algún €, IVA, precio, margen o coste.
 - Oferta comercial antigua, superada: https://claude.ai/artifact/9CWhA82CXe4HehS8GZEvJ9
 
 ## Agentes del proyecto (`.claude/agents/`)

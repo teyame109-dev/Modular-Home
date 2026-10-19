@@ -1,0 +1,62 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-19T09:10:05Z"
+  },
+  "lists": "css",
+  "title": "Névola · Documentación técnica de taller",
+  "cover": "cover",
+  "order": [
+    "cover",
+    "resumen",
+    "adaptacion",
+    "plantas",
+    "volumen",
+    "mod_m1",
+    "mod_m2",
+    "mod_m3",
+    "mod_m4",
+    "mod_m5",
+    "mod_m6",
+    "alz_pb",
+    "alz_p1",
+    "tab_pb",
+    "tab_p1",
+    "fabricacion",
+    "parcela",
+    "sistema",
+    "calidades",
+    "alcance",
+    "cierre"
+  ],
+  "sections": {
+    "s1": {
+      "description": "Qué se construye y cómo se pasa el proyecto a módulos",
+      "start": "cover"
+    },
+    "s2": {
+      "description": "Los seis módulos: fichas, alzados y plantas con tabiques",
+      "start": "mod_m1"
+    },
+    "s3": {
+      "description": "Fabricación, montaje, sistema constructivo y calidades",
+      "start": "fabricacion"
+    }
+  },
+  "faces": {
+    "archivo": {
+      "family": "Archivo",
+      "href": "https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&display=swap"
+    },
+    "archivo-narrow": {
+      "family": "Archivo Narrow",
+      "href": "https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500..700&display=swap"
+    },
+    "ibm-plex-mono": {
+      "family": "IBM Plex Mono",
+      "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+    }
+  },
+  "designSystems": []
+}
