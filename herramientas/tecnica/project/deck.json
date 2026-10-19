@@ -2,7 +2,7 @@
   "v": 4,
   "createdOnFiles": {
     "v": 1,
-    "at": "2026-10-19T09:10:05Z"
+    "at": "2026-10-19T09:12:31Z"
   },
   "lists": "css",
   "title": "Névola · Documentación técnica de taller",
@@ -27,8 +27,7 @@
     "parcela",
     "sistema",
     "calidades",
-    "alcance",
-    "cierre"
+    "alcance"
   ],
   "sections": {
     "s1": {
