@@ -148,6 +148,7 @@ svg text{font-family:var(--mono);fill:var(--ink)} .ax{font-size:13px;font-weight
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
 table{border-collapse:collapse;width:100%;font-size:14.5px;font-variant-numeric:tabular-nums} th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule)} th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--soft);border-bottom:2px solid var(--ink)} td.n{text-align:right;font-family:var(--mono);white-space:nowrap} tr.tot td{font-weight:800;border-top:2px solid var(--ink)}
 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:2px;background:var(--ink);border:2px solid var(--ink)} .notes div{background:var(--paper);padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0} .notes b{font-weight:800} .notes span{font-size:14px;color:var(--soft)} .notes .warn b{color:var(--accent)}
+.fotos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.fotos figure{margin:0;background:var(--paper);border:2px solid var(--ink);display:flex;flex-direction:column;min-width:0}.fotos .f-ancha{grid-column:1 / -1}.fotos img{display:block;width:100%;height:auto;max-width:100%}.fotos .f-ancha img{aspect-ratio:4/3;object-fit:cover}.fotos figure:not(.f-ancha) img{aspect-ratio:3/4;object-fit:cover}.fotos figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;border-top:2px solid var(--ink)}@media (max-width:640px){.fotos{grid-template-columns:minmax(0,1fr)}}
 footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:2px solid var(--ink);padding-top:12px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
 </style>
 <div class="wrap">
@@ -171,6 +172,16 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
 <section class="sheet">
   <div class="draw">${detalleSVG}</div>
   <div class="caj"><div><span>Lámina</span><b>C03 · Apoyo de dos módulos en muro interior</b></div><div><span>Escala</span><b>Gráfica</b></div><div><span>Referencia</span><b>Pino, E03-E04</b></div><div><span>Rev.</span><b>A · estimación</b></div></div>
+</section>
+
+<section class="obra" style="display:flex;flex-direction:column;gap:14px">
+  <h2>Así queda en obra</h2>
+  <p class="lede">Fotografías de una obra en Menorca con este mismo sistema: muros corridos de hormigón sobre zapata, sobre los que se colocan después los módulos.</p>
+  <div class="fotos">
+    <figure class="f-ancha"><img src="img/obra-muros-terminados.jpg" alt="Muros corridos de hormigón ya desencofrados, con la cámara sanitaria entre ellos y el terreno compactado" loading="lazy" width="1600" height="1200"><figcaption>Muros terminados y desencofrados. Entre ellos queda la cámara sanitaria; sobre su coronación apoyan los marcos de los módulos.</figcaption></figure>
+    <figure><img src="img/obra-encofrado-armado.jpg" alt="Zanjas encofradas con paneles amarillos y armaduras de zapata y arranque de muro colocadas" loading="lazy" width="1203" height="1600"><figcaption>Encofrado y armado de zapatas corridas y arranques de muro, antes de hormigonar.</figcaption></figure>
+    <figure><img src="img/obra-muros-y-losa.jpg" alt="Muros de cimentación terminados junto a una losa de hormigón con esperas de armadura" loading="lazy" width="1504" height="2000"><figcaption>Muros ya hormigonados junto a una losa con esperas para el resto de la obra.</figcaption></figure>
+  </div>
 </section>
 
 <section style="display:flex;flex-direction:column;gap:14px">
