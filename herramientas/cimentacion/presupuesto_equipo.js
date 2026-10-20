@@ -51,12 +51,12 @@ ws.getCell(`B${r}`).font = { name: 'Arial', size: 9, italic: true, color: { argb
 
 // Lo que no aparece
 r += 2; ws.getCell(`A${r}`).value = 'Lo que no aparece en el manuscrito (a confirmar con el equipo)'; ws.getCell(`A${r}`).font = { name: 'Arial', bold: true, size: 12 };
-r++; ws.getCell(`A${r}`).value = 'Los precios del manuscrito parecen de mano de obra: encofrado por metro, vertido (no suministro) a 16,50 €/m³ y armado por kg. Si es así, faltan los materiales y el movimiento de tierras. Precios en blanco: rellenar cuando el equipo los confirme.';
+r++; ws.getCell(`A${r}`).value = 'Los precios del manuscrito son de mano de obra: encofrado por metro, vertido (no suministro) a 16,50 €/m³ y armado por kg. El hormigón se suministra aparte a 95 €/m³ y el acero también va aparte. Precios en blanco: rellenar cuando estén confirmados.';
 ws.mergeCells(`A${r}:G${r}`); ws.getCell(`A${r}`).alignment = { wrapText: true, vertical: 'top' }; ws.getCell(`A${r}`).font = { name: 'Arial', size: 10, color: { argb: 'FF5E6064' } }; ws.getRow(r).height = 42;
 r++; ws.getRow(r).values = ['', 'Partida', 'De dónde sale la cantidad', 'Ud', 'Cantidad', 'Precio', 'Importe']; th(ws.getRow(r));
 const pend = [
-  ['Suministro de hormigón HA-25', 'Los 37 m³ vertidos', 'm³', `=E${first + 2}+E${first + 3}`],
-  ['Suministro de acero B500S', 'Si los 0,67 €/kg son solo elaboración y armado', 'kg', `=E${first + 4}`],
+  ['Suministro de hormigón HA-25', 'Los 37 m³ vertidos. Precio de Iván (20/10/2026)', 'm³', `=E${first + 2}+E${first + 3}`, 95],
+  ['Suministro de acero B500S', 'Va aparte de los 0,67 €/kg de elaboración y armado. Precio pendiente', 'kg', `=E${first + 4}`],
   ['Hormigón de limpieza bajo zapatas', 'Superficie de zapatas del croquis: 10,00 × (0,75 + 0,90 + 0,90 + 0,75) + 2 × 8,50 × 0,75', 'm²', '=10*(0.75+0.9+0.9+0.75)+2*8.5*0.75'],
   ['Excavación de zanjas y retirada de tierras', 'Pendiente de medir', 'm³', null],
   ['Grava o lámina en la cámara sanitaria', 'Pendiente de definir', 'm²', null],
@@ -64,9 +64,9 @@ const pend = [
   ['Replanteo topográfico', 'Ejes de muros y placas', 'ud', null],
 ];
 const pf = r + 1;
-for (const [d, m, u, q] of pend) {
+for (const [d, m, u, q, p] of pend) {
   r++; const row = ws.getRow(r);
-  row.values = ['', d, m, u, q ? { formula: q.slice(1) } : null, null, { formula: `IF(F${r}="","",E${r}*F${r})` }];
+  row.values = ['', d, m, u, q ? { formula: q.slice(1) } : null, p ?? null, { formula: `IF(F${r}="","",E${r}*F${r})` }];
   body(row, 7); row.getCell(5).numFmt = NUM; row.getCell(6).numFmt = EUR; row.getCell(7).numFmt = EUR; input(row.getCell(5)); input(row.getCell(6));
 }
 const pl = r;
@@ -127,8 +127,7 @@ const wq = wb.addWorksheet('Preguntas al equipo', { views: [{ showGridLines: fal
 wq.columns = [{ width: 5 }, { width: 100 }];
 head(wq, 'Preguntas para cerrar el presupuesto', 'Antes de darlo por bueno.');
 [
-  '¿Los precios son solo de mano de obra? ¿Incluyen el suministro de hormigón HA-25 y de acero, o van aparte?',
-  'Los 0,67 €/kg del hierro: ¿son elaboración y armado, o también el suministro del acero?',
+  'Hormigón y acero van aparte (hormigón a 95 €/m³). ¿A qué precio está el acero B500S suministrado en obra?',
   '¿Quién hace y paga la excavación de zanjas, la retirada de tierras, el hormigón de limpieza y la grava de la cámara sanitaria?',
   'Canto de las zapatas: con 26 m³ sale ≈ 0,57 m. ¿Qué canto han previsto?',
   'Placas: el croquis tiene 12 (3 por muro). En cada muro interior apoyan dos módulos y cada uno lleva su pilar, así que salen 2 placas por eje: 18 en total. ¿Las 32 € son por placa suministrada y colocada, con pernos?',
