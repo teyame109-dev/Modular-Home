@@ -116,7 +116,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-
     <div class="panel">
       <div class="wrap">
         <div class="card" id="card" aria-live="polite"></div>
-        <div><div class="rail" id="rail" role="group" aria-label="Pasos"></div><p class="hint">Arrastra la casa para girarla</p></div>
+        <div><div class="rail" id="rail" role="group" aria-label="Pasos"></div><p class="hint">Arrastra la casa para darle la vuelta</p></div>
       </div>
     </div>
   </div>
@@ -335,8 +335,9 @@ function pose(t) {
   mat.steel.opacity = 1 - ex; pergola.visible = ex < 0.98; pergola.position.z = ex * 3;
   mat.ghost.opacity = .18 * (1 - ex * .6);
   mat.joint.opacity = smooth(BANDS[8] + 0.08, BANDS[8] + 0.12, t);
-  // cámara: empieza como el render (desde el jardín, por la esquina del vuelo) y gira despacio al desmontar
-  const az = THREE.MathUtils.degToRad(-38 + (reduce ? 0 : 34 * smooth(BANDS[1], BANDS[8], t) - 34 * smooth(BANDS[8], 1, t))) + yaw;
+  // cámara: empieza como el render (desde el jardín, por la esquina del vuelo), da una vuelta completa
+  // mientras se recorren los módulos y vuelve al punto de partida para el montaje final
+  const az = THREE.MathUtils.degToRad(-38 + (reduce ? 0 : 360 * smooth(BANDS[1], BANDS[8], t))) + yaw;
   const el = THREE.MathUtils.degToRad(10 + 10 * ex);
   const r = (27 + 9 * ex) * Math.max(1, 1.0 / camera.aspect);
   camera.position.set(CENTER.x + r * Math.sin(az) * Math.cos(el), CENTER.y + 0.8 * ex + r * Math.sin(el), CENTER.z + r * Math.cos(az) * Math.cos(el));
@@ -391,7 +392,7 @@ addEventListener('pointermove', e => {
   if (!drag) return;
   const dx = e.clientX - drag.x;
   if (!drag.on && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(e.clientY - drag.y)) { drag.on = true; host.classList.add('drag'); }
-  if (drag.on) yawT = Math.max(-1.2, Math.min(1.2, drag.yaw - dx * 0.006));
+  if (drag.on) yawT = drag.yaw - dx * 0.008;   // sin tope: vuelta completa arrastrando
 });
 addEventListener('pointerup', () => { if (drag) { drag = null; host.classList.remove('drag'); } });
 addEventListener('pointercancel', () => { drag = null; host.classList.remove('drag'); });
