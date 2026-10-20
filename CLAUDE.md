@@ -124,7 +124,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - Confirmar el posible doble conteo de la gestión y el coste de la nave real.
 - Redactar la cláusula del piloto «a riesgo».
 - Decidir si se aplica a las 28 diapositivas la variante de diseño «Hoja de taller».
-- Cimentación: el equipo pasó a mano un presupuesto de 6.885 € sin IVA (20/10/2026; foto en `ofertas-proveedores/`, Excel en `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`). Es solo mano de obra. Materiales aparte: hormigón a 95 €/m³ (37 m³: 3.515 €) y acero a 0,95 €/kg (3.000 kg: 2.850 €). Con eso, la cimentación va por 13.250 € sin IVA. Faltan la excavación, el hormigón de limpieza, la grava, el bombeo y el replanteo. Mide 37 m³ y 3.000 kg, frente a los 29 m³ y 1.670 kg de nuestra estimación A, y lleva 12 placas, frente a nuestras 18. Las preguntas al equipo están en la hoja «Preguntas al equipo».
+- Cimentación: el equipo pasó a mano un presupuesto de 6.885 € sin IVA (20/10/2026; foto en `ofertas-proveedores/`, Excel en `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`). Es solo mano de obra. Materiales aparte: hormigón a 95 €/m³ (37 m³: 3.515 €) y acero a 0,95 €/kg (3.000 kg: 2.850 €). Hormigón de limpieza a 9 €/m² (45,75 m²: 411,75 €). Con eso, la cimentación va por 13.662 € sin IVA. Faltan la excavación, la grava, el bombeo y el replanteo. Mide 37 m³ y 3.000 kg, frente a los 29 m³ y 1.670 kg de nuestra estimación A, y lleva 12 placas, frente a nuestras 18. Las preguntas al equipo están en la hoja «Preguntas al equipo».
 
 ## Dónde está cada cosa
 
