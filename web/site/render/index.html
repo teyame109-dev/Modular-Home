@@ -4,22 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>Névola módulo a módulo</title>
-<meta name="description" content="El render de la promoción Névola montado con los seis módulos de acero que se fabrican en nave.">
+<title>Névola en seis módulos</title>
+<meta name="description" content="La vivienda del render de Névola levantada en 3D con las medidas reales de sus seis módulos de acero, que se desmonta al hacer scroll.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#E7E8E3">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Archivo+Narrow:wght@500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: portada con render de la promoción, escenario fijo que monta la vivienda módulo a módulo con el scroll, galería final */
+/* Layout: portada partida (texto + render del promotor), escenario 3D fijo que desmonta la vivienda con el scroll, comparación final con los renders */
 :root{ --bg:#E7E8E3; --paper:#EFF0EB; --ink:#141414; --soft:#5E6064; --rule:#C3C5BF; --accent:#C8381F;
-  --display:'Archivo', Arial, sans-serif; --narrow:'Archivo Narrow', 'Arial Narrow', sans-serif; --mono:'IBM Plex Mono', 'Courier New', monospace; color-scheme:light }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; color-scheme:dark }}
-:root[data-theme="dark"]{ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; color-scheme:dark }
-*{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  --wall:#F3F3EF; --glass:#2F3539; --steel:#2A2D30;
+  --display:'Archivo', Arial, sans-serif; --narrow:'Archivo Narrow', 'Arial Narrow', sans-serif; --mono:'IBM Plex Mono', 'Courier New', monospace;
+  --ease-out:cubic-bezier(0.23, 1, 0.32, 1); color-scheme:light }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; color-scheme:dark }}
+:root[data-theme="dark"]{ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; color-scheme:dark }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--display);font-size:15.5px;line-height:1.55}
-p{margin:0;max-width:68ch} h1,h2,h3{margin:0}
-.wrap{max-width:1180px;margin-inline:auto;padding-inline:16px}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.mono{font-family:var(--mono)}
+p{margin:0;max-width:65ch} h1,h2{margin:0}
+.wrap{max-width:1240px;margin-inline:auto;padding-inline:16px}
+button,a{touch-action:manipulation}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
 .top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:20px 16px;border-bottom:1px solid var(--rule)}
 .logo{display:inline-grid;grid-template-columns:auto auto;column-gap:.14em;align-items:end;font-family:var(--display);font-size:34px;line-height:1;color:var(--ink);text-decoration:none}
@@ -27,229 +32,371 @@ p{margin:0;max-width:68ch} h1,h2,h3{margin:0}
 .logo .sq::after{content:"";position:absolute;left:0;top:0;width:.12em;height:.12em;background:var(--accent)}
 .logo b{font-weight:900;letter-spacing:-.05em}
 .logo i{grid-column:2;font-style:normal;font-family:var(--mono);font-weight:500;font-size:.3em;letter-spacing:.42em;text-transform:uppercase;margin-top:.5em;padding-left:.1em}
-.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);border-radius:2px;padding:9px 12px;transition:transform 160ms cubic-bezier(0.23,1,0.32,1),background-color 160ms ease,color 160ms ease}
+.back{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);text-decoration:none;border:1px solid var(--ink);border-radius:2px;padding:9px 12px;user-select:none;-webkit-user-select:none;transition:transform 160ms var(--ease-out),background-color 160ms ease,color 160ms ease}
 .back:active{transform:scale(.97)}
 @media (hover:hover) and (pointer:fine){.back:hover{background:var(--ink);color:var(--paper)}}
-.back:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
-.hero{display:grid;gap:18px;padding-block:36px 28px}
-.hero h1{font-weight:800;font-size:clamp(34px,6.4vw,72px);line-height:.95;letter-spacing:-.04em;text-wrap:balance;max-width:16ch}
-.hero .lede{color:var(--soft);font-size:clamp(16px,1.6vw,19px);text-wrap:pretty}
-.hero figure{margin:8px 0 0;border:2px solid var(--ink);background:var(--paper)}
-.hero figure img{display:block;width:100%;height:auto}
-figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);padding:8px 12px;border-top:1px solid var(--rule)}
-.cue{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
-.cue::before{content:"";width:1px;height:28px;background:var(--accent)}
+/* Portada partida: texto a la izquierda, render del promotor a la derecha */
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:32px;align-items:center;padding-block:40px 48px}
+.hero h1{font-weight:800;font-size:clamp(36px,5.2vw,64px);line-height:.98;letter-spacing:-.04em;text-wrap:balance}
+.hero .lede{color:var(--soft);font-size:clamp(16px,1.5vw,18.5px);margin-top:18px;text-wrap:pretty}
+.hero figure{margin:0;border:2px solid var(--ink);background:var(--paper)}
+.hero img{display:block;width:100%;height:auto}
+figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--soft);padding:8px 12px;border-top:1px solid var(--rule)}
 
-/* ── Escenario del montaje ── */
-.montaje{position:relative;height:calc(9 * 60vh + 100vh);border-top:2px solid var(--ink)}
-.stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:14px;overflow:hidden;padding-block:12px}
-.stage > *{width:100%;max-width:calc((100svh - 200px) * 2.02);margin-inline:auto}
-.view{position:relative;aspect-ratio:1717/850;overflow:hidden;border:2px solid var(--ink);background:var(--paper)}
-.canvas{position:absolute;top:0;left:var(--shift,0%);width:var(--zoom,100%);aspect-ratio:1717/850}
-.canvas > *{position:absolute;inset:0;width:100%;height:100%}
-.base{display:block;object-fit:cover;filter:grayscale(1) contrast(.65) brightness(1.12);transition:filter 900ms ease}
-.canvas.done .base{filter:none}
-.plan{pointer-events:none}
-.plan .wash{fill:var(--bg);opacity:.88;transition:opacity 900ms ease}
-.canvas.done .plan .wash{opacity:0}
-.plan .slot{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:9 7;vector-effect:non-scaling-stroke;transition:opacity 300ms ease}
-.plan .slot.on{opacity:0}
-.plan text{font-family:var(--mono);font-size:30px;font-weight:500;fill:var(--ink);transition:opacity 300ms ease}
-.plan text.on{opacity:0}
-.mod{will-change:transform;pointer-events:none;opacity:0;transform:translate3d(0,var(--up),0);transition:transform 1100ms cubic-bezier(.3,.75,.25,1),opacity 250ms ease,filter 600ms ease}
-.mod.in{opacity:1;transform:translate3d(0,0,0)}
-.mod.air{filter:drop-shadow(0 22px 16px rgba(0,0,0,.38))}
-.canvas.done .mod.in{opacity:0;transition-delay:0s,900ms,0s;transition-duration:1100ms,500ms,600ms}
-.piece{position:absolute;inset:0;background:url(img/vivienda-jardin.jpg) 0 0/100% 100% no-repeat}
-.cable{position:absolute;width:2px;height:0;background:var(--ink);pointer-events:none;opacity:0;transition:height 1100ms cubic-bezier(.3,.75,.25,1),opacity 250ms ease}
-.cable.in{height:var(--h)} .cable.air{opacity:1}
-.joints{pointer-events:none;opacity:0;transition:opacity 400ms ease}
-.canvas.juntas .joints{opacity:1}
-.joints line{stroke:var(--accent);stroke-width:3;stroke-dasharray:2 0;vector-effect:non-scaling-stroke}
-.joints text{font-family:var(--mono);font-size:26px;font-weight:500;fill:var(--accent);paint-order:stroke;stroke:var(--paper);stroke-width:6px}
-
-.panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end}
-.card{min-height:118px;display:flex;flex-direction:column;gap:6px}
-.card .k{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-.card h2{font-weight:800;font-size:clamp(22px,3vw,34px);letter-spacing:-.03em;line-height:1.05}
+/* Escenario 3D */
+.montaje{position:relative;height:620vh;border-top:2px solid var(--ink)}
+.stage{position:sticky;top:0;height:100svh;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.scene{position:relative;min-height:0;touch-action:pan-y;cursor:grab}
+.scene.drag{cursor:grabbing}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.tag{position:absolute;left:0;top:0;pointer-events:none;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink);background:var(--paper);border:1px solid var(--ink);padding:3px 7px;border-radius:2px;white-space:nowrap;opacity:0;will-change:transform,opacity}
+.tag.hot{background:var(--accent);border-color:var(--accent);color:#fff}
+.fallback{position:absolute;inset:0;display:none;place-items:center;padding:24px;text-align:center;color:var(--soft)}
+.nogl .fallback{display:grid}
+.panel{border-top:1px solid var(--rule);background:var(--bg);padding-block:14px calc(14px + env(safe-area-inset-bottom,0px))}
+.panel .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end}
+.card{min-height:104px;display:flex;flex-direction:column;gap:5px}
+.card .k{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.card h2{font-weight:800;font-size:clamp(21px,2.6vw,32px);letter-spacing:-.03em;line-height:1.05}
 .card h2 .n{font-family:var(--narrow);font-weight:700;letter-spacing:-.01em}
 .card p{color:var(--soft);text-wrap:pretty}
-.card a{color:var(--ink)}
-.card > *{transition:opacity 220ms ease, transform 220ms cubic-bezier(0.23,1,0.32,1)}
+.card > *{transition:opacity 200ms var(--ease-out),transform 200ms var(--ease-out)}
 .card.swap > *{opacity:0;transform:translateY(6px)}
-.rail{display:flex;gap:6px;flex-wrap:wrap}
-.rail button{font-family:var(--mono);font-size:12px;letter-spacing:.04em;min-width:40px;height:40px;padding:0 6px;display:grid;place-items:center;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--soft);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1)}
+.rail{display:grid;grid-template-columns:repeat(9,44px);gap:6px}
+.rail button{font-family:var(--mono);font-size:12px;height:44px;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--soft);cursor:pointer;user-select:none;-webkit-user-select:none;transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease,transform 120ms var(--ease-out)}
 .rail button:active{transform:scale(.95)}
 .rail button.done{border-color:var(--ink);color:var(--ink)}
 .rail button.now{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (hover:hover) and (pointer:fine){.rail button:not(.now):hover{border-color:var(--ink);color:var(--ink)}}
-.view{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.hint{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-top:6px}
+.hint{font-family:var(--mono);font-size:11px;color:var(--soft);margin-top:6px;text-align:right}
 
-.gal{display:grid;gap:40px;padding-block:56px 32px}
-.gal h2{font-weight:800;font-size:clamp(24px,3.4vw,38px);letter-spacing:-.03em;line-height:1.05}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.grid figure{margin:0;border:2px solid var(--ink);background:var(--paper);display:flex;flex-direction:column;min-width:0}
-.grid .wide{grid-column:1/-1}
-.grid img{display:block;width:100%;height:auto}
+/* Cierre: render frente a datos */
+.close{display:grid;gap:24px;padding-block:64px 40px}
+.close h2{font-weight:800;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.03em;line-height:1.05;max-width:22ch}
+.pair{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:14px;align-items:start}
+.pair figure{margin:0;border:2px solid var(--ink);background:var(--paper)}
+.pair img{display:block;width:100%;height:auto}
+.facts{display:grid;gap:2px;background:var(--ink);border:2px solid var(--ink)}
+.facts div{background:var(--paper);padding:14px 16px;display:grid;gap:2px}
+.facts b{font-family:var(--narrow);font-weight:700;font-size:28px;letter-spacing:-.01em;line-height:1.1}
+.facts span{color:var(--soft);font-size:14px}
 .note{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--soft);font-size:14px}
-footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:2px solid var(--ink);padding-block:12px 40px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;border-top:2px solid var(--ink);padding-block:12px 40px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft)}
 
-@media (max-width:720px){
-  .canvas{--zoom:150%;--shift:-19.6%}
-  .view{aspect-ratio:1717/1275}
-  .stage > *{max-width:calc((100svh - 230px) * 1.35)}
-  .panel{grid-template-columns:1fr}
-  .rail{display:grid;grid-template-columns:repeat(9,minmax(0,1fr))} .rail button{min-width:0}
-  .plan text{font-size:40px}
-  .grid{grid-template-columns:1fr}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:22px;padding-block:28px 32px}
+  .panel .wrap{grid-template-columns:1fr;gap:10px}
+  .rail{grid-template-columns:repeat(9,minmax(0,1fr))}
+  .hint{text-align:left}
+  .card{min-height:118px}
+  .pair{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){ .card > *, .plan .slot, .plan text{transition:none} .mod{--up:-6% !important;transition-duration:500ms} .cable{display:none} }
+@media (prefers-reduced-motion:reduce){ .card > *{transition:none} }
 </style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
 </head>
 <body>
 <div class="wrap">
   <div class="top"><a class="logo" href="/" aria-label="RG21 Capital, volver a la propuesta"><span class="sq"></span><b>rg21</b><i>capital</i></a><a class="back" href="/">Volver a la propuesta</a></div>
-
   <section class="hero">
-    <p class="eyebrow">Névola · Guadalix de la Sierra · 16 viviendas</p>
-    <h1>La casa del render, módulo a módulo</h1>
-    <p class="lede">Tomamos la imagen del proyecto y la dividimos en los seis módulos de acero que se fabrican en la nave de Seseña. Al bajar, la grúa los coloca uno a uno sobre la cimentación hasta que la casa queda igual que en el render.</p>
-    <figure><img src="img/piscinas.jpg" width="1790" height="699" alt="Render de la promoción Névola: viviendas pareadas blancas alrededor de las piscinas comunitarias, con la sierra al fondo"><figcaption>Render de la promoción · Névola, Guadalix de la Sierra</figcaption></figure>
-    <p class="cue">Baja o toca la imagen para montar la vivienda</p>
+    <div>
+      <h1>La casa del render, en seis módulos</h1>
+      <p class="lede">La misma vivienda, levantada en 3D con las medidas reales de los módulos que fabricamos en Seseña. Al bajar, se desmonta.</p>
+    </div>
+    <figure><img src="img/vivienda-jardin.jpg" width="1717" height="850" alt="Render de una vivienda de Névola vista desde el jardín: planta primera en voladizo, porche con pérgola y piscina"><figcaption>Render de la promoción Névola</figcaption></figure>
   </section>
 </div>
 
-<section class="montaje" id="montaje" aria-label="Montaje de la vivienda sobre el render">
-  <div class="stage wrap">
-    <div class="view" id="view" role="button" tabindex="0" aria-label="Siguiente paso del montaje">
-      <div class="canvas" id="canvas">
-        <img class="base" id="base" src="img/vivienda-jardin.jpg" width="1717" height="850" alt="Render de una vivienda de Névola desde el jardín: planta primera en voladizo, porche con pérgola y piscina">
-        <svg class="plan" viewBox="0 0 1717 850" preserveAspectRatio="none" aria-hidden="true"><g id="wash"></g><g id="slots"></g></svg>
-        <!-- módulos y cables los crea el script -->
-        <svg class="joints" viewBox="0 0 1717 850" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="656" y1="12" x2="656" y2="712"/><line x1="845" y1="4" x2="845" y2="716"/>
-          <text x="666" y="560">3,20</text><text x="855" y="600">5,50</text>
-        </svg>
-      </div>
+<section class="montaje" id="montaje" aria-label="Maqueta 3D de la vivienda, que se desmonta en módulos">
+  <div class="stage">
+    <div class="scene" id="scene">
+      <p class="fallback">Este navegador no puede mostrar la maqueta 3D. Los seis módulos y sus medidas están en la propuesta.</p>
     </div>
     <div class="panel">
-      <div class="card" id="card" aria-live="polite"></div>
-      <div><div class="rail" id="rail" role="group" aria-label="Pasos del montaje"></div><p class="hint">Toca un paso o la imagen</p></div>
+      <div class="wrap">
+        <div class="card" id="card" aria-live="polite"></div>
+        <div><div class="rail" id="rail" role="group" aria-label="Pasos"></div><p class="hint">Arrastra la casa para girarla</p></div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="wrap">
-  <section class="gal">
-    <div style="display:grid;gap:12px">
-      <p class="eyebrow">La promoción</p>
-      <h2>Catorce pareadas y dos aisladas, la misma casa fabricada dieciséis veces</h2>
+  <section class="close">
+    <h2>Lo que fabricamos es lo que se ve en el render</h2>
+    <div class="pair">
+      <figure><img src="img/traseras-pareadas.jpg" width="1877" height="803" loading="lazy" alt="Fachadas traseras de las viviendas pareadas de Névola con porches y jardín"><figcaption>Traseras de las pareadas, render de la promoción</figcaption></figure>
+      <div class="facts">
+        <div><b>148,30 m²</b><span>construidos en dos plantas</span></div>
+        <div><b>6 módulos</b><span>tres por planta, sin cambiar la distribución</span></div>
+        <div><b>3,20 · 2,30 · 2,35 m</b><span>anchos de planta baja; el M4 llega a 3,80 m con el vuelo</span></div>
+      </div>
     </div>
-    <div class="grid">
-      <figure class="wide"><img src="img/traseras-pareadas.jpg" width="1877" height="803" loading="lazy" alt="Fachadas traseras de las viviendas pareadas con porches, jardín comunitario y la sierra"><figcaption>Traseras de las pareadas, con porche y jardín</figcaption></figure>
-      <figure><img src="img/jardin-comun.jpg" width="1857" height="792" loading="lazy" alt="Zona verde común de Névola con arbolado, caminos y viviendas al fondo"><figcaption>Zona verde común</figcaption></figure>
-      <figure><img src="img/vivienda-jardin.jpg" width="1717" height="850" loading="lazy" alt="Vivienda de Névola vista desde el jardín, con la piscina en primer plano"><figcaption>La vivienda montada, desde el jardín</figcaption></figure>
-    </div>
-    <p class="note">Las imágenes son los renders de la promoción. El reparto en módulos se ha dibujado encima y es orientativo: la posición exacta de cada junta es la de los planos de la propuesta.</p>
+    <p class="note">La maqueta está hecha con las medidas de la modulación de la propuesta. Los huecos de ventana son aproximados al render; los definitivos son los del proyecto.</p>
   </section>
   <footer><span>RG21 Capital · Névola</span><a class="back" href="/cimentacion/">Ver la cimentación</a></footer>
 </div>
 
-<script>
-(() => {
-  const W = 1717, H = 850;
-  // Polígonos de cada módulo sobre el render (px de la imagen). Juntas a 3,20 y 5,50 m de la fachada lateral de planta baja.
-  const MODS = [
-    {id:'M1', pts:[[312,484],[656,438],[656,712],[312,706]], dim:'9,50 × 3,20 m', planta:'Planta baja', txt:'Dormitorio 1, cocina y salón. La junta con el M2 cruza el dormitorio y queda oculta en suelo y techo.'},
-    {id:'M2', pts:[[656,438],[845,412],[845,716],[656,712]], dim:'9,50 × 2,30 m', planta:'Planta baja', txt:'Vestíbulo, arranque de la escalera y salón.'},
-    {id:'M3', pts:[[845,412],[858,322],[1062,310],[1062,392],[1318,452],[1320,726],[1062,730],[845,716]], dim:'9,50 × 2,35 m', planta:'Planta baja', txt:'Baño 1, lavadero y salón. La junta cae sobre el tabique del baño.'},
-    {id:'M4', pts:[[238,142],[570,2],[624,12],[656,12],[656,438],[312,484],[238,474]], dim:'8,47 × 3,80 m', planta:'Planta primera', txt:'Dormitorio 3 y baño 2. Lleva dentro los vuelos frontal y lateral de 0,60 m: el voladizo del render es este módulo entero, que viaja en una sola pieza.'},
-    {id:'M5', pts:[[656,12],[845,4],[858,322],[845,412],[656,438]], dim:'8,47 × 2,30 m', planta:'Planta primera', txt:'Dormitorio 2, distribuidor y escalera.'},
-    {id:'M6', pts:[[845,4],[872,4],[1132,176],[1132,145],[1282,145],[1352,262],[1354,345],[1062,330],[1062,310],[858,322]], lab:[1215,265], dim:'10,10 × 2,35 m', planta:'Planta primera', txt:'Escalera, vestidor y baño principal, que sale sobre la terraza.'}
-  ];
-  const STEPS = [
-    {k:'Paso 0 · Parcela', h:'La cimentación, lista para recibir', p:'Muros corridos bajo los lados largos de los módulos y una placa de anclaje en cada pilar. Las líneas discontinuas marcan el sitio de cada módulo. <a href="/cimentacion/">Ver la cimentación</a>.', r:'0'},
-    ...MODS.map((m, i) => ({k:`Paso ${i + 1} · ${m.planta}`, h:`${m.id} <span class="n">${m.dim}</span>`, p:m.txt, r:m.id})),
-    {k:'Paso 7 · Juntas', h:'Las juntas coinciden en las dos plantas', p:'A 3,20 y 5,50 m de la fachada lateral de planta baja. Los módulos de arriba apoyan sobre los marcos de los de abajo, sin cambiar la distribución del proyecto.', r:'J'},
-    {k:'Terminada', h:'148,30 m² montados en parcela', p:'Seis módulos fabricados en nave, transportados y montados. El resultado es la casa del render.', r:'✓'}
-  ];
+<script type="module">
+import * as THREE from 'three';
 
-  const canvas = document.getElementById('canvas'), base = document.getElementById('base');
-  const ns = 'http://www.w3.org/2000/svg';
-  const poly = (pts) => pts.map(p => p.join(',')).join(' ');
-  const clip = (pts) => 'polygon(' + pts.map(([x, y]) => `${(x / W * 100).toFixed(2)}% ${(y / H * 100).toFixed(2)}%`).join(',') + ')';
-  const washG = document.getElementById('wash'), slotsG = document.getElementById('slots'), jointsSvg = canvas.querySelector('.joints');
+// ── Modulación (m), de herramientas/nevtec/piloto_calc.js ──
+// x: desde la fachada lateral exterior de planta primera · z: desde la fachada delantera de planta primera (z crece hacia el jardín)
+// y: cota. Planta baja de +0,20 a +3,35; planta primera de +3,35 a +7,15 con el peto de cubierta.
+const PB = [0.20, 3.35], P1 = [3.35, 7.15];
+// Huecos: cara (f delantera, b trasera, l lateral exterior, w lateral interior), rango en el eje de la cara y cotas
+const MODS = [
+  {id:'M1', x:[0.60,3.80], z:[0.60,10.10], y:PB, dim:'9,50 × 3,20 m', planta:'Planta baja', txt:'Dormitorio 1, cocina y salón. La junta con el M2 cruza el dormitorio y queda oculta en suelo y techo.',
+   holes:[['f',1.4,2.6,1.1,2.5],['l',2.0,2.8,0.6,2.6],['l',5.6,6.4,0.4,2.6],['b',1.1,3.4,0.25,2.65]], peto:[['b'],['l',8.47,10.10]]},
+  {id:'M2', x:[3.80,6.10], z:[0.60,10.10], y:PB, dim:'9,50 × 2,30 m', planta:'Planta baja', txt:'Vestíbulo, arranque de la escalera y salón.',
+   holes:[['f',4.4,5.4,0.25,2.55],['b',4.1,5.8,0.25,2.65]], peto:[['b']]},
+  {id:'M3', x:[6.10,8.45], z:[0.60,10.10], y:PB, dim:'9,50 × 2,35 m', planta:'Planta baja', txt:'Baño 1, lavadero y salón. Su lado largo es la medianera con la vivienda vecina.',
+   holes:[['f',6.9,7.7,1.5,2.4],['b',6.5,7.9,0.25,2.65]]},
+  {id:'M4', x:[0.00,3.80], z:[0.00,8.47], y:P1, dim:'8,47 × 3,80 m', planta:'Planta primera', txt:'Dormitorio 3 y baño 2. Los vuelos frontal y lateral de 0,60 m van dentro del módulo, que viaja en una sola pieza.',
+   holes:[['f',1.0,2.6,4.0,5.9],['l',3.4,4.0,4.0,6.2],['b',1.2,3.0,3.6,5.9]]},
+  {id:'M5', x:[3.80,6.10], z:[0.00,8.47], y:P1, dim:'8,47 × 2,30 m', planta:'Planta primera', txt:'Dormitorio 2, distribuidor y escalera. Sale a la terraza de atrás.',
+   holes:[['f',4.4,5.5,4.0,5.9],['b',4.2,5.7,3.45,5.9]]},
+  {id:'M6', x:[6.10,8.45], z:[0.00,10.10], y:P1, dim:'10,10 × 2,35 m', planta:'Planta primera', txt:'Escalera, vestidor y baño principal, que sale sobre la terraza.',
+   holes:[['f',6.7,7.8,4.4,5.7],['b',6.6,7.9,4.0,5.9],['l',8.8,9.8,3.7,5.9]]},
+];
+const STEPS = [
+  {k:'La vivienda', h:'Pareada tipo, 148,30 m²', p:'La casa del render, con las medidas de la propuesta: dos plantas, terraza atrás y el vuelo de la planta primera.', r:'⌂'},
+  {k:'Desmontada', h:'Seis módulos, tres por planta', p:'Cada módulo es un marco de acero soldado que sale de la nave terminado y se monta en parcela sobre la cimentación.', r:'6'},
+  ...MODS.map(m => ({k:m.planta, h:`${m.id} <span class="n">${m.dim}</span>`, p:m.txt, r:m.id})),
+  {k:'Montada', h:'Las juntas coinciden en las dos plantas', p:'A 3,20 y 5,50 m de la fachada lateral de planta baja. Los módulos de arriba apoyan sobre los marcos de abajo.', r:'✓'},
+];
+// Tramos del scroll: 0 vivienda · 1 desmontaje · 2–7 un módulo cada uno · 8 montada
+const BANDS = [0, 0.09, 0.24, 0.33, 0.42, 0.51, 0.60, 0.69, 0.80, 1];
 
-  const els = MODS.map(m => {
-    const w = document.createElementNS(ns, 'polygon'); w.setAttribute('points', poly(m.pts)); w.setAttribute('class', 'wash'); washG.appendChild(w);
-    const s = document.createElementNS(ns, 'polygon'); s.setAttribute('points', poly(m.pts)); s.setAttribute('class', 'slot'); slotsG.appendChild(s);
-    const xs = m.pts.map(p => p[0]), ys = m.pts.map(p => p[1]);
-    const cx = (Math.min(...xs) + Math.max(...xs)) / 2, top = Math.min(...ys), cy = (Math.min(...ys) + Math.max(...ys)) / 2;
-    const [lx, ly] = m.lab || [cx, cy];
-    const t = document.createElementNS(ns, 'text'); t.setAttribute('x', lx); t.setAttribute('y', ly); t.setAttribute('text-anchor', 'middle'); t.textContent = m.id; slotsG.appendChild(t);
-    const mod = document.createElement('div'); mod.className = 'mod';
-    const piece = document.createElement('div'); piece.className = 'piece'; piece.style.clipPath = piece.style.webkitClipPath = clip(m.pts);
-    mod.appendChild(piece);
-    const cable = document.createElement('div'); cable.className = 'cable'; cable.style.left = (cx / W * 100) + '%'; cable.style.top = '0';
-    // sale desde encima del encuadre; el cable llega hasta el borde superior del módulo
-    mod.style.setProperty('--up', -(top / H * 100 + 105) + '%'); cable.style.setProperty('--h', (top / H * 100) + '%');
-    canvas.insertBefore(mod, jointsSvg); canvas.insertBefore(cable, jointsSvg);
-    return {mod, cable, slot:s, label:t};
-  });
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const host = document.getElementById('scene');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({antialias:true, alpha:true}); }
+catch (e) { document.querySelector('.stage').classList.add('nogl'); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+host.appendChild(renderer.domElement);
+renderer.domElement.setAttribute('aria-hidden', 'true');
 
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const rail = document.getElementById('rail'), view = document.getElementById('view');
-  const card = document.getElementById('card'), sec = document.getElementById('montaje');
-  const btns = STEPS.map((st, i) => {
-    const b = document.createElement('button'); b.type = 'button'; b.textContent = st.r;
-    b.setAttribute('aria-label', st.k.replace(/<[^>]+>/g, ''));
-    b.addEventListener('click', () => go(i)); rail.appendChild(b); return b;
-  });
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, 0.5, 300);
+const CENTER = new THREE.Vector3(4.2, 3.2, 5.0);
 
-  // Paso 0: parcela · 1–6: módulos · 7: juntas · 8: terminada
-  let cur = -1;
-  function setStep(i) {
-    if (i === cur) return;
-    const first = cur < 0; cur = i;
-    els.forEach((e, j) => {
-      const inn = i >= j + 1, was = e.mod.classList.contains('in');
-      e.mod.classList.toggle('in', inn); e.cable.classList.toggle('in', inn);
-      e.slot.classList.toggle('on', inn); e.label.classList.toggle('on', inn);
-      if (inn && !was && !first) {   // cae ahora: sombra y cable mientras está en el aire
-        e.mod.classList.add('air'); e.cable.classList.add('air');
-        clearTimeout(e.tm); e.tm = setTimeout(() => { e.mod.classList.remove('air'); e.cable.classList.remove('air'); }, 1000);
-      }
-    });
-    canvas.classList.toggle('juntas', i === 7); canvas.classList.toggle('done', i === 8);
-    const s = STEPS[i];
-    const fill = () => { card.innerHTML = `<span class="k">${s.k}</span><h2>${s.h}</h2><p>${s.p}</p>`; card.classList.remove('swap'); };
-    if (first || reduce) fill(); else { card.classList.add('swap'); setTimeout(fill, 160); }
-    btns.forEach((b, j) => { b.classList.toggle('now', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-current', j === i ? 'step' : 'false'); });
+// Luz: cielo suave + sol de tarde desde el jardín, como en el render
+scene.add(new THREE.HemisphereLight(0xffffff, 0xd9d6ce, 2.0));
+const sun = new THREE.DirectionalLight(0xfff6ec, 2.3);
+sun.position.set(-14, 22, 20); sun.target.position.copy(CENTER);
+sun.castShadow = true; const big = Math.min(innerWidth, innerHeight) > 700;
+sun.shadow.mapSize.set(big ? 2048 : 1024, big ? 2048 : 1024);
+Object.assign(sun.shadow.camera, {left:-18, right:18, top:18, bottom:-18, near:1, far:80});
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+
+// Colores desde los tokens de la página (cambian con el modo oscuro)
+const C = {};
+function readColors() { for (const k of ['wall','glass','steel','ink','accent','rule']) C[k] = new THREE.Color(css('--' + k)); }
+readColors();
+
+const mat = {
+  glass: new THREE.MeshStandardMaterial({color:C.glass, roughness:.25, metalness:.35}),
+  steel: new THREE.MeshStandardMaterial({color:C.steel, roughness:.6, metalness:.3, transparent:true}),
+  conc: new THREE.MeshStandardMaterial({color:0xb7b8b2, roughness:.95}),
+  joint: new THREE.MeshBasicMaterial({color:C.accent, transparent:true, opacity:0}),
+  ghost: new THREE.LineBasicMaterial({color:C.ink, transparent:true, opacity:.18}),
+};
+
+// Suelo: solo sombra + rejilla fina de plano
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), new THREE.ShadowMaterial({opacity:.16}));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const grid = new THREE.GridHelper(60, 60, C.rule, C.rule); grid.position.set(4.2, 0.002, 5); grid.material.transparent = true; grid.material.opacity = .55; scene.add(grid);
+
+// Cimentación: muros corridos bajo los lados largos de los módulos de planta baja
+const found = new THREE.Group();
+for (const x of [0.60, 3.80, 6.10, 8.45]) {
+  const w = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.2, 9.5), mat.conc);
+  w.position.set(x, 0.1, 5.35); w.castShadow = w.receiveShadow = true; found.add(w);
+}
+scene.add(found);
+
+// ── Un módulo: caja + huecos + petos + aristas ──
+const box = (w, h, d, m) => { const g = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); g.castShadow = g.receiveShadow = true; return g; };
+function buildModule(m) {
+  const g = new THREE.Group();
+  const [x0, x1] = m.x, [z0, z1] = m.z, [y0, y1] = m.y;
+  const W = x1 - x0, D = z1 - z0, H = y1 - y0;
+  const wall = new THREE.MeshStandardMaterial({color:C.wall, roughness:.88, transparent:true});
+  const body = box(W - 0.02, H, D - 0.02, wall); body.position.set(0, H / 2, 0); g.add(body);
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), new THREE.LineBasicMaterial({color:C.ink, transparent:true, opacity:.28}));
+  edges.position.copy(body.position); g.add(edges);
+  const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+  const glass = mat.glass.clone(); glass.transparent = true;
+  for (const [f, a, b, ya, yb] of m.holes) {
+    const h = yb - ya, yc = ya + h / 2 - y0, t = 0.08;
+    let pane;
+    if (f === 'f' || f === 'b') { pane = box(b - a, h, t, glass); pane.position.set((a + b) / 2 - cx, yc, (f === 'f' ? z0 : z1) - cz + (f === 'f' ? -0.005 : 0.005)); }
+    else { pane = box(t, h, b - a, glass); pane.position.set((f === 'l' ? x0 : x1) - cx - 0.005, yc, (a + b) / 2 - cz); }
+    pane.castShadow = false; g.add(pane);
   }
-
-  // El scroll del tramo se reparte en 9 bandas iguales, una por paso
-  const N = STEPS.length;
-  const span = () => sec.offsetHeight - innerHeight;
-  const stepFromScroll = () => { const t = Math.max(0, Math.min(0.9999, -sec.getBoundingClientRect().top / span())); return Math.floor(t * N); };
-  let lock = 0;
-  function go(i) {
-    i = Math.max(0, Math.min(N - 1, i));
-    setStep(i);
-    lock = Date.now() + 1500;   // que el scroll programado no pise el paso elegido
-    const y = sec.getBoundingClientRect().top + scrollY + span() * (i + 0.5) / N;
-    scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
+  for (const [f, a, b] of (m.peto || [])) {   // peto de la terraza sobre la planta baja
+    const ph = 0.9, t = 0.12;
+    const p = f === 'b' ? box(W, ph, t, wall) : box(t, ph, b - a, wall);
+    if (f === 'b') p.position.set(0, H + ph / 2, D / 2 - t / 2); else p.position.set(-W / 2 + t / 2, H + ph / 2, (a + b) / 2 - cz);
+    g.add(p);
   }
-  view.addEventListener('click', () => go(cur + 1 >= N ? 0 : cur + 1));
-  view.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(cur + 1 >= N ? 0 : cur + 1); } });
-  function frame() { if (Date.now() > lock) setStep(stepFromScroll()); }
-  let raf = 0;
-  const req = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; frame(); }); };
-  addEventListener('scroll', req, {passive:true}); addEventListener('resize', req);
-  frame();
-})();
+  g.position.set(cx, y0, cz);
+  const meshes = []; g.traverse(o => { if (o.isMesh) meshes.push(o); });
+  g.userData = {home:new THREE.Vector3(cx, y0, cz), wall, edges:edges.material, glass, top:H, upper:y0 > 1, meshes};
+  scene.add(g);
+  return g;
+}
+const groups = MODS.map(buildModule);
+
+// Pérgola del jardín (no es módulo: se aparta al desmontar)
+const pergola = new THREE.Group();
+for (const [x, z] of [[3.2, 13.0], [8.3, 13.0]]) { const p = box(0.12, 2.9, 0.12, mat.steel); p.position.set(x, 1.45, z); pergola.add(p); }
+for (let i = 0; i < 9; i++) { const s = box(5.3, 0.1, 0.08, mat.steel); s.position.set(5.75, 2.95, 10.4 + i * 0.33); pergola.add(s); }
+for (const x of [3.2, 8.3]) { const s = box(0.1, 0.16, 2.9, mat.steel); s.position.set(x, 2.88, 11.55); pergola.add(s); }
+scene.add(pergola);
+
+// Vivienda vecina (la pareada), solo en línea
+const ghost = new THREE.Group();
+for (const m of MODS) {
+  const W = m.x[1] - m.x[0], D = m.z[1] - m.z[0], H = m.y[1] - m.y[0];
+  const l = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(W, H, D)), mat.ghost);
+  l.position.set(16.9 - (m.x[0] + m.x[1]) / 2, m.y[0] + H / 2, (m.z[0] + m.z[1]) / 2); ghost.add(l);
+}
+scene.add(ghost);
+
+// Juntas en rojo sobre las fachadas, al volver a montar
+const joints = new THREE.Group();
+for (const x of [3.80, 6.10]) {
+  for (const [z, y0, y1] of [[0.60 - 0.02, 0.2, 3.35], [10.10 + 0.02, 0.2, 3.35], [-0.02, 3.35, 7.15]]) {
+    const j = new THREE.Mesh(new THREE.BoxGeometry(0.05, y1 - y0, 0.01), mat.joint); j.position.set(x, (y0 + y1) / 2, z); joints.add(j);
+  }
+}
+scene.add(joints);
+
+// Etiquetas HTML que siguen a cada módulo
+const tags = MODS.map(m => { const d = document.createElement('div'); d.className = 'tag'; d.textContent = m.id; d._show = 0; host.appendChild(d); return d; });
+
+// ── Pasos y tarjeta ──
+const card = document.getElementById('card'), rail = document.getElementById('rail'), sec = document.getElementById('montaje');
+const btns = STEPS.map((s, i) => {
+  const b = document.createElement('button'); b.type = 'button'; b.textContent = s.r; b.setAttribute('aria-label', s.k + ': ' + s.h.replace(/<[^>]+>/g, ''));
+  b.addEventListener('click', () => go(i)); rail.appendChild(b); return b;
+});
+let shown = -1;
+function setCard(i) {
+  if (i === shown) return;
+  const first = shown < 0; shown = i;
+  const s = STEPS[i];
+  const fill = () => { card.innerHTML = `<span class="k">${s.k}</span><h2>${s.h}</h2><p>${s.p}</p>`; card.classList.remove('swap'); };
+  if (first || reduce) fill(); else { card.classList.add('swap'); setTimeout(fill, 150); }
+  btns.forEach((b, j) => { b.classList.toggle('now', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-current', j === i ? 'step' : 'false'); });
+}
+const span = () => sec.offsetHeight - innerHeight;
+function go(i) {
+  const t = (BANDS[i] + BANDS[i + 1]) / 2;
+  scrollTo({top: sec.getBoundingClientRect().top + scrollY + span() * t, behavior: reduce ? 'auto' : 'smooth'});
+}
+
+// ── Animación ──
+const clamp = v => Math.max(0, Math.min(1, v));
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const SPREAD = [-1.5, 0, 1.5, -1.5, 0, 1.5];
+let target = 0, shownT = -1, yaw = 0, yawT = 0;
+
+function readScroll() { target = clamp(-sec.getBoundingClientRect().top / span()); }
+
+function pose(t) {
+  const ex = smooth(BANDS[1], BANDS[2] - 0.02, t) * (1 - smooth(BANDS[8], BANDS[8] + 0.1, t));   // desmontaje
+  let step = BANDS.findIndex((b, i) => i < BANDS.length - 1 && t < BANDS[i + 1]);
+  if (step < 0) step = STEPS.length - 1;
+  const focus = step >= 2 && step <= 7 ? step - 2 : -1;
+  const anyFocus = smooth(BANDS[2], BANDS[2] + 0.03, t) * (1 - smooth(BANDS[8] - 0.03, BANDS[8], t));
+  groups.forEach((g, i) => {
+    const u = g.userData;
+    // foco: el módulo de su tramo sube un poco y el resto se aclara
+    const fb = smooth(BANDS[i + 2], BANDS[i + 2] + 0.03, t) * (1 - smooth(BANDS[i + 3] - 0.03, BANDS[i + 3], t));
+    g.position.set(u.home.x + SPREAD[i] * ex, u.home.y + ex * (u.upper ? 3.6 : 0.9) + fb * 0.8, u.home.z);
+    const dim = 1 - anyFocus * 0.86 * (1 - fb);
+    u.wall.opacity = dim; u.glass.opacity = dim; u.edges.opacity = .28 * dim + fb * .6;
+    u.edges.color.copy(fb > 0.5 ? C.accent : C.ink);
+    // aclarados: sin sombra y sin escribir profundidad, para que el módulo en foco se vea limpio
+    const solid = dim > 0.98;
+    u.wall.transparent = u.glass.transparent = !solid; u.wall.depthWrite = solid;
+    u.meshes.forEach(o => { o.castShadow = solid; });
+    tags[i].classList.toggle('hot', fb > 0.5);
+    tags[i]._show = ex * (focus < 0 || fb > 0.5 ? 1 : 0.35);
+  });
+  mat.steel.opacity = 1 - ex; pergola.visible = ex < 0.98; pergola.position.z = ex * 3;
+  mat.ghost.opacity = .18 * (1 - ex * .6);
+  mat.joint.opacity = smooth(BANDS[8] + 0.08, BANDS[8] + 0.12, t);
+  // cámara: empieza como el render (desde el jardín, por la esquina del vuelo) y gira despacio al desmontar
+  const az = THREE.MathUtils.degToRad(-38 + (reduce ? 0 : 34 * smooth(BANDS[1], BANDS[8], t) - 34 * smooth(BANDS[8], 1, t))) + yaw;
+  const el = THREE.MathUtils.degToRad(10 + 10 * ex);
+  const r = (27 + 9 * ex) * Math.max(1, 1.0 / camera.aspect);
+  camera.position.set(CENTER.x + r * Math.sin(az) * Math.cos(el), CENTER.y + 0.8 * ex + r * Math.sin(el), CENTER.z + r * Math.cos(az) * Math.cos(el));
+  camera.lookAt(CENTER.x, CENTER.y + 1.2 * ex, CENTER.z);
+  setCard(step);
+}
+
+const v = new THREE.Vector3();
+function placeTags() {
+  const w = host.clientWidth, h = host.clientHeight;
+  groups.forEach((g, i) => {
+    v.set(g.position.x, g.position.y + g.userData.top + 0.5, g.position.z).project(camera);
+    const tg = tags[i];
+    tg.style.transform = `translate(${(v.x * .5 + .5) * w}px, ${(-v.y * .5 + .5) * h}px) translate(-50%, -100%)`;
+    tg.style.opacity = tg._show.toFixed(3);
+  });
+}
+
+let dirty = true, active = true;
+function resize() {
+  const w = host.clientWidth, h = host.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); dirty = true;
+}
+let last = performance.now();
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min(0.1, ((now || performance.now()) - last) / 1000); last = now || performance.now();
+  if (!active) return;
+  readScroll();
+  // suavizado por tiempo (igual en móviles lentos): el modelo alcanza al scroll en unos 0,3 s
+  const k = reduce ? 1 : 1 - Math.exp(-dt * 9);
+  yaw += (yawT - yaw) * k;
+  const next = shownT < 0 ? target : shownT + (target - shownT) * k;
+  if (Math.abs(next - shownT) < 1e-5 && Math.abs(yawT - yaw) < 1e-4 && !dirty) return;
+  shownT = Math.abs(target - next) < 1e-4 ? target : next;
+  pose(shownT); renderer.render(scene, camera); placeTags(); dirty = false;
+}
+new IntersectionObserver(es => { active = es[0].isIntersecting; dirty = true; }, {rootMargin:'100px'}).observe(sec);
+new ResizeObserver(resize).observe(host);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+  readColors();
+  groups.forEach(g => { g.userData.wall.color.copy(C.wall); g.userData.glass.color.copy(C.glass); });
+  mat.steel.color.copy(C.steel); mat.joint.color.copy(C.accent); mat.ghost.color.copy(C.ink); grid.material.color.copy(C.rule);
+  dirty = true;
+});
+
+// Arrastrar en horizontal gira la casa; el scroll vertical sigue siendo de la página
+let drag = null;
+host.addEventListener('pointerdown', e => { drag = {x:e.clientX, y:e.clientY, yaw:yawT, on:false}; });
+addEventListener('pointermove', e => {
+  if (!drag) return;
+  const dx = e.clientX - drag.x;
+  if (!drag.on && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(e.clientY - drag.y)) { drag.on = true; host.classList.add('drag'); }
+  if (drag.on) yawT = Math.max(-1.2, Math.min(1.2, drag.yaw - dx * 0.006));
+});
+addEventListener('pointerup', () => { if (drag) { drag = null; host.classList.remove('drag'); } });
+addEventListener('pointercancel', () => { drag = null; host.classList.remove('drag'); });
+
+resize(); loop();
 </script>
 </body>
 </html>
