@@ -124,6 +124,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - Confirmar el posible doble conteo de la gestión y el coste de la nave real.
 - Redactar la cláusula del piloto «a riesgo».
 - Decidir si se aplica a las 28 diapositivas la variante de diseño «Hoja de taller».
+- Cimentación: el equipo pasó a mano un presupuesto de 6.885 € sin IVA (20/10/2026; foto en `ofertas-proveedores/`, Excel en `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`). Parece solo mano de obra: falta confirmar si incluye el hormigón y el acero, la excavación, el hormigón de limpieza y la grava. Mide 37 m³ y 3.000 kg, frente a los 29 m³ y 1.670 kg de nuestra estimación A, y lleva 12 placas, frente a nuestras 18. Las preguntas al equipo están en la hoja «Preguntas al equipo».
 
 ## Dónde está cada cosa
 
@@ -190,6 +191,7 @@ Este repositorio es la fuente de todo. Se trabaja desde una **sesión de Claude 
 | Excel del estudio de costes | `node herramientas/nevtec/piloto_xlsx.js costes/Nevola_piloto_estudio_costes.xlsx` |
 | Planos de cimentación (página) | `node herramientas/cimentacion/cimentacion.js && node herramientas/cimentacion/web_cimentacion.js web/site` |
 | Renders limpios de `/render/` (necesita `pip install opencv-python-headless`) | `python3 herramientas/render/limpia_renders.py` → `web/site/render/img/`. La maqueta 3D está en `web/site/render/index.html`, que se edita a mano: los módulos y los huecos están en la constante `MODS` de su script, y los tabiques, la escalera, las estancias y los muebles en `PLANS` (si cambian los tabiques en `gen.js`, hay que copiarlos aquí). |
+| Presupuesto de cimentación del equipo (Excel) | `node herramientas/cimentacion/presupuesto_equipo.js` → `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`. Para que el Excel lleve los resultados ya calculados (se ven en el móvil), abrirlo y guardarlo, o pasarlo por `soffice --headless --convert-to xlsx`. |
 | Web completa | `node web/build_web.js` (lee las diapositivas de `herramientas/propuesta/project/slides`) |
 
 - **Diapositivas:** se publican en sus artifacts de claude.ai (enlaces arriba) con la herramienta Artifact, enviando solo las diapositivas que cambian.
