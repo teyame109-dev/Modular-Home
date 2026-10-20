@@ -63,7 +63,7 @@ const pend = [
   ['Excavación de zanjas y retirada de tierras', 'Superficie de zapatas (45,75 m²) × 1,30 m de fondo, como en la estimación A (coronación a −0,05, muro, zapata y limpieza). Sin descontar cruces. Precio de Iván (20/10/2026)', 'm³', '=(10*(0.75+0.9+0.9+0.75)+2*8.5*0.75)*1.3', 18],
   ['Grava en la cámara sanitaria', 'Huella de planta baja: 7,85 × 9,50 m, sin descontar muros, como en la estimación A. Precio de Iván (20/10/2026)', 'm²', '=7.85*9.5', 12],
   ['Bombeo de hormigón', 'Una partida por vivienda. Precio de Iván (20/10/2026)', 'ud', '=1', 250],
-  ['Replanteo topográfico', 'Ejes de muros y placas', 'ud', null],
+  ['Replanteo topográfico', 'Ejes de muros y placas, por vivienda. Precio de Iván (20/10/2026)', 'ud', '=1', 300],
 ];
 const pf = r + 1;
 for (const [d, m, u, q, p] of pend) {

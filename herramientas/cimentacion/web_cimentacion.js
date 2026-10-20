@@ -44,6 +44,7 @@ const PUB = {
   'Excavación de zanjas y retirada de tierras': ['Excavación de zanjas y retirada de tierras', 'Superficie de zapatas × 1,30 m'],
   'Grava en la cámara sanitaria': ['Grava en la cámara sanitaria', 'Huella de planta baja, 7,85 × 9,50 m'],
   'Bombeo de hormigón': ['Bombeo de hormigón', 'Por vivienda'],
+  'Replanteo topográfico': ['Replanteo topográfico', 'Ejes de muros y placas'],
 };
 const val = c => (c && typeof c === 'object' && 'result' in c) ? c.result : c;
 async function presupuesto() {
