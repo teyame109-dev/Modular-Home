@@ -42,23 +42,30 @@ figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-tr
 .cue::before{content:"";width:1px;height:28px;background:var(--accent)}
 
 /* ── Escenario del montaje ── */
-.montaje{position:relative;height:900vh;border-top:2px solid var(--ink)}
+.montaje{position:relative;height:calc(9 * 60vh + 100vh);border-top:2px solid var(--ink)}
 .stage{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:14px;overflow:hidden;padding-block:12px}
 .stage > *{width:100%;max-width:calc((100svh - 200px) * 2.02);margin-inline:auto}
 .view{position:relative;aspect-ratio:1717/850;overflow:hidden;border:2px solid var(--ink);background:var(--paper)}
 .canvas{position:absolute;top:0;left:var(--shift,0%);width:var(--zoom,100%);aspect-ratio:1717/850}
 .canvas > *{position:absolute;inset:0;width:100%;height:100%}
-.base{display:block;object-fit:cover;filter:grayscale(var(--g,1)) contrast(calc(1 - .35 * var(--g,1))) brightness(calc(1 + .12 * var(--g,1)))}
+.base{display:block;object-fit:cover;filter:grayscale(1) contrast(.65) brightness(1.12);transition:filter 900ms ease}
+.canvas.done .base{filter:none}
 .plan{pointer-events:none}
-.plan .wash{fill:var(--bg);opacity:var(--wash,.88)}
+.plan .wash{fill:var(--bg);opacity:.88;transition:opacity 900ms ease}
+.canvas.done .plan .wash{opacity:0}
 .plan .slot{fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:9 7;vector-effect:non-scaling-stroke;transition:opacity 300ms ease}
 .plan .slot.on{opacity:0}
 .plan text{font-family:var(--mono);font-size:30px;font-weight:500;fill:var(--ink);transition:opacity 300ms ease}
 .plan text.on{opacity:0}
-.mod{will-change:transform;pointer-events:none;filter:drop-shadow(0 calc(var(--lift,0) * 22px) calc(var(--lift,0) * 18px) rgba(0,0,0,.38))}
+.mod{will-change:transform;pointer-events:none;opacity:0;transform:translate3d(0,var(--up),0);transition:transform 1100ms cubic-bezier(.3,.75,.25,1),opacity 250ms ease,filter 600ms ease}
+.mod.in{opacity:1;transform:translate3d(0,0,0)}
+.mod.air{filter:drop-shadow(0 22px 16px rgba(0,0,0,.38))}
+.canvas.done .mod.in{opacity:0;transition-delay:0s,900ms,0s;transition-duration:1100ms,500ms,600ms}
 .piece{position:absolute;inset:0;background:url(img/vivienda-jardin.jpg) 0 0/100% 100% no-repeat}
-.cable{position:absolute;width:2px;background:var(--ink);transform-origin:top;pointer-events:none;opacity:0}
-.joints{pointer-events:none;opacity:var(--jo,0)}
+.cable{position:absolute;width:2px;height:0;background:var(--ink);pointer-events:none;opacity:0;transition:height 1100ms cubic-bezier(.3,.75,.25,1),opacity 250ms ease}
+.cable.in{height:var(--h)} .cable.air{opacity:1}
+.joints{pointer-events:none;opacity:0;transition:opacity 400ms ease}
+.canvas.juntas .joints{opacity:1}
 .joints line{stroke:var(--accent);stroke-width:3;stroke-dasharray:2 0;vector-effect:non-scaling-stroke}
 .joints text{font-family:var(--mono);font-size:26px;font-weight:500;fill:var(--accent);paint-order:stroke;stroke:var(--paper);stroke-width:6px}
 
@@ -71,10 +78,15 @@ figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-tr
 .card a{color:var(--ink)}
 .card > *{transition:opacity 220ms ease, transform 220ms cubic-bezier(0.23,1,0.32,1)}
 .card.swap > *{opacity:0;transform:translateY(6px)}
-.rail{display:flex;gap:6px;list-style:none;margin:0;padding:0}
-.rail li{font-family:var(--mono);font-size:11px;letter-spacing:.04em;width:34px;height:28px;display:grid;place-items:center;border:1px solid var(--rule);color:var(--soft);transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease}
-.rail li.done{border-color:var(--ink);color:var(--ink)}
-.rail li.now{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.rail{display:flex;gap:6px;flex-wrap:wrap}
+.rail button{font-family:var(--mono);font-size:12px;letter-spacing:.04em;min-width:40px;height:40px;padding:0 6px;display:grid;place-items:center;border:1px solid var(--rule);border-radius:2px;background:transparent;color:var(--soft);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1)}
+.rail button:active{transform:scale(.95)}
+.rail button.done{border-color:var(--ink);color:var(--ink)}
+.rail button.now{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){.rail button:not(.now):hover{border-color:var(--ink);color:var(--ink)}}
+.view{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hint{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-top:6px}
 
 .gal{display:grid;gap:40px;padding-block:56px 32px}
 .gal h2{font-weight:800;font-size:clamp(24px,3.4vw,38px);letter-spacing:-.03em;line-height:1.05}
@@ -90,11 +102,11 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
   .view{aspect-ratio:1717/1275}
   .stage > *{max-width:calc((100svh - 230px) * 1.35)}
   .panel{grid-template-columns:1fr}
-  .rail li{width:auto;flex:1}
+  .rail{display:grid;grid-template-columns:repeat(9,minmax(0,1fr))} .rail button{min-width:0}
   .plan text{font-size:40px}
   .grid{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){ .card > *, .plan .slot, .plan text{transition:none} }
+@media (prefers-reduced-motion:reduce){ .card > *, .plan .slot, .plan text{transition:none} .mod{--up:-6% !important;transition-duration:500ms} .cable{display:none} }
 </style>
 </head>
 <body>
@@ -106,13 +118,13 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
     <h1>La casa del render, módulo a módulo</h1>
     <p class="lede">Tomamos la imagen del proyecto y la dividimos en los seis módulos de acero que se fabrican en la nave de Seseña. Al bajar, la grúa los coloca uno a uno sobre la cimentación hasta que la casa queda igual que en el render.</p>
     <figure><img src="img/piscinas.jpg" width="1790" height="699" alt="Render de la promoción Névola: viviendas pareadas blancas alrededor de las piscinas comunitarias, con la sierra al fondo"><figcaption>Render de la promoción · Névola, Guadalix de la Sierra</figcaption></figure>
-    <p class="cue">Baja para montar la vivienda</p>
+    <p class="cue">Baja o toca la imagen para montar la vivienda</p>
   </section>
 </div>
 
 <section class="montaje" id="montaje" aria-label="Montaje de la vivienda sobre el render">
   <div class="stage wrap">
-    <div class="view">
+    <div class="view" id="view" role="button" tabindex="0" aria-label="Siguiente paso del montaje">
       <div class="canvas" id="canvas">
         <img class="base" id="base" src="img/vivienda-jardin.jpg" width="1717" height="850" alt="Render de una vivienda de Névola desde el jardín: planta primera en voladizo, porche con pérgola y piscina">
         <svg class="plan" viewBox="0 0 1717 850" preserveAspectRatio="none" aria-hidden="true"><g id="wash"></g><g id="slots"></g></svg>
@@ -125,7 +137,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
     </div>
     <div class="panel">
       <div class="card" id="card" aria-live="polite"></div>
-      <ol class="rail" id="rail" aria-hidden="true"></ol>
+      <div><div class="rail" id="rail" role="group" aria-label="Pasos del montaje"></div><p class="hint">Toca un paso o la imagen</p></div>
     </div>
   </div>
 </section>
@@ -182,61 +194,57 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
     const piece = document.createElement('div'); piece.className = 'piece'; piece.style.clipPath = piece.style.webkitClipPath = clip(m.pts);
     mod.appendChild(piece);
     const cable = document.createElement('div'); cable.className = 'cable'; cable.style.left = (cx / W * 100) + '%'; cable.style.top = '0';
+    // sale desde encima del encuadre; el cable llega hasta el borde superior del módulo
+    mod.style.setProperty('--up', -(top / H * 100 + 105) + '%'); cable.style.setProperty('--h', (top / H * 100) + '%');
     canvas.insertBefore(mod, jointsSvg); canvas.insertBefore(cable, jointsSvg);
-    return {mod, cable, slot:s, label:t, top:top / H};
+    return {mod, cable, slot:s, label:t};
   });
 
-  const rail = document.getElementById('rail');
-  STEPS.forEach(s => { const li = document.createElement('li'); li.textContent = s.r; rail.appendChild(li); });
-  const lis = [...rail.children];
-  const card = document.getElementById('card');
-  let shown = -1;
-  function setCard(i) {
-    if (i === shown) return;
-    const first = shown < 0; shown = i;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rail = document.getElementById('rail'), view = document.getElementById('view');
+  const card = document.getElementById('card'), sec = document.getElementById('montaje');
+  const btns = STEPS.map((st, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = st.r;
+    b.setAttribute('aria-label', st.k.replace(/<[^>]+>/g, ''));
+    b.addEventListener('click', () => go(i)); rail.appendChild(b); return b;
+  });
+
+  // Paso 0: parcela · 1–6: módulos · 7: juntas · 8: terminada
+  let cur = -1;
+  function setStep(i) {
+    if (i === cur) return;
+    const first = cur < 0; cur = i;
+    els.forEach((e, j) => {
+      const inn = i >= j + 1, was = e.mod.classList.contains('in');
+      e.mod.classList.toggle('in', inn); e.cable.classList.toggle('in', inn);
+      e.slot.classList.toggle('on', inn); e.label.classList.toggle('on', inn);
+      if (inn && !was && !first) {   // cae ahora: sombra y cable mientras está en el aire
+        e.mod.classList.add('air'); e.cable.classList.add('air');
+        clearTimeout(e.tm); e.tm = setTimeout(() => { e.mod.classList.remove('air'); e.cable.classList.remove('air'); }, 1000);
+      }
+    });
+    canvas.classList.toggle('juntas', i === 7); canvas.classList.toggle('done', i === 8);
     const s = STEPS[i];
     const fill = () => { card.innerHTML = `<span class="k">${s.k}</span><h2>${s.h}</h2><p>${s.p}</p>`; card.classList.remove('swap'); };
     if (first || reduce) fill(); else { card.classList.add('swap'); setTimeout(fill, 160); }
-    lis.forEach((li, j) => { li.classList.toggle('now', j === i); li.classList.toggle('done', j < i); });
+    btns.forEach((b, j) => { b.classList.toggle('now', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-current', j === i ? 'step' : 'false'); });
   }
 
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const sec = document.getElementById('montaje');
-  const clamp = (v) => Math.max(0, Math.min(1, v));
-  const ease = (t) => 1 - Math.pow(1 - t, 3);
-  // Tramos del recorrido: 0–0,10 parcela · 0,10–0,76 seis módulos · 0,76–0,88 juntas · 0,88–1 terminada
-  const A = 0.10, B = 0.76, C = 0.88, SEG = (B - A) / MODS.length;
-
-  function frame() {
-    const r = sec.getBoundingClientRect(), vh = innerHeight;
-    const t = clamp(-r.top / (r.height - vh));
-    const fin = clamp((t - C) / 0.07);           // el fondo pasa a color bajo las piezas
-    const out = clamp((t - C - 0.07) / 0.03);    // luego las piezas se funden con él
-    els.forEach((e, i) => {
-      const p = clamp((t - A - i * SEG) / (SEG * 0.85));
-      const k = ease(p);
-      const landed = p >= 1;
-      if (reduce) {
-        e.mod.style.opacity = k * (1 - out); e.mod.style.transform = 'none'; e.mod.style.setProperty('--lift', 0);
-      } else {
-        // cae desde encima del encuadre hasta su sitio
-        const dy = (1 - k) * -(e.top * 100 + 105);
-        e.mod.style.transform = `translate3d(0, ${dy}%, 0)`;
-        // al final se funden con el render de fondo para que no queden costuras
-        e.mod.style.opacity = p > 0 ? 1 - out : 0;
-        e.mod.style.setProperty('--lift', landed ? 0 : (p > 0 ? 1 - k * 0.6 : 0));
-        e.cable.style.opacity = p > 0 && !landed ? 1 : 0;
-        e.cable.style.height = Math.max(0, (e.top * 100) + dy) + '%';
-      }
-      e.slot.classList.toggle('on', landed); e.label.classList.toggle('on', p > 0);
-    });
-    const jo = clamp((t - B) / 0.04) * (1 - clamp((t - C) / 0.04));
-    canvas.style.setProperty('--jo', jo.toFixed(3));
-    canvas.style.setProperty('--g', (1 - fin).toFixed(3));
-    canvas.style.setProperty('--wash', (0.88 * (1 - fin)).toFixed(3));
-    const step = t < A ? 0 : t < B ? 1 + Math.min(MODS.length - 1, Math.floor((t - A) / SEG)) : t < C ? 7 : 8;
-    setCard(step);
+  // El scroll del tramo se reparte en 9 bandas iguales, una por paso
+  const N = STEPS.length;
+  const span = () => sec.offsetHeight - innerHeight;
+  const stepFromScroll = () => { const t = Math.max(0, Math.min(0.9999, -sec.getBoundingClientRect().top / span())); return Math.floor(t * N); };
+  let lock = 0;
+  function go(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    setStep(i);
+    lock = Date.now() + 1500;   // que el scroll programado no pise el paso elegido
+    const y = sec.getBoundingClientRect().top + scrollY + span() * (i + 0.5) / N;
+    scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
   }
+  view.addEventListener('click', () => go(cur + 1 >= N ? 0 : cur + 1));
+  view.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); go(cur + 1 >= N ? 0 : cur + 1); } });
+  function frame() { if (Date.now() > lock) setStep(stepFromScroll()); }
   let raf = 0;
   const req = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; frame(); }); };
   addEventListener('scroll', req, {passive:true}); addEventListener('resize', req);
