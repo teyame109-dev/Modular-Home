@@ -34,6 +34,7 @@ const partidas = [
   ['Vertido de hormigón: zapatas', 'Según el equipo', 'm³', 26, 16.5],
   ['Hierro elaborado y armado', 'Según el equipo', 'kg', 3000, 0.67],
   ['Placas de anclaje', '3 por muro × 4 muros', 'ud', 12, 32],
+  ['Solera de limpieza (mano de obra)', 'Superficie de zapatas del croquis. Añadida por Iván (20/10/2026)', 'm²', '=10*(0.75+0.9+0.9+0.75)+2*8.5*0.75', 11],
 ];
 const first = r + 1;
 for (const [i, [d, m, u, q, p]] of partidas.entries()) {
@@ -46,7 +47,7 @@ r++; const tot = ws.getRow(r); tot.values = ['', 'Total del presupuesto del equi
 tot.font = { name: 'Arial', bold: true, size: 11 }; tot.getCell(7).numFmt = EUR; tot.getCell(7).font = { name: 'Arial', bold: true, size: 11, color: { argb: ACC } };
 tot.getCell(2).border = tot.getCell(7).border = { top: { style: 'medium', color: { argb: INK } } };
 const TOT = r;
-r++; ws.getCell(`B${r}`).value = 'En el manuscrito: 6.885,00 €. La diferencia son los redondeos (1.144,80 → 1.145 y 610,50 → 610).';
+r++; ws.getCell(`B${r}`).value = 'En el manuscrito: 6.885,00 €, sin la solera de limpieza, que se añadió después. Los céntimos son redondeos del papel (1.144,80 → 1.145 y 610,50 → 610).';
 ws.getCell(`B${r}`).font = { name: 'Arial', size: 9, italic: true, color: { argb: 'FF5E6064' } };
 
 // Lo que no aparece
@@ -55,9 +56,9 @@ r++; ws.getCell(`A${r}`).value = 'Los precios del manuscrito son de mano de obra
 ws.mergeCells(`A${r}:G${r}`); ws.getCell(`A${r}`).alignment = { wrapText: true, vertical: 'top' }; ws.getCell(`A${r}`).font = { name: 'Arial', size: 10, color: { argb: 'FF5E6064' } }; ws.getRow(r).height = 42;
 r++; ws.getRow(r).values = ['', 'Partida', 'De dónde sale la cantidad', 'Ud', 'Cantidad', 'Precio', 'Importe']; th(ws.getRow(r));
 const pend = [
-  ['Suministro de hormigón HA-25', 'Los 37 m³ vertidos. Precio de Iván (20/10/2026)', 'm³', `=E${first + 2}+E${first + 3}`, 95],
+  ['Suministro de hormigón HA-25', 'Los 37 m³ vertidos. Precio de Iván (20/10/2026)', 'm³', `=E${first + 2}+E${first + 3}`, 115],
   ['Suministro de acero B500S', 'Los 3.000 kg, aparte de los 0,67 €/kg de elaboración y armado. Precio de Iván (20/10/2026)', 'kg', `=E${first + 4}`, 0.95],
-  ['Hormigón de limpieza bajo zapatas', 'Superficie de zapatas del croquis: 10,00 × (0,75 + 0,90 + 0,90 + 0,75) + 2 × 8,50 × 0,75. Precio de Iván (20/10/2026)', 'm²', '=10*(0.75+0.9+0.9+0.75)+2*8.5*0.75', 9],
+  ['Hormigón de limpieza bajo zapatas', 'Superficie de zapatas del croquis: 10,00 × (0,75 + 0,90 + 0,90 + 0,75) + 2 × 8,50 × 0,75. Precio: 10 cm de espesor al precio del hormigón', 'm²', '=10*(0.75+0.9+0.9+0.75)+2*8.5*0.75', '=0.1*F{HORM}'],
   ['Excavación de zanjas y retirada de tierras', 'Superficie de zapatas (45,75 m²) × 1,30 m de fondo, como en la estimación A (coronación a −0,05, muro, zapata y limpieza). Sin descontar cruces. Precio de Iván (20/10/2026)', 'm³', '=(10*(0.75+0.9+0.9+0.75)+2*8.5*0.75)*1.3', 18],
   ['Grava en la cámara sanitaria', 'Huella de planta baja: 7,85 × 9,50 m, sin descontar muros, como en la estimación A. Precio de Iván (20/10/2026)', 'm²', '=7.85*9.5', 12],
   ['Bombeo de hormigón', 'Si hace falta en la parcela', 'ud', null],
@@ -66,7 +67,8 @@ const pend = [
 const pf = r + 1;
 for (const [d, m, u, q, p] of pend) {
   r++; const row = ws.getRow(r);
-  row.values = ['', d, m, u, q ? { formula: q.slice(1) } : null, p ?? null, { formula: `IF(F${r}="","",E${r}*F${r})` }];
+  const pv = typeof p === 'string' ? { formula: p.slice(1).replace('{HORM}', pf) } : p;
+  row.values = ['', d, m, u, q ? { formula: q.slice(1) } : null, pv ?? null, { formula: `IF(F${r}="","",E${r}*F${r})` }];
   body(row, 7); row.getCell(5).numFmt = NUM; row.getCell(6).numFmt = EUR; row.getCell(7).numFmt = EUR; input(row.getCell(5)); input(row.getCell(6));
 }
 const pl = r;

@@ -125,7 +125,7 @@ Aún no está en la propuesta: la diapositiva de condiciones no lo recoge.
 - Confirmar el posible doble conteo de la gestión y el coste de la nave real.
 - Redactar la cláusula del piloto «a riesgo».
 - Decidir si se aplica a las 28 diapositivas la variante de diseño «Hoja de taller».
-- Cimentación: el equipo pasó a mano un presupuesto de 6.885 € sin IVA (20/10/2026; foto en `ofertas-proveedores/`, Excel en `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`). Es solo mano de obra. Materiales aparte: hormigón a 95 €/m³ (37 m³: 3.515 €) y acero a 0,95 €/kg (3.000 kg: 2.850 €). Hormigón de limpieza a 9 €/m² (45,75 m²: 411,75 €) y excavación a 18 €/m³ (59,48 m³: 1.070,55 €; 1,30 m de fondo, por confirmar). Grava de cámara sanitaria a 12 €/m² (74,58 m²: 894,90 €). Con eso, la cimentación va por 15.627,50 € sin IVA. Faltan el bombeo y el replanteo. Mide 37 m³ y 3.000 kg, frente a los 29 m³ y 1.670 kg de nuestra estimación A, y lleva 12 placas, frente a nuestras 18. Las preguntas al equipo están en la hoja «Preguntas al equipo».
+- Cimentación: el equipo pasó a mano un presupuesto de 6.885 € sin IVA (20/10/2026; foto en `ofertas-proveedores/`, Excel en `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`). Es solo mano de obra; Iván le añadió la solera de limpieza a 11 €/m² (45,75 m²: 503,25 €), con lo que la mano de obra va por 7.388,55 €. Materiales aparte: hormigón a 115 €/m³ (37 m³: 4.255 €) y acero a 0,95 €/kg (3.000 kg: 2.850 €). Hormigón de limpieza a 11,50 €/m², que son 10 cm al precio del hormigón (45,75 m²: 526,13 €) y excavación a 18 €/m³ (59,48 m³: 1.070,55 €; 1,30 m de fondo, por confirmar). Grava de cámara sanitaria a 12 €/m² (74,58 m²: 894,90 €). Con eso, la cimentación va por 16.985,13 € sin IVA. Faltan el bombeo y el replanteo. Mide 37 m³ y 3.000 kg, frente a los 29 m³ y 1.670 kg de nuestra estimación A, y lleva 12 placas, frente a nuestras 18. Las preguntas al equipo están en la hoja «Preguntas al equipo».
 
 ## Dónde está cada cosa
 
@@ -201,4 +201,4 @@ Este repositorio es la fuente de todo. Se trabaja desde una **sesión de Claude 
 **Reglas que no se rompen:**
 - **Precio cerrado con NIDO:** las mejoras van al margen, nunca al precio.
 - **Documentación técnica:** sin importes ni marca RG21.
-- **Sin compartir costes en lo público:** la web pública no lleva costes ni márgenes, solo los precios ya aceptados. Excepción decidida por Iván el 20/10/2026: en `/cimentacion/` se publica el presupuesto de la cimentación de Knubo, extra a la promoción (15.627,50 € por vivienda, sin IVA). Va sin margen añadido, porque Knubo ya lo lleva en la mano de obra.
+- **Sin compartir costes en lo público:** la web pública no lleva costes ni márgenes, solo los precios ya aceptados. Excepción decidida por Iván el 20/10/2026: en `/cimentacion/` se publica el presupuesto de la cimentación de Knubo, extra a la promoción (16.985,13 € por vivienda, sin IVA). Va sin margen añadido, porque Knubo ya lo lleva en la mano de obra.

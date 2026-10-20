@@ -36,6 +36,7 @@ const PUB = {
   'Vertido de hormigón: zapatas': ['Vertido de hormigón en zapatas', 'Medición de Knubo'],
   'Hierro elaborado y armado': ['Elaboración y armado del acero', 'Medición de Knubo'],
   'Placas de anclaje': ['Placas de anclaje', '3 por muro × 4 muros'],
+  'Solera de limpieza (mano de obra)': ['Solera de limpieza', 'Superficie de zapatas'],
   'Suministro de hormigón HA-25': ['Suministro de hormigón HA-25', 'Los m³ de muros y zapatas'],
   'Suministro de acero B500S': ['Suministro de acero B 500 S', 'Medición de Knubo'],
   'Hormigón de limpieza bajo zapatas': ['Hormigón de limpieza bajo zapatas', 'Superficie de zapatas'],
@@ -75,7 +76,7 @@ async function presupuesto() {
   <div class="notes">
     <div><b>Medición de Knubo</b><span>Muros de 0,70 m de alto y zapatas de 0,75 y 0,90 m de ancho: 37 m³ de hormigón y 3.000 kg de acero. La estimación A de esta página da 29 m³ y 1.670 kg. La medición final saldrá del cálculo de estructura y del geotécnico.</span></div>
     <div><b>Placas de anclaje</b><span>El presupuesto lleva 12, tres por muro. En los muros interiores apoyan dos módulos y cada uno lleva su pilar, así que pueden ser 18. Las 6 de más serían 192 €.</span></div>
-    <div><b>Mediciones estimadas</b><span>Limpieza: superficie de zapatas, 45,75 m². Excavación: esa superficie por 1,30 m de fondo, sin descontar los cruces de zapatas (unos 6 m³). Grava: toda la huella de planta baja, sin descontar los muros (unos 10 m²).</span></div>
+    <div><b>Mediciones estimadas</b><span>Limpieza: superficie de zapatas, 45,75 m², con 10 cm de hormigón al precio del HA-25. Excavación: esa superficie por 1,30 m de fondo, sin descontar los cruces de zapatas (unos 6 m³). Grava: toda la huella de planta baja, sin descontar los muros (unos 10 m²).</span></div>
     ${sinPrecio ? `<div><b>No incluido</b><span>${sinPrecio.charAt(0).toUpperCase() + sinPrecio.slice(1)}, si hacen falta en la parcela.</span></div>` : ''}
   </div>
 </section>
