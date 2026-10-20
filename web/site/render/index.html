@@ -13,11 +13,11 @@
 <style>
 /* Layout: portada partida (texto + render del promotor), escenario 3D fijo que desmonta la vivienda con el scroll, comparación final con los renders */
 :root{ --bg:#E7E8E3; --paper:#EFF0EB; --ink:#141414; --soft:#5E6064; --rule:#C3C5BF; --accent:#C8381F;
-  --wall:#F3F3EF; --glass:#2F3539; --steel:#2A2D30;
+  --wall:#F3F3EF; --glass:#2F3539; --steel:#2A2D30; --floor:#DCCBAE; --furn:#CFCBC2; --sofa:#B9BEB8; --white:#FBFBF8;
   --display:'Archivo', Arial, sans-serif; --narrow:'Archivo Narrow', 'Arial Narrow', sans-serif; --mono:'IBM Plex Mono', 'Courier New', monospace;
   --ease-out:cubic-bezier(0.23, 1, 0.32, 1); color-scheme:light }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; color-scheme:dark }}
-:root[data-theme="dark"]{ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; color-scheme:dark }
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; --floor:#9C8B70; --furn:#A6A39C; --sofa:#8E938D; --white:#E4E4E0; color-scheme:dark }}
+:root[data-theme="dark"]{ --bg:#141414; --paper:#1C1E20; --ink:#ECEDE8; --soft:#A9ABA6; --rule:#34363A; --accent:#EE6A4E; --wall:#D9DAD5; --glass:#22272B; --steel:#0E1012; --floor:#9C8B70; --furn:#A6A39C; --sofa:#8E938D; --white:#E4E4E0; color-scheme:dark }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--display);font-size:15.5px;line-height:1.55}
@@ -52,6 +52,8 @@ figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:v
 .scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .tag{position:absolute;left:0;top:0;pointer-events:none;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink);background:var(--paper);border:1px solid var(--ink);padding:3px 7px;border-radius:2px;white-space:nowrap;opacity:0;will-change:transform,opacity}
 .tag.hot{background:var(--accent);border-color:var(--accent);color:#fff}
+.room{position:absolute;left:0;top:0;pointer-events:none;font-family:var(--mono);font-size:11px;line-height:1.25;color:var(--ink);text-align:center;white-space:nowrap;opacity:0;will-change:transform,opacity;text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 6px var(--paper)}
+.room small{display:block;font-size:10px;color:var(--soft)}
 .fallback{position:absolute;inset:0;display:none;place-items:center;padding:24px;text-align:center;color:var(--soft)}
 .nogl .fallback{display:grid}
 .panel{border-top:1px solid var(--rule);background:var(--bg);padding-block:14px calc(14px + env(safe-area-inset-bottom,0px))}
@@ -162,7 +164,7 @@ const MODS = [
 ];
 const STEPS = [
   {k:'La vivienda', h:'Pareada tipo, 148,30 m²', p:'La casa del render, con las medidas de la propuesta: dos plantas, terraza atrás y el vuelo de la planta primera.', r:'⌂'},
-  {k:'Desmontada', h:'Seis módulos, tres por planta', p:'Cada módulo es un marco de acero soldado que sale de la nave terminado y se monta en parcela sobre la cimentación.', r:'6'},
+  {k:'Desmontada', h:'Seis módulos, tres por planta', p:'Al separarlos se ve la distribución del proyecto, sin cambios: cada estancia cae en su módulo y las juntas van sobre tabiques o quedan ocultas.', r:'6'},
   ...MODS.map(m => ({k:m.planta, h:`${m.id} <span class="n">${m.dim}</span>`, p:m.txt, r:m.id})),
   {k:'Montada', h:'Las juntas coinciden en las dos plantas', p:'A 3,20 y 5,50 m de la fachada lateral de planta baja. Los módulos de arriba apoyan sobre los marcos de abajo.', r:'✓'},
 ];
@@ -197,7 +199,7 @@ scene.add(sun, sun.target);
 
 // Colores desde los tokens de la página (cambian con el modo oscuro)
 const C = {};
-function readColors() { for (const k of ['wall','glass','steel','ink','accent','rule']) C[k] = new THREE.Color(css('--' + k)); }
+function readColors() { for (const k of ['wall','glass','steel','ink','accent','rule','floor','furn','sofa','white']) C[k] = new THREE.Color(css('--' + k)); }
 readColors();
 
 const mat = {
@@ -221,38 +223,122 @@ for (const x of [0.60, 3.80, 6.10, 8.45]) {
 }
 scene.add(found);
 
-// ── Un módulo: caja + huecos + petos + aristas ──
+// ── Interiores: tabiques, escalera y estancias de las plantas de la propuesta (herramientas/propuesta/gen.js) ──
+// Coordenadas de cada planta: x desde su fachada lateral, y desde su fachada principal; o = origen de la planta en el modelo.
+const T = 0.18;
+const PLANS = {
+  PB: { o:[0.60, 0.60],
+    walls: [[0, 7.85, 0, T], [0, 7.85, 9.50 - T, 9.50], [0, T, 0, 9.50], [7.85 - T, 7.85, 0, 9.50],
+      [3.45, 3.55, T, 2.35], [3.45, 3.55, 3.15, 3.50], [T, 3.45, 3.40, 3.50],
+      [5.45, 5.55, T, 1.05], [5.45, 5.55, 1.75, 1.90], [5.55, 7.85, 1.90, 2.00],
+      [4.55, 7.85, 3.25, 3.35], [5.45, 5.55, 3.35, 3.60], [5.45, 5.55, 4.30, 4.75], [5.45, 7.85, 4.65, 4.75]],
+    stair: [4.55, 7.67, 2.00, 3.25],
+    rooms: [['Dormitorio 1', '9,55 m²', 1.70, 1.70], ['Vestíbulo', '4,75 m²', 4.50, 1.10], ['Baño 1', '3,75 m²', 6.65, 0.95], ['Escalera', '', 6.10, 2.62], ['Lavadero', '4,00 m²', 6.65, 4.02], ['Cocina', '', 1.30, 4.15], ['Salón · comedor', '37,60 m²', 3.90, 7.10]],
+    // Muebles orientativos: [x0, x1, y0, y1, alto, acabado]
+    furn: [[1.40, 3.40, 0.60, 2.10, .45, 'furn'], [1.45, 3.30, 0.65, 2.05, .55, 'white'], [2.95, 3.30, 0.75, 1.95, .66, 'white'], [3.00, 3.40, 2.15, 2.55, .50, 'furn'], [0.40, 2.40, 2.80, 3.38, 2.2, 'furn'],
+      [3.60, 4.00, 0.60, 1.60, .90, 'furn'],
+      [5.60, 6.30, 0.20, 0.65, .85, 'white'], [7.15, 7.60, 0.25, 0.95, .42, 'white'], [6.40, 7.65, 1.00, 1.88, .06, 'white'],
+      [5.60, 7.00, 3.40, 4.00, .90, 'furn'], [7.05, 7.65, 3.40, 4.00, .85, 'white'],
+      [0.18, 0.80, 3.55, 5.60, .90, 'furn'], [0.80, 2.80, 3.52, 4.10, .90, 'furn'], [2.80, 3.40, 3.52, 4.10, 2.1, 'furn'], [1.40, 2.90, 4.90, 5.80, .92, 'furn'],
+      [5.30, 7.60, 6.30, 7.15, .45, 'soft'], [5.30, 7.60, 6.30, 6.55, .85, 'soft'], [5.90, 7.00, 7.55, 8.15, .40, 'furn'],
+      [1.00, 2.80, 6.70, 7.70, .75, 'furn'], [1.20, 1.60, 6.28, 6.65, .45, 'soft'], [2.20, 2.60, 6.28, 6.65, .45, 'soft'], [1.20, 1.60, 7.75, 8.12, .45, 'soft'], [2.20, 2.60, 7.75, 8.12, .45, 'soft']] },
+  P1: { o:[0, 0],
+    walls: [[0, 8.45, 0, T], [0, 6.11, 8.47 - T, 8.47], [0, T, 0, 8.47], [8.45 - T, 8.45, 0, 10.10], [6.11, 6.11 + T, 8.47, 10.10], [6.11, 8.45, 10.10 - T, 10.10],
+      [3.75, 3.85, T, 4.06], [T, 2.55, 3.96, 4.06], [3.35, 4.20, 3.96, 4.06], [4.95, 5.35, 3.96, 4.06], [5.25, 8.45 - T, 2.85, 2.95],
+      [5.25, 5.35, 2.95, 5.15], [2.95, 3.05, 4.06, 4.30], [2.95, 3.05, 5.00, 5.70],
+      [T, 3.40, 5.60, 5.70], [4.20, 8.45 - T, 5.60, 5.70], [5.40, 5.50, 5.70, 6.00], [5.40, 5.50, 6.80, 8.29], [6.01, 6.11, 5.70, 7.60], [6.01, 6.11, 8.20, 8.47]],
+    stair: [5.35, 8.27, 2.95, 5.15],
+    rooms: [['Dormitorio 3', '12,00 m²', 2.20, 1.90], ['Dormitorio 2', '12,10 m²', 4.95, 1.40], ['Escalera', '', 6.80, 4.05], ['Baño 2', '3,85 m²', 1.80, 4.90], ['Distribuidor', '3,95 m²', 4.15, 4.80], ['Dormitorio principal', '17,50 m²', 2.40, 7.00], ['Vestidor', '', 5.75, 7.05], ['Baño principal', '7,10 m²', 7.25, 8.70]],
+    furn: [[1.20, 2.70, 1.90, 3.90, .45, 'furn'], [1.25, 2.65, 1.95, 3.80, .55, 'white'], [1.30, 2.60, 3.45, 3.80, .66, 'white'], [0.18, 0.78, 0.40, 1.80, 2.2, 'furn'],
+      [5.50, 7.00, 0.85, 2.83, .45, 'furn'], [5.55, 6.95, 0.90, 2.75, .55, 'white'], [5.60, 6.90, 2.40, 2.75, .66, 'white'], [3.86, 4.45, 0.40, 2.40, 2.2, 'furn'],
+      [0.20, 1.90, 4.10, 4.80, .55, 'white'], [1.05, 1.45, 5.05, 5.58, .42, 'white'], [2.10, 2.90, 5.10, 5.58, .85, 'white'],
+      [1.60, 3.20, 5.72, 7.72, .45, 'furn'], [1.65, 3.15, 5.85, 7.67, .55, 'white'], [1.70, 3.10, 5.75, 6.10, .66, 'white'], [1.10, 1.55, 5.75, 6.15, .50, 'furn'], [3.25, 3.70, 5.75, 6.15, .50, 'furn'],
+      [5.52, 5.98, 6.00, 8.20, 2.0, 'furn'],
+      [6.30, 7.60, 9.00, 9.90, .06, 'white'], [7.65, 8.25, 6.00, 7.40, .85, 'white'], [7.75, 8.25, 8.10, 8.55, .42, 'white']] },
+};
+const CUT = 1.15, FLOOR = 0.08;   // al desmontar, las paredes bajan a 1,15 m y se ve el interior desde arriba
+
 const box = (w, h, d, m) => { const g = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); g.castShadow = g.receiveShadow = true; return g; };
-function buildModule(m) {
+const unit = new THREE.BoxGeometry(1, 1, 1);
+const roomTags = [];
+function buildModule(m, mi) {
   const g = new THREE.Group();
   const [x0, x1] = m.x, [z0, z1] = m.z, [y0, y1] = m.y;
   const W = x1 - x0, D = z1 - z0, H = y1 - y0;
-  const wall = new THREE.MeshStandardMaterial({color:C.wall, roughness:.88, transparent:true});
-  const body = box(W - 0.02, H, D - 0.02, wall); body.position.set(0, H / 2, 0); g.add(body);
-  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(body.geometry), new THREE.LineBasicMaterial({color:C.ink, transparent:true, opacity:.28}));
-  edges.position.copy(body.position); g.add(edges);
   const cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
-  const glass = mat.glass.clone(); glass.transparent = true;
+  const P = PLANS[y0 > 1 ? 'P1' : 'PB'], [ox, oz] = P.o;
+  const M = {   // materiales propios del módulo, para poder aclararlo entero
+    wall: new THREE.MeshStandardMaterial({color:C.wall, roughness:.88}),
+    cut: new THREE.MeshStandardMaterial({color:C.ink, roughness:1}),
+    floor: new THREE.MeshStandardMaterial({color:C.floor, roughness:.8}),
+    furn: new THREE.MeshStandardMaterial({color:C.furn, roughness:.9}),
+    soft: new THREE.MeshStandardMaterial({color:C.sofa, roughness:1}),
+    white: new THREE.MeshStandardMaterial({color:C.white, roughness:.5}),
+    glass: new THREE.MeshStandardMaterial({color:C.glass, roughness:.25, metalness:.35}),
+    roof: new THREE.MeshStandardMaterial({color:C.wall, roughness:.88}),
+  };
+  const inMod = (wx, wz) => wx >= x0 - 1e-6 && wx <= x1 + 1e-6 && wz >= z0 - 1e-6 && wz <= z1 + 1e-6;
+  // suelo
+  const fl = box(W - 0.02, FLOOR, D - 0.02, M.floor); fl.position.set(0, FLOOR / 2, 0); g.add(fl);
+  // muros de la planta recortados al módulo; la cara de arriba en tinta, como un corte de plano
+  const walls = [];
+  const wallMats = [M.wall, M.wall, M.cut, M.wall, M.wall, M.wall];
+  for (const [a, b, c, d] of P.walls) {
+    const p = Math.max(a + ox, x0), q = Math.min(b + ox, x1), u = Math.max(c + oz, z0), v = Math.min(d + oz, z1);
+    if (q - p < 0.01 || v - u < 0.01) continue;
+    const w = new THREE.Mesh(unit, wallMats); w.castShadow = w.receiveShadow = true;
+    w.scale.set(q - p, 1, v - u); w.position.set((p + q) / 2 - cx, 0, (u + v) / 2 - cz); g.add(w); walls.push(w);
+  }
+  // escalera: peldaños de 0,18 m hasta la altura de corte
+  const [sa, sb, sc, sd] = P.stair, n = Math.round((sb - sa) / 0.28);
+  for (let k = 0; k < n; k++) {
+    const p = sa + ox + k * (sb - sa) / n, q = p + (sb - sa) / n, u = sc + oz, v = sd + oz;
+    if (!inMod((p + q) / 2, (u + v) / 2)) continue;
+    const hh = Math.min(CUT - 0.05, 0.18 * (k + 1));
+    const st = box(q - p - 0.01, hh, v - u, M.furn); st.position.set((p + q) / 2 - cx, FLOOR + hh / 2, (u + v) / 2 - cz); g.add(st);
+  }
+  // muebles (orientativos)
+  for (const [a, b, c, d, h, k] of P.furn) {
+    const wx = (a + b) / 2 + ox, wz = (c + d) / 2 + oz;
+    if (!inMod(wx, wz)) continue;
+    const f = box(b - a, h, d - c, M[k]); f.position.set(wx - cx, FLOOR + h / 2, wz - cz); g.add(f);
+  }
+  // estancias del módulo
+  for (const [name, m2, rx, ry] of P.rooms) {
+    const wx = rx + ox, wz = ry + oz;
+    if (!inMod(wx, wz)) continue;
+    const d = document.createElement('div'); d.className = 'room'; d.innerHTML = name + (m2 ? `<small>${m2}</small>` : '');
+    host.appendChild(d); roomTags.push({el:d, mi, lx:wx - cx, lz:wz - cz});
+  }
+  // ventanas en las fachadas
+  const panes = [];
   for (const [f, a, b, ya, yb] of m.holes) {
     const h = yb - ya, yc = ya + h / 2 - y0, t = 0.08;
     let pane;
-    if (f === 'f' || f === 'b') { pane = box(b - a, h, t, glass); pane.position.set((a + b) / 2 - cx, yc, (f === 'f' ? z0 : z1) - cz + (f === 'f' ? -0.005 : 0.005)); }
-    else { pane = box(t, h, b - a, glass); pane.position.set((f === 'l' ? x0 : x1) - cx - 0.005, yc, (a + b) / 2 - cz); }
-    pane.castShadow = false; g.add(pane);
+    if (f === 'f' || f === 'b') { pane = box(b - a, h, t, M.glass); pane.position.set((a + b) / 2 - cx, yc, (f === 'f' ? z0 : z1) - cz + (f === 'f' ? -0.005 : 0.005)); }
+    else { pane = box(t, h, b - a, M.glass); pane.position.set((f === 'l' ? x0 : x1) - cx - 0.005, yc, (a + b) / 2 - cz); }
+    pane.castShadow = false; g.add(pane); panes.push(pane);
   }
-  for (const [f, a, b] of (m.peto || [])) {   // peto de la terraza sobre la planta baja
+  // cubierta del módulo (y petos de la terraza): se levanta y desaparece al desmontar
+  const roof = new THREE.Group();
+  const rs = box(W, 0.14, D, M.roof); rs.position.set(0, H - 0.06, 0); roof.add(rs);
+  for (const [f, a, b] of (m.peto || [])) {
     const ph = 0.9, t = 0.12;
-    const p = f === 'b' ? box(W, ph, t, wall) : box(t, ph, b - a, wall);
-    if (f === 'b') p.position.set(0, H + ph / 2, D / 2 - t / 2); else p.position.set(-W / 2 + t / 2, H + ph / 2, (a + b) / 2 - cz);
-    g.add(p);
+    const pp = f === 'b' ? box(W, ph, t, M.roof) : box(t, ph, b - a, M.roof);
+    if (f === 'b') pp.position.set(0, H + ph / 2, D / 2 - t / 2); else pp.position.set(-W / 2 + t / 2, H + ph / 2, (a + b) / 2 - cz);
+    roof.add(pp);
   }
+  g.add(roof);
+  // contorno del módulo (el marco), que baja con las paredes
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(W - 0.02, 1, D - 0.02)), new THREE.LineBasicMaterial({color:C.ink, transparent:true, opacity:.28}));
+  g.add(edges);
   g.position.set(cx, y0, cz);
   const meshes = []; g.traverse(o => { if (o.isMesh) meshes.push(o); });
-  g.userData = {home:new THREE.Vector3(cx, y0, cz), wall, edges:edges.material, glass, top:H, upper:y0 > 1, meshes};
+  g.userData = {home:new THREE.Vector3(cx, y0, cz), M, edges, edgeMat:edges.material, walls, panes, roof, H, h:H, upper:y0 > 1, meshes};
   scene.add(g);
   return g;
 }
-const groups = MODS.map(buildModule);
+const groups = MODS.map((m, i) => buildModule(m, i));
 
 // Pérgola del jardín (no es módulo: se aparta al desmontar)
 const pergola = new THREE.Group();
@@ -323,12 +409,21 @@ function pose(t) {
     const fb = smooth(BANDS[i + 2], BANDS[i + 2] + 0.03, t) * (1 - smooth(BANDS[i + 3] - 0.03, BANDS[i + 3], t));
     g.position.set(u.home.x + SPREAD[i] * ex, u.home.y + ex * (u.upper ? 3.6 : 0.9) + fb * 0.8, u.home.z);
     const dim = 1 - anyFocus * 0.86 * (1 - fb);
-    u.wall.opacity = dim; u.glass.opacity = dim; u.edges.opacity = .28 * dim + fb * .6;
-    u.edges.color.copy(fb > 0.5 ? C.accent : C.ink);
+    // paredes de altura completa a 1,15 m: se abre el módulo como una maqueta
+    const h = u.H + (CUT - u.H) * ex; u.h = h;
+    for (const w of u.walls) { w.scale.y = h - FLOOR; w.position.y = FLOOR + (h - FLOOR) / 2; }
+    u.edges.scale.y = h; u.edges.position.y = h / 2;
+    u.roof.position.y = ex * 1.6; u.roof.visible = ex < 0.98;
     // aclarados: sin sombra y sin escribir profundidad, para que el módulo en foco se vea limpio
     const solid = dim > 0.98;
-    u.wall.transparent = u.glass.transparent = !solid; u.wall.depthWrite = solid;
+    for (const [k, mt] of Object.entries(u.M)) {
+      const o = k === 'roof' ? dim * (1 - ex) : k === 'glass' ? dim * (1 - ex) : dim;
+      mt.opacity = o; mt.transparent = o < 0.99; mt.depthWrite = o >= 0.99;
+    }
+    u.panes.forEach(p => { p.visible = ex < 0.98; });
+    u.edgeMat.opacity = .28 * dim + fb * .6; u.edgeMat.color.copy(fb > 0.5 ? C.accent : C.ink);
     u.meshes.forEach(o => { o.castShadow = solid; });
+    u.fb = fb;
     tags[i].classList.toggle('hot', fb > 0.5);
     tags[i]._show = ex * (focus < 0 || fb > 0.5 ? 1 : 0.35);
   });
@@ -338,8 +433,8 @@ function pose(t) {
   // cámara: empieza como el render (desde el jardín, por la esquina del vuelo), da una vuelta completa
   // mientras se recorren los módulos y vuelve al punto de partida para el montaje final
   const az = THREE.MathUtils.degToRad(-38 + (reduce ? 0 : 360 * smooth(BANDS[1], BANDS[8], t))) + yaw;
-  const el = THREE.MathUtils.degToRad(10 + 10 * ex);
-  const r = (27 + 9 * ex) * Math.max(1, 1.0 / camera.aspect);
+  const el = THREE.MathUtils.degToRad(10 + 26 * ex);   // más alta al desmontar, para ver dentro
+  const r = (27 + 7 * ex) * Math.max(1, 1.0 / camera.aspect);
   camera.position.set(CENTER.x + r * Math.sin(az) * Math.cos(el), CENTER.y + 0.8 * ex + r * Math.sin(el), CENTER.z + r * Math.cos(az) * Math.cos(el));
   camera.lookAt(CENTER.x, CENTER.y + 1.2 * ex, CENTER.z);
   setCard(step);
@@ -349,11 +444,19 @@ const v = new THREE.Vector3();
 function placeTags() {
   const w = host.clientWidth, h = host.clientHeight;
   groups.forEach((g, i) => {
-    v.set(g.position.x, g.position.y + g.userData.top + 0.5, g.position.z).project(camera);
+    v.set(g.position.x, g.position.y + g.userData.h + 0.6, g.position.z).project(camera);
     const tg = tags[i];
     tg.style.transform = `translate(${(v.x * .5 + .5) * w}px, ${(-v.y * .5 + .5) * h}px) translate(-50%, -100%)`;
     tg.style.opacity = tg._show.toFixed(3);
   });
+  // nombres de las estancias del módulo en foco
+  for (const r of roomTags) {
+    const g = groups[r.mi], fb = g.userData.fb || 0;
+    r.el.style.opacity = fb.toFixed(3);
+    if (fb < 0.01) continue;
+    v.set(g.position.x + r.lx, g.position.y + CUT + 0.25, g.position.z + r.lz).project(camera);
+    r.el.style.transform = `translate(${(v.x * .5 + .5) * w}px, ${(-v.y * .5 + .5) * h}px) translate(-50%, -50%)`;
+  }
 }
 
 let dirty = true, active = true;
@@ -380,7 +483,7 @@ new IntersectionObserver(es => { active = es[0].isIntersecting; dirty = true; },
 new ResizeObserver(resize).observe(host);
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
   readColors();
-  groups.forEach(g => { g.userData.wall.color.copy(C.wall); g.userData.glass.color.copy(C.glass); });
+  groups.forEach(g => { const M = g.userData.M; for (const k of ['wall','floor','furn','white','glass']) M[k].color.copy(C[k]); M.soft.color.copy(C.sofa); M.roof.color.copy(C.wall); M.cut.color.copy(C.ink); });
   mat.steel.color.copy(C.steel); mat.joint.color.copy(C.accent); mat.ghost.color.copy(C.ink); grid.material.color.copy(C.rule);
   dirty = true;
 });
