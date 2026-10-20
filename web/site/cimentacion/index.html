@@ -41,6 +41,15 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
 .back:active{transform:scale(.97)}
 @media (hover:hover) and (pointer:fine){.back:hover{background:var(--ink);color:var(--paper)}}
 .back:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.presu-t td .sub{display:block;font-size:12.5px;color:var(--soft)}
+.presu-t tr.grp td{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);padding-top:16px}
+.presu-t tr.tot td{font-weight:700}
+.presu-t tr.gran td{font-weight:800;font-size:17px;border-top:2px solid var(--ink);border-bottom:0}
+.presu-t tr.gran td.n{color:var(--accent)}
+.presu .notes{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.presu-t td .pu{display:none}
+@media (max-width:600px){.presu-t .pc{display:none}.presu-t td .pu{display:block;font-size:12px;color:var(--soft)}.presu-t td,.presu-t th{padding-inline:6px}}
 </style>
 </head>
 <body>
@@ -118,7 +127,23 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border
       <tr><td>Cámara sanitaria: grava y lámina</td><td class="n">≈ 74,58 m²</td></tr>
       <tr><td>Rejillas de ventilación</td><td class="n">6 ud</td></tr>
     </tbody></table>
-    <p class="lede" style="font-size:13.5px">Materiales como en Pino: HA-25/F/20/XC2, B 500 S, recubrimiento de 70 mm contra el terreno. La cimentación la ejecuta el promotor; RG21 entrega la posición de placas y pernos.</p>
+    <p class="lede" style="font-size:13.5px">Materiales como en Pino: HA-25/F/20/XC2, B 500 S, recubrimiento de 70 mm contra el terreno. La cimentación es un extra a la promoción y la ejecuta Knubo; RG21 entrega la posición de placas y pernos.</p>
+  </div>
+</section>
+
+<section class="presu" style="display:flex;flex-direction:column;gap:14px">
+  <h2>Presupuesto de la cimentación</h2>
+  <p class="lede">Es un extra a la promoción: no está en el precio de las viviendas. La ejecuta Knubo. Importes por vivienda, sin IVA.</p>
+  <div style="overflow-x:auto"><table class="presu-t"><thead><tr><th>Partida</th><th class="n">Medición</th><th class="n pc">Precio</th><th class="n">Importe</th></tr></thead><tbody>
+    <tr class="grp"><td colspan="3">Ejecución</td><td class="pc"></td></tr><tr><td>Muros a dos caras, longitudinales<span class="sub">4 muros × 9,50 m × 2 caras</span></td><td class="n">76 ml<span class="pu">36,00 €/ml</span></td><td class="n pc">36,00 €/ml</td><td class="n">2.736,00 €</td></tr><tr><td>Muros a dos caras, muretes transversales<span class="sub">2 muretes × 7,95 m × 2 caras</span></td><td class="n">31,8 ml<span class="pu">36,00 €/ml</span></td><td class="n pc">36,00 €/ml</td><td class="n">1.144,80 €</td></tr><tr><td>Vertido de hormigón en muros<span class="sub">Medición de Knubo</span></td><td class="n">11 m³<span class="pu">16,50 €/m³</span></td><td class="n pc">16,50 €/m³</td><td class="n">181,50 €</td></tr><tr><td>Vertido de hormigón en zapatas<span class="sub">Medición de Knubo</span></td><td class="n">26 m³<span class="pu">16,50 €/m³</span></td><td class="n pc">16,50 €/m³</td><td class="n">429,00 €</td></tr><tr><td>Elaboración y armado del acero<span class="sub">Medición de Knubo</span></td><td class="n">3.000 kg<span class="pu">0,67 €/kg</span></td><td class="n pc">0,67 €/kg</td><td class="n">2.010,00 €</td></tr><tr><td>Placas de anclaje<span class="sub">3 por muro × 4 muros</span></td><td class="n">12 ud<span class="pu">32,00 €/ud</span></td><td class="n pc">32,00 €/ud</td><td class="n">384,00 €</td></tr><tr class="tot"><td colspan="2">Ejecución</td><td class="pc"></td><td class="n">6.885,30 €</td></tr>
+    <tr class="grp"><td colspan="3">Materiales y trabajos previos</td><td class="pc"></td></tr><tr><td>Suministro de hormigón HA-25<span class="sub">Los m³ de muros y zapatas</span></td><td class="n">37 m³<span class="pu">95,00 €/m³</span></td><td class="n pc">95,00 €/m³</td><td class="n">3.515,00 €</td></tr><tr><td>Suministro de acero B 500 S<span class="sub">Medición de Knubo</span></td><td class="n">3.000 kg<span class="pu">0,95 €/kg</span></td><td class="n pc">0,95 €/kg</td><td class="n">2.850,00 €</td></tr><tr><td>Hormigón de limpieza bajo zapatas<span class="sub">Superficie de zapatas</span></td><td class="n">45,75 m²<span class="pu">9,00 €/m²</span></td><td class="n pc">9,00 €/m²</td><td class="n">411,75 €</td></tr><tr><td>Excavación de zanjas y retirada de tierras<span class="sub">Superficie de zapatas × 1,30 m</span></td><td class="n">59,48 m³<span class="pu">18,00 €/m³</span></td><td class="n pc">18,00 €/m³</td><td class="n">1.070,55 €</td></tr><tr><td>Grava en la cámara sanitaria<span class="sub">Huella de planta baja, 7,85 × 9,50 m</span></td><td class="n">74,58 m²<span class="pu">12,00 €/m²</span></td><td class="n pc">12,00 €/m²</td><td class="n">894,90 €</td></tr><tr class="tot"><td colspan="2">Materiales y trabajos previos</td><td class="pc"></td><td class="n">8.742,20 €</td></tr>
+    <tr class="gran"><td colspan="2">Total cimentación por vivienda</td><td class="pc"></td><td class="n">15.627,50 €</td></tr>
+  </tbody></table></div>
+  <div class="notes">
+    <div><b>Medición de Knubo</b><span>Muros de 0,70 m de alto y zapatas de 0,75 y 0,90 m de ancho: 37 m³ de hormigón y 3.000 kg de acero. La estimación A de esta página da 29 m³ y 1.670 kg. La medición final saldrá del cálculo de estructura y del geotécnico.</span></div>
+    <div><b>Placas de anclaje</b><span>El presupuesto lleva 12, tres por muro. En los muros interiores apoyan dos módulos y cada uno lleva su pilar, así que pueden ser 18. Las 6 de más serían 192 €.</span></div>
+    <div><b>Mediciones estimadas</b><span>Limpieza: superficie de zapatas, 45,75 m². Excavación: esa superficie por 1,30 m de fondo, sin descontar los cruces de zapatas (unos 6 m³). Grava: toda la huella de planta baja, sin descontar los muros (unos 10 m²).</span></div>
+    <div><b>No incluido</b><span>Bombeo y replanteo topográfico, si hacen falta en la parcela.</span></div>
   </div>
 </section>
 

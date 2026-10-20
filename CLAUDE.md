@@ -9,6 +9,7 @@ Contexto completo del proyecto para que una sesión nueva pueda seguir sin el hi
 - **Cliente:** Nido Capital (en el proyecto figura como MAGNUS 5 REAL ESTATE S.L., C/ Alcalá 226). Arquitecta: Nieves López Colino.
 - **Promoción Névola** en Guadalix de la Sierra (Madrid): 16 viviendas, 14 pareadas y 2 aisladas (las viviendas 05 y 10).
 - **Plan:** una vivienda piloto y, si funciona, la serie de 16.
+- **Knubo** es otra sociedad de Iván. Ejecuta la cimentación como extra a la promoción, fuera del precio de las viviendas (20/10/2026).
 
 ## La vivienda tipo (pareada)
 
@@ -189,7 +190,7 @@ Este repositorio es la fuente de todo. Se trabaja desde una **sesión de Claude 
 | Propuesta de 28 diapositivas | `node herramientas/propuesta/gen.js && node herramientas/propuesta/fixdeck.js` → `herramientas/propuesta/project/` |
 | Documentación técnica de taller (sin € ni RG21) | `node herramientas/tecnica/tecnica_build.js` → `herramientas/tecnica/project/` |
 | Excel del estudio de costes | `node herramientas/nevtec/piloto_xlsx.js costes/Nevola_piloto_estudio_costes.xlsx` |
-| Planos de cimentación (página) | `node herramientas/cimentacion/cimentacion.js && node herramientas/cimentacion/web_cimentacion.js web/site` |
+| Planos de cimentación (página) | `node herramientas/cimentacion/cimentacion.js && node herramientas/cimentacion/web_cimentacion.js web/site`. La web lee los importes del presupuesto de Knubo del Excel `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`, que tiene que llevar los resultados guardados. |
 | Renders limpios de `/render/` (necesita `pip install opencv-python-headless`) | `python3 herramientas/render/limpia_renders.py` → `web/site/render/img/`. La maqueta 3D está en `web/site/render/index.html`, que se edita a mano: los módulos y los huecos están en la constante `MODS` de su script, y los tabiques, la escalera, las estancias y los muebles en `PLANS` (si cambian los tabiques en `gen.js`, hay que copiarlos aquí). |
 | Presupuesto de cimentación del equipo (Excel) | `node herramientas/cimentacion/presupuesto_equipo.js` → `costes/Nevola_cimentacion_presupuesto_equipo.xlsx`. Para que el Excel lleve los resultados ya calculados (se ven en el móvil), abrirlo y guardarlo, o pasarlo por `soffice --headless --convert-to xlsx`. |
 | Web completa | `node web/build_web.js` (lee las diapositivas de `herramientas/propuesta/project/slides`) |
@@ -200,4 +201,4 @@ Este repositorio es la fuente de todo. Se trabaja desde una **sesión de Claude 
 **Reglas que no se rompen:**
 - **Precio cerrado con NIDO:** las mejoras van al margen, nunca al precio.
 - **Documentación técnica:** sin importes ni marca RG21.
-- **Sin compartir costes en lo público:** la web pública no lleva costes ni márgenes, solo los precios ya aceptados.
+- **Sin compartir costes en lo público:** la web pública no lleva costes ni márgenes, solo los precios ya aceptados. Excepción decidida por Iván el 20/10/2026: en `/cimentacion/` se publica el presupuesto de la cimentación de Knubo, extra a la promoción (15.627,50 € por vivienda, sin IVA). Va sin margen añadido, porque Knubo ya lo lleva en la mano de obra.
