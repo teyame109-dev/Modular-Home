@@ -178,8 +178,8 @@ const rep = (a, b) => { if (!h.includes(a)) throw new Error('falta marca: ' + a.
 rep('</style>', CSS + '</style>');
 // menú: siete entradas
 const LINKS = [['propuesta', 'Propuesta'], ['proyecto', 'Proyecto'], ['modulos', 'Módulos'], ['fabricacion', 'Fabricación'], ['sistema', 'Sistema'], ['calidades', 'Calidades'], ['oferta', 'Oferta']];
-h = h.replace(/<ul class="links">[\s\S]*?<\/ul>/, '<ul class="links">' + LINKS.slice(0, 6).map(([id, t]) => `<li><a href="#${id}">${t}</a></li>`).join('') + '<li><a href="/cimentacion/">Cimentación</a></li></ul>');
-h = h.replace(/<div class="panel" id="menuPanel" hidden>[\s\S]*?<\/div>/, '<div class="panel" id="menuPanel" hidden>' + LINKS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('') + '<a href="/cimentacion/">Cimentación</a></div>');
+h = h.replace(/<ul class="links">[\s\S]*?<\/ul>/, '<ul class="links">' + LINKS.slice(0, 6).map(([id, t]) => `<li><a href="#${id}">${t}</a></li>`).join('') + '<li><a href="/cimentacion/">Cimentación</a></li><li><a href="/render/">Render</a></li></ul>');
+h = h.replace(/<div class="panel" id="menuPanel" hidden>[\s\S]*?<\/div>/, '<div class="panel" id="menuPanel" hidden>' + LINKS.map(([id, t]) => `<a href="#${id}">${t}</a>`).join('') + '<a href="/cimentacion/">Cimentación</a><a href="/render/">Montaje sobre el render</a></div>');
 h = h.replace("['piloto', 'porque', 'modulos', 'fabricacion', 'sistema', 'calidades', 'oferta']", "['piloto', 'propuesta', 'proyecto', 'modulos', 'fabricacion', 'sistema', 'calidades', 'oferta']");
 // la sección «porque» de la base pasa a ser «propuesta» + proyecto
 h = h.replace(/<section class="block" id="porque">[\s\S]*?<\/section>/, S.propuesta + '\n\n  ' + S.proyecto);
