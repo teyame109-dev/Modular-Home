@@ -26,7 +26,10 @@ p{margin:0;max-width:65ch} h1,h2{margin:0}
 button,a{touch-action:manipulation}
 a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:20px 16px;border-bottom:1px solid var(--rule)}
+/* Encabezado fijo; --bar es su altura, medida en el script, para que el escenario 3D quede debajo */
+:root{--bar:84px}
+.bar{position:sticky;top:0;z-index:20;background:var(--bg)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:16px 14px;border-bottom:1px solid var(--rule)}
 .logo{display:inline-grid;grid-template-columns:auto auto;column-gap:.14em;align-items:end;font-family:var(--display);font-size:34px;line-height:1;color:var(--ink);text-decoration:none}
 .logo .sq{width:.5em;height:.5em;border-top:.12em solid currentColor;border-left:.12em solid currentColor;position:relative;align-self:start;margin-top:.1em}
 .logo .sq::after{content:"";position:absolute;left:0;top:0;width:.12em;height:.12em;background:var(--accent)}
@@ -46,7 +49,7 @@ figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:v
 
 /* Escenario 3D */
 .montaje{position:relative;height:620vh;border-top:2px solid var(--ink)}
-.stage{position:sticky;top:0;height:100svh;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.stage{position:sticky;top:var(--bar);height:calc(100svh - var(--bar));display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
 .scene{position:relative;min-height:0;touch-action:pan-y;cursor:grab}
 .scene.drag{cursor:grabbing}
 .scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -102,8 +105,8 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js"}}</script>
 </head>
 <body>
+<header class="bar" id="bar"><div class="wrap"><div class="top"><a class="logo" href="/" aria-label="RG21 Capital, volver a la propuesta"><span class="sq"></span><b>rg21</b><i>capital</i></a><a class="back" href="/">Volver a la propuesta</a></div></div></header>
 <div class="wrap">
-  <div class="top"><a class="logo" href="/" aria-label="RG21 Capital, volver a la propuesta"><span class="sq"></span><b>rg21</b><i>capital</i></a><a class="back" href="/">Volver a la propuesta</a></div>
   <section class="hero">
     <div>
       <h1>Névola en seis módulos</h1>
@@ -391,10 +394,12 @@ function setCard(i, detail = false) {
   if (first || reduce) fill(); else { card.classList.add('swap'); setTimeout(fill, 150); }
   btns.forEach((b, j) => { b.classList.toggle('now', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-current', j === i ? 'step' : 'false'); });
 }
-const span = () => sec.offsetHeight - innerHeight;
+const bar = document.getElementById('bar'), stage = document.querySelector('.stage');
+new ResizeObserver(() => document.documentElement.style.setProperty('--bar', bar.offsetHeight + 'px')).observe(bar);
+const span = () => sec.offsetHeight - stage.offsetHeight;
 function go(i) {
   const t = (BANDS[i] + BANDS[i + 1]) / 2;
-  scrollTo({top: sec.getBoundingClientRect().top + scrollY + span() * t, behavior: reduce ? 'auto' : 'smooth'});
+  scrollTo({top: sec.getBoundingClientRect().top + scrollY - bar.offsetHeight + span() * t, behavior: reduce ? 'auto' : 'smooth'});
 }
 
 // ── Animación ──
@@ -409,7 +414,7 @@ function closeDetail() { if (!det.on) return; det.on = false; dirty = true; }
 addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 const ease = x => x * x * (3 - 2 * x);
 
-function readScroll() { target = clamp(-sec.getBoundingClientRect().top / span()); }
+function readScroll() { target = clamp((bar.offsetHeight - sec.getBoundingClientRect().top) / span()); }
 
 function pose(t) {
   const ex = smooth(BANDS[1], BANDS[2] - 0.02, t) * (1 - smooth(BANDS[8], BANDS[8] + 0.1, t));   // desmontaje

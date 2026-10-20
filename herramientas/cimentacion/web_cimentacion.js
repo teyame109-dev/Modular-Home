@@ -5,7 +5,8 @@ const site = process.argv[2]; if (!site) throw new Error('falta la carpeta site'
 let h = fs.readFileSync(path.join(__dirname, 'cimentacion_nevola.html'), 'utf8');
 const rep = (a, b) => { if (!h.includes(a)) throw new Error('no: ' + a.slice(0, 60)); h = h.replace(a, b); };
 const CSS = `
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:16px}
+/* Encabezado fijo arriba al hacer scroll */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);margin-top:-28px;padding-top:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:16px}
 .logo{display:inline-grid;grid-template-columns:auto auto;column-gap:.14em;align-items:end;font-family:var(--display);font-size:34px;line-height:1;color:var(--ink);text-decoration:none}
 .logo .sq{width:.5em;height:.5em;border-top:.12em solid currentColor;border-left:.12em solid currentColor;position:relative;align-self:start;margin-top:.1em}
 .logo .sq::after{content:"";position:absolute;left:0;top:0;width:.12em;height:.12em;background:var(--accent)}
