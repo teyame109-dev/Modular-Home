@@ -170,3 +170,30 @@ Proponer y confirmar antes de cambiar nada. Él toca archivos en paralelo, así 
   - Decisión: se deja para proyectos que lleguen sin BC3. En ese caso, pedir los planos en DXF y leerlos con `ezdxf` (Python).
   - Los DWG de Névola son de AutoCAD 2007 (AC1021).
   - La base de precios CWICR de DDC tiene licencia no comercial.
+
+## Cómo se trabaja: desde el móvil o desde el ordenador (20/10/2026)
+
+Este repositorio es la fuente de todo. Se trabaja desde una **sesión de Claude Code en la nube** sobre teyame109-dev/Modular-Home: app de Claude → Code, en el móvil o en el ordenador. El portátil de Iván puede estar apagado.
+
+- **Antes de tocar nada:** `git pull`. Al terminar, commit y push a `main`.
+- **Web pública** (https://nevola-rg21.vercel.app): Vercel la publica sola con cada push a `main`, en unos 15 s.
+- **Documentos nuevos de Iván** (ofertas, planos, fotos): los adjunta en el chat o los sube a GitHub. Se guardan en su carpeta: `ofertas-proveedores/`, `fichas-tecnicas/`, `proyectos-referencia/`, `entregables/`, etc.
+- **Dependencias:** `cd herramientas && npm install`, una vez, para exceljs.
+
+**Regenerar cada entregable (desde la raíz del repo):**
+
+| Entregable | Comando |
+|---|---|
+| Propuesta de 28 diapositivas | `node herramientas/propuesta/gen.js && node herramientas/propuesta/fixdeck.js` → `herramientas/propuesta/project/` |
+| Documentación técnica de taller (sin € ni RG21) | `node herramientas/tecnica/tecnica_build.js` → `herramientas/tecnica/project/` |
+| Excel del estudio de costes | `node herramientas/nevtec/piloto_xlsx.js costes/Nevola_piloto_estudio_costes.xlsx` |
+| Planos de cimentación (página) | `node herramientas/cimentacion/cimentacion.js && node herramientas/cimentacion/web_cimentacion.js web/site` |
+| Web completa | `node web/build_web.js` (lee las diapositivas de `herramientas/propuesta/project/slides`) |
+
+- **Diapositivas:** se publican en sus artifacts de claude.ai (enlaces arriba) con la herramienta Artifact, enviando solo las diapositivas que cambian.
+- **PDF de cimentación:** se imprime la página con Chrome o Edge sin ventana (A4 apaisado). La copia vigente está en `entregables/`.
+
+**Reglas que no se rompen:**
+- **Precio cerrado con NIDO:** las mejoras van al margen, nunca al precio.
+- **Documentación técnica:** sin importes ni marca RG21.
+- **Sin compartir costes en lo público:** la web pública no lleva costes ni márgenes, solo los precios ya aceptados.

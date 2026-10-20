@@ -1,6 +1,7 @@
 // Restaura los metadatos del índice, renumera pies de página y comprueba los límites de los SVG
 const fs = require('fs');
-const prev = JSON.parse(fs.readFileSync('deck_prev.json', 'utf8'));
+process.chdir(__dirname);
+const prev = fs.existsSync('deck_prev.json') ? JSON.parse(fs.readFileSync('deck_prev.json', 'utf8')) : JSON.parse(fs.readFileSync('project/deck.json', 'utf8'));
 const d = JSON.parse(fs.readFileSync('project/deck.json', 'utf8'));
 fs.writeFileSync('project/deck.json', JSON.stringify({ v: 4, createdOnFiles: prev.createdOnFiles, lists: prev.lists, ...d, createdOnFiles: prev.createdOnFiles }, null, 2));
 d.order.forEach((id, i) => { const f = 'project/slides/' + id + '.html'; const s = fs.readFileSync(f, 'utf8'); fs.writeFileSync(f, s.replace(/(text-align:right; font-size:24px; color:#[0-9A-F]{6}">)\d\d(<\/p>)/, '$1' + String(i + 1).padStart(2, '0') + '$2')); });

@@ -1,6 +1,6 @@
 // Versión solo técnica de la propuesta, para los operarios: sin importes ni condiciones comerciales
 const fs = require('fs'), path = require('path');
-const SRC = 'propuesta/project/slides', DST = 'tecnica/project/slides';
+const SRC = path.join(__dirname, '..', 'propuesta', 'project', 'slides'), DST = path.join(__dirname, 'project', 'slides');
 const order = ['cover', 'resumen', 'adaptacion', 'plantas', 'volumen', 'mod_m1', 'mod_m2', 'mod_m3', 'mod_m4', 'mod_m5', 'mod_m6', 'alz_pb', 'alz_p1', 'tab_pb', 'tab_p1', 'fabricacion', 'parcela', 'sistema', 'calidades', 'alcance'];
 const rep = (h, a, b, id) => { if (!h.includes(a)) throw new Error(id + ' no: ' + a.slice(0, 60)); return h.split(a).join(b); };
 order.forEach((id, i) => {
@@ -25,9 +25,9 @@ order.forEach((id, i) => {
   if (/€|IVA|precio|Precio|margen|Margen|coste|Coste/.test(h)) throw new Error('queda algo económico en ' + id + ': ' + (h.match(/.{40}(€|IVA|precio|Precio|margen|Margen|coste|Coste).{40}/) || [''])[0]);
   fs.writeFileSync(path.join(DST, id + '.html'), h);
 });
-const d = JSON.parse(fs.readFileSync('propuesta/project/deck.json', 'utf8'));
+const d = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'propuesta', 'project', 'deck.json'), 'utf8'));
 const deck = { v: 4, createdOnFiles: { v: 1, at: new Date().toISOString().replace(/\.\d+Z$/, 'Z') }, lists: 'css', title: 'Névola · Documentación técnica de taller', cover: 'cover', order,
   sections: { s1: { description: 'Qué se construye y cómo se pasa el proyecto a módulos', start: 'cover' }, s2: { description: 'Los seis módulos: fichas, alzados y plantas con tabiques', start: 'mod_m1' }, s3: { description: 'Fabricación, montaje, sistema constructivo y calidades', start: 'fabricacion' } },
   faces: d.faces, designSystems: [] };
-fs.writeFileSync('tecnica/project/deck.json', JSON.stringify(deck, null, 2));
+fs.writeFileSync(path.join(__dirname, 'project', 'deck.json'), JSON.stringify(deck, null, 2));
 console.log('ok', order.length, 'diapositivas');

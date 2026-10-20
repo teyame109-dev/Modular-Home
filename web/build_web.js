@@ -2,7 +2,7 @@
 // y de los dibujos de las diapositivas de la propuesta (../propuesta/project/slides).
 // Uso: node build_web.js  ->  escribe nevola_web.html y site/index.html (para Vercel)
 const fs = require('fs'), path = require('path');
-const SL = path.join(__dirname, '..', 'propuesta', 'project', 'slides');
+const SL = path.join(__dirname, '..', 'herramientas', 'propuesta', 'project', 'slides');
 const base = fs.readFileSync(path.join(__dirname, 'nevola_web_base.html'), 'utf8');
 const read = id => fs.readFileSync(path.join(SL, id + '.html'), 'utf8');
 
