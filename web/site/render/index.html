@@ -72,6 +72,9 @@ figcaption{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:v
 .rail button.now{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 @media (hover:hover) and (pointer:fine){.rail button:not(.now):hover{border-color:var(--ink);color:var(--ink)}}
 .hint{font-family:var(--mono);font-size:11px;color:var(--soft);margin-top:6px;text-align:right}
+.closeview{align-self:flex-start;margin-top:4px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--ink);border-radius:2px;padding:9px 12px;cursor:pointer;user-select:none;-webkit-user-select:none;transition:transform 160ms var(--ease-out),background-color 160ms ease,color 160ms ease}
+.closeview:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){.closeview:hover{background:var(--ink);color:var(--paper)}}
 
 /* Cierre: render frente a datos */
 .close{display:grid;gap:24px;padding-block:64px 40px}
@@ -118,7 +121,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-
     <div class="panel">
       <div class="wrap">
         <div class="card" id="card" aria-live="polite"></div>
-        <div><div class="rail" id="rail" role="group" aria-label="Pasos"></div><p class="hint">Arrastra la casa para darle la vuelta</p></div>
+        <div><div class="rail" id="rail" role="group" aria-label="Pasos"></div><p class="hint">Pincha un módulo para verlo de cerca. Arrastra para girar.</p></div>
       </div>
     </div>
   </div>
@@ -372,14 +375,19 @@ const tags = MODS.map(m => { const d = document.createElement('div'); d.classNam
 const card = document.getElementById('card'), rail = document.getElementById('rail'), sec = document.getElementById('montaje');
 const btns = STEPS.map((s, i) => {
   const b = document.createElement('button'); b.type = 'button'; b.textContent = s.r; b.setAttribute('aria-label', s.k + ': ' + s.h.replace(/<[^>]+>/g, ''));
-  b.addEventListener('click', () => go(i)); rail.appendChild(b); return b;
+  b.addEventListener('click', () => { if (i >= 2 && i <= 7) openDetail(i - 2); else { closeDetail(); go(i); } }); rail.appendChild(b); return b;
 });
 let shown = -1;
-function setCard(i) {
-  if (i === shown) return;
-  const first = shown < 0; shown = i;
+function setCard(i, detail = false) {
+  const key = (detail ? 'd' : '') + i;
+  if (key === shown) return;
+  const first = shown === -1; shown = key;
   const s = STEPS[i];
-  const fill = () => { card.innerHTML = `<span class="k">${s.k}</span><h2>${s.h}</h2><p>${s.p}</p>`; card.classList.remove('swap'); };
+  const fill = () => {
+    card.innerHTML = `<span class="k">${s.k}${detail ? ' · vista del módulo' : ''}</span><h2>${s.h}</h2><p>${s.p}</p>` + (detail ? '<button type="button" class="closeview">Volver a la casa</button>' : '');
+    const cb = card.querySelector('.closeview'); if (cb) cb.addEventListener('click', closeDetail);
+    card.classList.remove('swap');
+  };
   if (first || reduce) fill(); else { card.classList.add('swap'); setTimeout(fill, 150); }
   btns.forEach((b, j) => { b.classList.toggle('now', j === i); b.classList.toggle('done', j < i); b.setAttribute('aria-current', j === i ? 'step' : 'false'); });
 }
@@ -394,6 +402,12 @@ const clamp = v => Math.max(0, Math.min(1, v));
 const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
 const SPREAD = [-1.5, 0, 1.5, -1.5, 0, 1.5];
 let target = 0, shownT = -1, yaw = 0, yawT = 0;
+// Vista de un módulo: se abre al pincharlo (o con su botón) y se cierra al volver, al pinchar fuera o al hacer scroll
+const det = {i:-1, on:false, d:0, y:0};
+function openDetail(i) { if (det.on && det.i !== i) det.d = Math.min(det.d, 0.35); det.i = i; det.on = true; det.y = scrollY; dirty = true; }
+function closeDetail() { if (!det.on) return; det.on = false; dirty = true; }
+addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+const ease = x => x * x * (3 - 2 * x);
 
 function readScroll() { target = clamp(-sec.getBoundingClientRect().top / span()); }
 
@@ -403,44 +417,62 @@ function pose(t) {
   if (step < 0) step = STEPS.length - 1;
   const focus = step >= 2 && step <= 7 ? step - 2 : -1;
   const anyFocus = smooth(BANDS[2], BANDS[2] + 0.03, t) * (1 - smooth(BANDS[8] - 0.03, BANDS[8], t));
+  const D = ease(det.d), di = det.i;
   groups.forEach((g, i) => {
-    const u = g.userData;
+    const u = g.userData, isD = i === di;
     // foco: el módulo de su tramo sube un poco y el resto se aclara
-    const fb = smooth(BANDS[i + 2], BANDS[i + 2] + 0.03, t) * (1 - smooth(BANDS[i + 3] - 0.03, BANDS[i + 3], t));
+    let fb = smooth(BANDS[i + 2], BANDS[i + 2] + 0.03, t) * (1 - smooth(BANDS[i + 3] - 0.03, BANDS[i + 3], t));
     g.position.set(u.home.x + SPREAD[i] * ex, u.home.y + ex * (u.upper ? 3.6 : 0.9) + fb * 0.8, u.home.z);
-    const dim = 1 - anyFocus * 0.86 * (1 - fb);
+    let dim = 1 - anyFocus * 0.86 * (1 - fb);
+    // vista de módulo: ese módulo abierto y en primer plano, los demás casi apagados
+    const open = Math.max(ex, isD ? D : 0);
+    if (D > 0) { dim = isD ? dim + (1 - dim) * D : dim * (1 - 0.94 * D); fb = isD ? Math.max(fb, D) : fb * (1 - D); }
     // paredes de altura completa a 1,15 m: se abre el módulo como una maqueta
-    const h = u.H + (CUT - u.H) * ex; u.h = h;
+    const h = u.H + (CUT - u.H) * open; u.h = h;
     for (const w of u.walls) { w.scale.y = h - FLOOR; w.position.y = FLOOR + (h - FLOOR) / 2; }
     u.edges.scale.y = h; u.edges.position.y = h / 2;
-    u.roof.position.y = ex * 1.6; u.roof.visible = ex < 0.98;
+    u.roof.position.y = open * 1.6; u.roof.visible = open < 0.98;
     // aclarados: sin sombra y sin escribir profundidad, para que el módulo en foco se vea limpio
     const solid = dim > 0.98;
     for (const [k, mt] of Object.entries(u.M)) {
-      const o = k === 'roof' ? dim * (1 - ex) : k === 'glass' ? dim * (1 - ex) : dim;
-      mt.opacity = o; mt.transparent = o < 0.99; mt.depthWrite = o >= 0.99;
+      const o = k === 'roof' || k === 'glass' ? dim * (1 - open) : dim;
+      // al cambiar entre opaco y transparente el shader cambia (OPAQUE), así que hay que recompilar
+      const tr = o < 0.99; if (mt.transparent !== tr) { mt.transparent = tr; mt.needsUpdate = true; }
+      mt.opacity = o; mt.depthWrite = !tr;
     }
-    u.panes.forEach(p => { p.visible = ex < 0.98; });
+    u.panes.forEach(p => { p.visible = open < 0.98; });
     u.edgeMat.opacity = .28 * dim + fb * .6; u.edgeMat.color.copy(fb > 0.5 ? C.accent : C.ink);
     u.meshes.forEach(o => { o.castShadow = solid; });
     u.fb = fb;
     tags[i].classList.toggle('hot', fb > 0.5);
-    tags[i]._show = ex * (focus < 0 || fb > 0.5 ? 1 : 0.35);
+    const show = ex * (focus < 0 || fb > 0.5 ? 1 : 0.35);
+    tags[i]._show = isD ? Math.max(show, D) : show * (1 - D);
   });
-  mat.steel.opacity = 1 - ex; pergola.visible = ex < 0.98; pergola.position.z = ex * 3;
-  mat.ghost.opacity = .18 * (1 - ex * .6);
+  const away = Math.max(ex, D);
+  mat.steel.opacity = 1 - away; pergola.visible = away < 0.98; pergola.position.z = away * 3;
+  mat.ghost.opacity = .18 * (1 - ex * .6) * (1 - D);
   mat.joint.opacity = smooth(BANDS[8] + 0.08, BANDS[8] + 0.12, t);
   // cámara: empieza como el render (desde el jardín, por la esquina del vuelo), da una vuelta completa
   // mientras se recorren los módulos y vuelve al punto de partida para el montaje final
   const az = THREE.MathUtils.degToRad(-38 + (reduce ? 0 : 360 * smooth(BANDS[1], BANDS[8], t))) + yaw;
   const el = THREE.MathUtils.degToRad(10 + 26 * ex);   // más alta al desmontar, para ver dentro
   const r = (27 + 7 * ex) * Math.max(1, 1.0 / camera.aspect);
-  camera.position.set(CENTER.x + r * Math.sin(az) * Math.cos(el), CENTER.y + 0.8 * ex + r * Math.sin(el), CENTER.z + r * Math.cos(az) * Math.cos(el));
-  camera.lookAt(CENTER.x, CENTER.y + 1.2 * ex, CENTER.z);
-  setCard(step);
+  camPos.set(CENTER.x + r * Math.sin(az) * Math.cos(el), CENTER.y + 0.8 * ex + r * Math.sin(el), CENTER.z + r * Math.cos(az) * Math.cos(el));
+  camTgt.set(CENTER.x, CENTER.y + 1.2 * ex, CENTER.z);
+  if (D > 0 && di >= 0) {
+    // cámara cerca del módulo, mirando dentro desde arriba
+    const g = groups[di], m = MODS[di];
+    const size = Math.max(m.x[1] - m.x[0], m.z[1] - m.z[0]);
+    const rd = (size * 1.6 + 4) * Math.max(1, 0.9 / camera.aspect), ed = THREE.MathUtils.degToRad(48);
+    const c = tmp.set(g.position.x, g.position.y + 0.8, g.position.z);
+    camPos.lerp(tmp2.set(c.x + rd * Math.sin(az) * Math.cos(ed), c.y + rd * Math.sin(ed), c.z + rd * Math.cos(az) * Math.cos(ed)), D);
+    camTgt.lerp(c, D);
+  }
+  camera.position.copy(camPos); camera.lookAt(camTgt);
+  if (det.on) setCard(di + 2, true); else setCard(step);
 }
 
-const v = new THREE.Vector3();
+const v = new THREE.Vector3(), camPos = new THREE.Vector3(), camTgt = new THREE.Vector3(), tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3();
 function placeTags() {
   const w = host.clientWidth, h = host.clientHeight;
   groups.forEach((g, i) => {
@@ -474,8 +506,13 @@ function loop(now) {
   // suavizado por tiempo (igual en móviles lentos): el modelo alcanza al scroll en unos 0,3 s
   const k = reduce ? 1 : 1 - Math.exp(-dt * 9);
   yaw += (yawT - yaw) * k;
+  if (det.on && Math.abs(scrollY - det.y) > 60) closeDetail();
+  const dGoal = det.on ? 1 : 0, dPrev = det.d;
+  det.d = reduce ? dGoal : det.d + (dGoal - det.d) * (1 - Math.exp(-dt * 5));
+  if (Math.abs(dGoal - det.d) < 1e-3) det.d = dGoal;
+  const moving = det.d !== dPrev;
   const next = shownT < 0 ? target : shownT + (target - shownT) * k;
-  if (Math.abs(next - shownT) < 1e-5 && Math.abs(yawT - yaw) < 1e-4 && !dirty) return;
+  if (Math.abs(next - shownT) < 1e-5 && Math.abs(yawT - yaw) < 1e-4 && !dirty && !moving) return;
   shownT = Math.abs(target - next) < 1e-4 ? target : next;
   pose(shownT); renderer.render(scene, camera); placeTags(); dirty = false;
 }
@@ -497,7 +534,32 @@ addEventListener('pointermove', e => {
   if (!drag.on && Math.abs(dx) > 6 && Math.abs(dx) > Math.abs(e.clientY - drag.y)) { drag.on = true; host.classList.add('drag'); }
   if (drag.on) yawT = drag.yaw - dx * 0.008;   // sin tope: vuelta completa arrastrando
 });
-addEventListener('pointerup', () => { if (drag) { drag = null; host.classList.remove('drag'); } });
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+function pick(e) {
+  const rc = renderer.domElement.getBoundingClientRect();
+  ndc.set((e.clientX - rc.left) / rc.width * 2 - 1, -((e.clientY - rc.top) / rc.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  for (const hit of ray.intersectObjects(groups, true)) {
+    let o = hit.object; if (!o.visible || !o.isMesh) continue;
+    const mt = Array.isArray(o.material) ? o.material[0] : o.material;
+    if (mt.opacity < 0.3) continue;   // los módulos apagados no se pueden pinchar
+    while (o && !groups.includes(o)) o = o.parent;
+    if (o) return groups.indexOf(o);
+  }
+  return -1;
+}
+addEventListener('pointerup', e => {
+  if (!drag) return;
+  const click = !drag.on; drag = null; host.classList.remove('drag');
+  if (!click) return;
+  const i = pick(e);
+  if (i >= 0) openDetail(i); else closeDetail();
+});
+// cursor de mano sobre los módulos (solo con ratón)
+if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  let hp = 0;
+  host.addEventListener('pointermove', e => { if (drag || hp) return; hp = requestAnimationFrame(() => { hp = 0; host.style.cursor = pick(e) >= 0 ? 'pointer' : ''; }); });
+}
 addEventListener('pointercancel', () => { drag = null; host.classList.remove('drag'); });
 
 resize(); loop();
