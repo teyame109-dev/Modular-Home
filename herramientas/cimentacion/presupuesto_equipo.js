@@ -58,6 +58,7 @@ r++; ws.getRow(r).values = ['', 'Partida', 'De dónde sale la cantidad', 'Ud', '
 const pend = [
   ['Suministro de hormigón HA-25', 'Los 37 m³ vertidos. Precio de Iván (20/10/2026)', 'm³', `=E${first + 2}+E${first + 3}`, 115],
   ['Suministro de acero B500S', 'Los 3.000 kg, aparte de los 0,67 €/kg de elaboración y armado. Precio de Iván (20/10/2026)', 'kg', `=E${first + 4}`, 0.95],
+  ['Suministro de placas de anclaje', 'Las 12 placas del presupuesto; la colocación va en mano de obra. Precio de Iván (20/10/2026)', 'ud', `=E${first + 5}`, 220],
   ['Hormigón de limpieza bajo zapatas', 'Superficie de zapatas del croquis: 10,00 × (0,75 + 0,90 + 0,90 + 0,75) + 2 × 8,50 × 0,75. Precio: 10 cm de espesor al precio del hormigón', 'm²', '=10*(0.75+0.9+0.9+0.75)+2*8.5*0.75', '=0.1*F{HORM}'],
   ['Excavación de zanjas y retirada de tierras', 'Superficie de zapatas (45,75 m²) × 1,30 m de fondo, como en la estimación A (coronación a −0,05, muro, zapata y limpieza). Sin descontar cruces. Precio de Iván (20/10/2026)', 'm³', '=(10*(0.75+0.9+0.9+0.75)+2*8.5*0.75)*1.3', 18],
   ['Grava en la cámara sanitaria', 'Huella de planta baja: 7,85 × 9,50 m, sin descontar muros, como en la estimación A. Precio de Iván (20/10/2026)', 'm²', '=7.85*9.5', 12],
@@ -132,7 +133,7 @@ head(wq, 'Preguntas para cerrar el presupuesto', 'Antes de darlo por bueno.');
   'Hormigón (95 €/m³) y acero (0,95 €/kg) van aparte. ¿Confirmáis que vuestro precio no incluye ningún material salvo las placas?',
   '¿Quién hace y paga la excavación de zanjas, la retirada de tierras, el hormigón de limpieza y la grava de la cámara sanitaria?',
   'Canto de las zapatas: con 26 m³ sale ≈ 0,57 m. ¿Qué canto han previsto?',
-  'Placas: el croquis tiene 12 (3 por muro). En cada muro interior apoyan dos módulos y cada uno lleva su pilar, así que salen 2 placas por eje: 18 en total. ¿Las 32 € son por placa suministrada y colocada, con pernos?',
+  'Placas: el croquis tiene 12 (3 por muro). En cada muro interior apoyan dos módulos y cada uno lleva su pilar, así que salen 2 placas por eje: 18 en total. Las 32 € son la colocación; la placa se compra aparte a 220 €. ¿Incluye los pernos?',
   'Muretes transversales: 7,85 m en el croquis y 7,95 m en el cálculo. ¿Cuál es la buena?',
   'Medianera: ¿zapata propia de 0,75 m o común con la vivienda vecina, como la planteamos nosotros (1,20 m, mitad por vivienda)?',
   'Cota de coronación: con el suelo a +0,20, el marco queda a −0,05. ¿Lo tienen en cuenta en la altura de 0,70 m?',
